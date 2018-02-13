@@ -32,7 +32,6 @@
         <activity
             android:name=".controllers.LoginActivity"
             android:label="@string/title_activity_login">
-
         </activity>
         <activity
             android:name=".controllers.Login_Success"
