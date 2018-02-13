@@ -5,7 +5,20 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  */
 
 public class User {
+    public String getUserName() {
+        return userName;
+    }
+
     private String userName;
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
     private String passWord;
 
     public User(String userName, String passWord) {
