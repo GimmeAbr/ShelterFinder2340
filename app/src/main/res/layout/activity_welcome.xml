@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@drawable/blue_back"
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.WelcomeActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -22,43 +22,50 @@
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_vertical"
-            android:background="@color/black_overlay"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/welcome_blue" />
-
+            <!--android:textColor="#33b5e5"-->
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:keepScreenOn="true"
                 android:text="@string/app_title"
-                android:textColor="#33b5e5"
+                android:textColor="@android:color/white"
+
                 android:textSize="50dp"
                 android:textStyle="bold"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <Button
                 android:id="@+id/login_button"
+                android:background="@color/colorPrimary"
+                android:elevation="@dimen/fab_margin"
+                android:padding="@dimen/fab_margin"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@string/login_string" />
+                android:text="@string/login_string"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <Button
                 android:id="@+id/reg_button"
                 style="?metaButtonBarButtonStyle"
+                android:padding="@dimen/fab_margin"
+                android:background="@color/colorPrimary"
+                android:elevation="@dimen/fab_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@string/reg_string" />
+                android:text="@string/reg_string"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
         </LinearLayout>
     </FrameLayout>
