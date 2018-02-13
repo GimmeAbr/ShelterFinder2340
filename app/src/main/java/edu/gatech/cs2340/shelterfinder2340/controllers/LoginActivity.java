@@ -33,7 +33,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.gatech.cs2340.shelterfinder2340.Login_Success;
 import edu.gatech.cs2340.shelterfinder2340.R;
 
 import static android.Manifest.permission.READ_CONTACTS;

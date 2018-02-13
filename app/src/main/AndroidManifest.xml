@@ -22,10 +22,7 @@
             android:name=".controllers.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity
-            android:name=".controllers.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +30,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login_Success"
+            android:name=".controllers.LoginActivity"
+            android:label="@string/title_activity_login">
+
+        </activity>
+        <activity
+            android:name=".controllers.Login_Success"
             android:label="@string/title_activity_login__success"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
