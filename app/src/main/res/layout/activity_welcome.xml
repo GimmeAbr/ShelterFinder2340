@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/welcome_blue"
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.WelcomeActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -22,7 +22,7 @@
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_vertical"
+            android:layout_gravity="center_vertical"
             android:background="@color/black_overlay"
             android:orientation="vertical"
             tools:ignore="UselessParent">
@@ -36,7 +36,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:keepScreenOn="true"
                 android:text="@string/app_title"
                 android:textColor="#33b5e5"
