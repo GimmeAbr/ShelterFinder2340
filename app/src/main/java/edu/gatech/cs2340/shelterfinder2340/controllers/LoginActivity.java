@@ -29,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,6 +194,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Intent myIntent = new Intent(this, Login_Success.class);
             if (email.equals("1234@gmail.com") && password.equals("12345")) {
                 startActivity(myIntent);
+            } else {
+                Toast error_toast = Toast.makeText(getApplicationContext(), "Email and Password do not match, please try again", Toast.LENGTH_LONG);
+                error_toast.show();
+                mEmailView.setText("");
+                mPasswordView.setText("");
             }
         }
     }
