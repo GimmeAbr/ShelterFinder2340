@@ -6,4 +6,108 @@
     android:layout_height="match_parent"
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.RegisterActivity">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/NameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="33dp"
+            android:text="@string/reg_name"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/NameTitle"
+            android:layout_below="@+id/NameTitle"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true" />
+
+        <TextView
+            android:id="@+id/IDTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/NameTitle"
+            android:layout_below="@+id/NameTitle"
+            android:layout_marginTop="67dp"
+            android:text="@string/reg_id"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/IDTitle"
+            android:layout_below="@+id/IDTitle"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true" />
+
+        <TextView
+            android:id="@+id/PasswordTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/id"
+            android:layout_below="@+id/id"
+            android:layout_marginTop="12dp"
+            android:text="@string/reg_password"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/PasswordTitle"
+            android:layout_below="@+id/PasswordTitle"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/UserTypeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/password"
+            android:layout_below="@+id/password"
+            android:layout_marginTop="12dp"
+            android:text="@string/reg_userType"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/registrationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spinner"
+            android:layout_below="@+id/spinner"
+            android:layout_marginTop="23dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/reg"
+            tools:backgroundTint="@color/colorAccent"
+            tools:textColor="@android:color/background_light" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/password"
+            android:layout_alignStart="@+id/UserTypeTitle"
+            android:layout_below="@+id/UserTypeTitle"
+            android:layout_marginTop="12dp" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
+
+
+

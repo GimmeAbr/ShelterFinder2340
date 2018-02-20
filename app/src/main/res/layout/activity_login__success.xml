@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.Login_Success">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="569dp"
+        tools:layout_editor_absoluteY="4dp">
+
+        <TextView
+            android:id="@+id/displayID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="119dp"
+            android:layout_marginTop="194dp" />
+    </RelativeLayout>
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
