@@ -42,8 +42,12 @@ public class WelcomeActivity extends AppCompatActivity {
         findViewById(R.id.reg_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+
+
                 startActivity(intent);
+
             }
         });
     }

@@ -2,6 +2,7 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 
 /**
  * Created by Sylvia Li on 2018/2/12.
+ *
  */
 
 public class User {
