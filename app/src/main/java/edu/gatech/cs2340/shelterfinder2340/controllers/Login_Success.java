@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 
@@ -19,14 +20,13 @@ public class Login_Success extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button logoutButton = (Button) findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent logOutIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(logOutIntent);
+                Intent i = new Intent(getApplicationContext(), WelcomeActivity.class);
+                startActivity(i);
             }
         });
     }
-
 }
