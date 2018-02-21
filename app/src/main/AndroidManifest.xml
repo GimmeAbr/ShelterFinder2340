@@ -34,9 +34,6 @@
             android:label="@string/title_activity_login">
         </activity>
         <activity
-            android:name=".controllers.RegisterActivity"
-            android:label="Register"></activity>
-        <activity
             android:name=".controllers.Login_Success"
             android:label="@string/title_activity_login__success"
             android:theme="@style/AppTheme.NoActionBar"></activity>
