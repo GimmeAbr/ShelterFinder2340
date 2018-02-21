@@ -52,6 +52,14 @@ public class RegisterActivity extends AppCompatActivity {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = preferences.edit();
 
+        Button cancel = (Button) findViewById(R.id.cancel_register);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cancelIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                startActivity(cancelIntent);
+            }
+        });
 
         _register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
                     set.addAll(vals);
                     editor.putStringSet(_id.getText().toString(), set);
                     editor.commit();
-
 
                     startActivity(myIntent);
 
