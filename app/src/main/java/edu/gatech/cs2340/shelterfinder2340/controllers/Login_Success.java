@@ -44,8 +44,8 @@ public class Login_Success extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Set<String> set = preferences.getStringSet(id, null);
         List<String> convertedSet = new ArrayList<>();
-        convertedSet.addAll(set);
-        display.setText(convertedSet.get(0));
+        // convertedSet.addAll(set);
+        // display.setText(convertedSet.get(0));
 
 
 
