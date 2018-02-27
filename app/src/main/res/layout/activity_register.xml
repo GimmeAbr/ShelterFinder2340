@@ -43,7 +43,7 @@
             android:layout_alignStart="@+id/NameTitle"
             android:layout_below="@+id/NameTitle"
             android:layout_marginTop="67dp"
-            android:text="@string/reg_id"
+            android:text="Email"
             android:textSize="20dp" />
 
         <EditText
