@@ -1,26 +1,38 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import java.io.Serializable;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 
 public class Login_Success extends AppCompatActivity {
 
     private TextView display;
+    private ListView shelterListView;
+    private ArrayAdapter<Shelter> shelterAdapter;
+    private List<Shelter> shelterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +58,20 @@ public class Login_Success extends AppCompatActivity {
         List<String> convertedSet = new ArrayList<>();
         // convertedSet.addAll(set);
         // display.setText(convertedSet.get(0));
+
+        shelterListView = (ListView) findViewById(R.id.shelter_list);
+        shelterAdapter = new ArrayAdapter<Shelter>(getApplicationContext(), R.layout.shelter_list_content);
+        shelterAdapter.addAll(shelterList);
+
+        shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Shelter st = shelterAdapter.getItem(i);
+                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
+                intent.putExtra("shelter", (Serializable) st);
+                startActivity(intent);
+            }
+        });
+
     }
 }
