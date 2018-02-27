@@ -46,8 +46,5 @@ public class Login_Success extends AppCompatActivity {
         List<String> convertedSet = new ArrayList<>();
         // convertedSet.addAll(set);
         // display.setText(convertedSet.get(0));
-
-
-
     }
 }
