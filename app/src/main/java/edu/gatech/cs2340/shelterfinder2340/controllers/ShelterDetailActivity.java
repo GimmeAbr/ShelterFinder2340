@@ -1,9 +1,11 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -19,28 +21,31 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         ActionBar tb = getSupportActionBar();
 
-        Shelter st = (Shelter) getIntent().getSerializableExtra("shelter");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
         if (tb != null) {
-            tb.setTitle(st.getShelterName());
+            tb.setTitle(extras.getString("shelterName"));
         }
 
+
         TextView capacity = (TextView) findViewById(R.id.capacity);
-        capacity.setText(st.getCapacity());
+        capacity.setText(extras.get("shelterCapacity") + "");
 
         TextView gender = (TextView) findViewById(R.id.gender);
-        gender.setText(st.getGender());
+        gender.setText(extras.getString("shelterGender"));
 
         TextView longtitude = (TextView) findViewById(R.id.longitude);
-        longtitude.setText("" + st.getLongitude());
+        longtitude.setText("" + extras.get("shelterLongitude"));
 
         TextView latitude = (TextView) findViewById(R.id.latitude);
-        latitude.setText("" + st.getLatitude());
+        latitude.setText("" + extras.get("shelterLatitude"));
 
         TextView address = (TextView) findViewById(R.id.address);
-        address.setText(st.getAddress());
+        address.setText(extras.getString("shelterAddress"));
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
-        phone.setText(st.getPhoneNumber());
+        phone.setText(extras.get("phoneNumber") + "");
 
     }
 }

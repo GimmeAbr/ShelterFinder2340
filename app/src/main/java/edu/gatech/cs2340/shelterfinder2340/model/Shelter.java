@@ -3,11 +3,13 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by admin on 2/26/18.
  */
 
-public class Shelter implements Parcelable{
+public class Shelter {
     private String shelterName, gender, address;
     private int capacity, phoneNumber;
     private double longitude, latitude;
@@ -86,13 +88,4 @@ public class Shelter implements Parcelable{
         return shelterName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

@@ -54,14 +54,12 @@ public class Login_Success extends AppCompatActivity {
             }
         });
 
-       display = (TextView) findViewById(R.id.displayID);
 //        Intent intent = getIntent();
 //        String id = intent.getStringExtra("id");
 //        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        Set<String> set = preferences.getStringSet(id, null);
 //        List<String> convertedSet = new ArrayList<>();
         // convertedSet.addAll(set);
-        display.setText("Welcome!");
 
         Shelter testSt = new Shelter("test shelter", "female", 12, 21133, 1.0, 2.0);
         shelterList = new ArrayList<Shelter>();
@@ -81,41 +79,17 @@ public class Login_Success extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = shelterList.get(i);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                intent.putExtra("shelter", st);
+                intent.putExtra("shelterName", st.getShelterName());
+                intent.putExtra("shelterAddress", st.getAddress());
+                intent.putExtra("shelterCapacity", st.getCapacity());
+                intent.putExtra("shelterGender", st.getGender());
+                intent.putExtra("shelterLatitude", st.getLatitude());
+                intent.putExtra("shelterLongitude", st.getLongitude());
+                intent.putExtra("phoneNumber", st.getPhoneNumber());
                 startActivity(intent);
             }
         });
 
     }
 
-    private class ShelterAdapter extends ArrayAdapter<Shelter> {
-        private Context context;
-        private List<Shelter> shelters;
-        public ShelterAdapter(Context context, List<Shelter> shelters) {
-            super(context, R.layout.shelter_list_content);
-            this.context = context;
-            this.shelters = shelters;
-        }
-
-        private int lastPosition = -1;
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.shelter_list_content, parent, false);
-            TextView shelterName = (TextView) rowView.findViewById(R.id.shelter_name);
-            TextView shelterAddress = (TextView) rowView.findViewById(R.id.shelter_address);
-            Shelter st = shelters.get(position);
-            shelterName.setText(st.getShelterName());
-            shelterAddress.setText(st.getAddress());
-            return rowView;
-        }
-
-        @Override
-        public Shelter getItem(int pos) {
-            return shelterList.get(pos);
-        }
-
-    }
 }
