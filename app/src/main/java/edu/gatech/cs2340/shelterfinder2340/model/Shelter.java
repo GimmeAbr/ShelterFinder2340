@@ -7,15 +7,15 @@ import android.os.Parcelable;
  * Created by admin on 2/26/18.
  */
 
-public class Shelter implements Parcelable{
-    private String shelterName, gender, address;
-    private int capacity, phoneNumber;
+public class Shelter{
+    private String shelterName, gender, address, phoneNumber;
+    private int capacity;
     private double longitude, latitude;
 
     public Shelter() {
 
     }
-    public Shelter (String shelterName, String gender, int capacity, int phoneNumber, double longitude, double latitude) {
+    public Shelter (String shelterName, String gender, int capacity, String phoneNumber, double longitude, double latitude) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.capacity = capacity;
@@ -41,7 +41,7 @@ public class Shelter implements Parcelable{
         this.capacity = capacity;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -71,7 +71,7 @@ public class Shelter implements Parcelable{
         return capacity;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -83,18 +83,4 @@ public class Shelter implements Parcelable{
         return longitude;
     }
 
-    @Override
-    public String toString() {
-        return shelterName;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

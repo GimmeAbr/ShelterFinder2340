@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,13 @@ import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Set;
@@ -65,10 +73,13 @@ public class Login_Success extends AppCompatActivity {
         // convertedSet.addAll(set);
         display.setText("Welcome!");
 
-        Shelter testSt = new Shelter("test shelter5", "female", 12, 21133, 1.0, 2.0);
-        Shelter testSt2 = new Shelter("test shelter6", "female", 12, 21133, 1.0, 2.0);
-        Shelter testSt3 = new Shelter("test shelter7", "female", 12, 21133, 1.0, 2.0);
-        Shelter testSt4 = new Shelter("test shelter8", "female", 12, 21133, 1.0, 2.0);
+        parseCSV();
+        Log.d("Success:", "CSV parsed");
+
+        Shelter testSt = new Shelter("test shelter5", "female", 12, "21133", 1.0, 2.0);
+        Shelter testSt2 = new Shelter("test shelter6", "female", 12, "21133", 1.0, 2.0);
+        Shelter testSt3 = new Shelter("test shelter7", "female", 12, "21133", 1.0, 2.0);
+        Shelter testSt4 = new Shelter("test shelter8", "female", 12, "21133", 1.0, 2.0);
         shelterList = new ArrayList<Shelter>();
         shelterList.add(testSt);
         shelterList.add(testSt2);
@@ -129,4 +140,31 @@ public class Login_Success extends AppCompatActivity {
         }
 
     }
+
+    private void parseCSV() {
+        Log.d("Flag1","in CSV");
+        InputStream csvStream = getResources().openRawResource(R.raw.shelters);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(csvStream));
+        List<Shelter> shelterList = new ArrayList<>();
+        try {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String shelterName = data[1];
+                int capacity = Integer.parseInt(data[2]);
+                String gender = data[3];
+                double longitude = Double.valueOf(data[4]);
+                double latitude = Double.valueOf(data[5]);
+                String address = data[6];
+                String phoneNumber = data[7];
+                Shelter newShelter = new Shelter(shelterName, gender, capacity, phoneNumber, longitude, latitude);
+                shelterList.add(newShelter);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShelterDao dao = new ShelterDao();
+        dao.saveShelters(shelterList);
+    }
+
 }
