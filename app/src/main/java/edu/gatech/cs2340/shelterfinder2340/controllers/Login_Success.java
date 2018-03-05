@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 
 public class Login_Success extends AppCompatActivity {
 
@@ -63,10 +65,19 @@ public class Login_Success extends AppCompatActivity {
         // convertedSet.addAll(set);
         display.setText("Welcome!");
 
-        Shelter testSt = new Shelter("test shelter", "female", 12, 21133, 1.0, 2.0);
+        Shelter testSt = new Shelter("test shelter5", "female", 12, 21133, 1.0, 2.0);
+        Shelter testSt2 = new Shelter("test shelter6", "female", 12, 21133, 1.0, 2.0);
+        Shelter testSt3 = new Shelter("test shelter7", "female", 12, 21133, 1.0, 2.0);
+        Shelter testSt4 = new Shelter("test shelter8", "female", 12, 21133, 1.0, 2.0);
         shelterList = new ArrayList<Shelter>();
         shelterList.add(testSt);
-
+        shelterList.add(testSt2);
+        shelterList.add(testSt3);
+        shelterList.add(testSt4);
+        ShelterDao dao = new ShelterDao();
+        dao.saveShelters(shelterList);
+        List<Shelter> shelters = dao.getShelters();
+        Log.d("debug", "Shelters pulled: " + shelters.size());
         shelterArray = new Shelter[shelterList.size()];
 
         for (int i = 0; i < shelterList.size(); i++) {

@@ -12,6 +12,9 @@ public class Shelter implements Parcelable{
     private int capacity, phoneNumber;
     private double longitude, latitude;
 
+    public Shelter() {
+
+    }
     public Shelter (String shelterName, String gender, int capacity, int phoneNumber, double longitude, double latitude) {
         this.shelterName = shelterName;
         this.gender = gender;
@@ -71,7 +74,6 @@ public class Shelter implements Parcelable{
     public int getPhoneNumber() {
         return phoneNumber;
     }
-
 
     public double getLatitude() {
         return latitude;
