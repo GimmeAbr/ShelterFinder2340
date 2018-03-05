@@ -103,7 +103,13 @@ public class Login_Success extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = shelterList.get(i);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                intent.putExtra("shelter", st);
+                intent.putExtra("shelterName", st.getShelterName());
+                intent.putExtra("shelterAddress", st.getAddress());
+                intent.putExtra("shelterCapacity", st.getCapacity());
+                intent.putExtra("shelterGender", st.getGender());
+                intent.putExtra("shelterLatitude", st.getLatitude());
+                intent.putExtra("shelterLongitude", st.getLongitude());
+                intent.putExtra("phoneNumber", st.getPhoneNumber());
                 startActivity(intent);
             }
         });
