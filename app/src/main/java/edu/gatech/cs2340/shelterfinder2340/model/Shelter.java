@@ -83,4 +83,9 @@ public class Shelter{
         return longitude;
     }
 
+    @Override
+    public String toString() {
+        return this.shelterName;
+    }
+
 }

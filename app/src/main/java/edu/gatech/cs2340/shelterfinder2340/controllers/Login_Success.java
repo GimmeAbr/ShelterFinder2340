@@ -73,8 +73,8 @@ public class Login_Success extends AppCompatActivity {
         // convertedSet.addAll(set);
         display.setText("Welcome!");
 
-        parseCSV();
-        Log.d("Success:", "CSV parsed");
+//        parseCSV();
+//        Log.d("Success:", "CSV parsed");
 
         Shelter testSt = new Shelter("test shelter5", "female", 12, "21133", 1.0, 2.0);
         Shelter testSt2 = new Shelter("test shelter6", "female", 12, "21133", 1.0, 2.0);
