@@ -8,20 +8,20 @@ import android.os.Parcelable;
  */
 
 public class Shelter{
-    private String shelterName, gender, address, phoneNumber;
-    private int capacity;
+    private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
 
     public Shelter() {
 
     }
-    public Shelter (String shelterName, String gender, int capacity, String phoneNumber, double longitude, double latitude) {
+    public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.capacity = capacity;
         this.phoneNumber = phoneNumber;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.address = address;
     }
 
     //Setters
@@ -37,7 +37,7 @@ public class Shelter{
         this.address = address;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
@@ -67,7 +67,7 @@ public class Shelter{
         return address;
     }
 
-    public int getCapacity() {
+    public String getCapacity() {
         return capacity;
     }
 

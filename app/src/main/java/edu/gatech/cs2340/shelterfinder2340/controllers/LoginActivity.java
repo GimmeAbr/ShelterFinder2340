@@ -372,6 +372,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 final Intent myIntent = new Intent(thisObj, Login_Success.class);
+                Log.d("Flag", "starting login success");
                 startActivity(myIntent);
                 finish();
             } else {

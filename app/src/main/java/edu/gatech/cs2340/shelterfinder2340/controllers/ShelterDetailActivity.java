@@ -26,7 +26,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
 
         TextView capacity = (TextView) findViewById(R.id.capacity);
-        capacity.setText(extras.get("shelterCapacity") + "");
+        capacity.setText(extras.getString("shelterCapacity"));
 
         TextView gender = (TextView) findViewById(R.id.gender);
         gender.setText(extras.getString("shelterGender"));
@@ -41,7 +41,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         address.setText(extras.getString("shelterAddress"));
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
-        phone.setText(extras.get("phoneNumber") + "");
+        phone.setText(extras.getString("phoneNumber"));
 
     }
 }
