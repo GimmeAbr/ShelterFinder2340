@@ -39,7 +39,11 @@
             android:name=".controllers.Login_Success"
             android:label="@string/title_activity_login__success"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controllers.ShelterDetailActivity"></activity>
+        <activity android:name=".controllers.ShelterDetailActivity" />
+        <activity
+            android:name=".controllers.FilterActivity"
+            android:label="@string/title_activity_filter"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
