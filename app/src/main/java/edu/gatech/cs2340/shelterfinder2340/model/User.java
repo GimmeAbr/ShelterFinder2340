@@ -5,7 +5,7 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  *
  */
 
-public class User {
+public abstract class User {
     public String getUserName() {
         return userName;
     }

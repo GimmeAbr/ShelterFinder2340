@@ -76,19 +76,19 @@ public class Login_Success extends AppCompatActivity {
 //        parseCSV();
 //        Log.d("Success:", "CSV parsed");
 
-        Shelter testSt = new Shelter("test shelter5", "female", "12", "ATL", "21133", 1.0, 2.0);
-        Shelter testSt2 = new Shelter("test shelter6", "female", "12", "ATL", "21133", 1.0, 2.0);
-        Shelter testSt3 = new Shelter("test shelter7", "female", "12", "ATL", "21133", 1.0, 2.0);
-        Shelter testSt4 = new Shelter("test shelter8", "female", "12", "ATL", "21133", 1.0, 2.0);
+//        Shelter testSt = new Shelter("test shelter5", "female", "12", "ATL", "21133", 1.0, 2.0);
+//        Shelter testSt2 = new Shelter("test shelter6", "female", "12", "ATL", "21133", 1.0, 2.0);
+//        Shelter testSt3 = new Shelter("test shelter7", "female", "12", "ATL", "21133", 1.0, 2.0);
+//        Shelter testSt4 = new Shelter("test shelter8", "female", "12", "ATL", "21133", 1.0, 2.0);
         shelterList = new ArrayList<Shelter>();
-        shelterList.add(testSt);
-        shelterList.add(testSt2);
-        shelterList.add(testSt3);
-        shelterList.add(testSt4);
+//        shelterList.add(testSt);
+//        shelterList.add(testSt2);
+//        shelterList.add(testSt3);
+//        shelterList.add(testSt4);
         Log.d("Flag1", "before csv");
         shelterList.addAll(parseCSV());
 //        ShelterDao dao = new ShelterDao();
-//        dao.saveShelters(shelterList);
+//        //dao.saveShelters(shelterList);
 //        List<Shelter> shelters = dao.getShelters();
 //        Log.d("debug", "Shelters pulled: " + shelters.size());
 //        shelterArray = new Shelter[shelterList.size()];
