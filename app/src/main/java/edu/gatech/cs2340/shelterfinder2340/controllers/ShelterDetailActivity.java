@@ -1,11 +1,9 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
-import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -21,16 +19,14 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         ActionBar tb = getSupportActionBar();
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-
+        Bundle extras = getIntent().getExtras();
         if (tb != null) {
             tb.setTitle(extras.getString("shelterName"));
         }
 
 
         TextView capacity = (TextView) findViewById(R.id.capacity);
-        capacity.setText(extras.get("shelterCapacity") + "");
+        capacity.setText(extras.getString("shelterCapacity"));
 
         TextView gender = (TextView) findViewById(R.id.gender);
         gender.setText(extras.getString("shelterGender"));
@@ -45,7 +41,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         address.setText(extras.getString("shelterAddress"));
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
-        phone.setText(extras.get("phoneNumber") + "");
+        phone.setText(extras.getString("phoneNumber"));
 
     }
 }

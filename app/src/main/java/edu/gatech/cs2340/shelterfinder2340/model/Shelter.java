@@ -3,24 +3,25 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by admin on 2/26/18.
  */
 
-public class Shelter {
-    private String shelterName, gender, address;
-    private int capacity, phoneNumber;
+public class Shelter{
+    private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
 
-    public Shelter (String shelterName, String gender, int capacity, int phoneNumber, double longitude, double latitude) {
+    public Shelter() {
+
+    }
+    public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.capacity = capacity;
         this.phoneNumber = phoneNumber;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.address = address;
     }
 
     //Setters
@@ -36,11 +37,11 @@ public class Shelter {
         this.address = address;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -66,14 +67,13 @@ public class Shelter {
         return address;
     }
 
-    public int getCapacity() {
+    public String getCapacity() {
         return capacity;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
-
 
     public double getLatitude() {
         return latitude;
@@ -85,7 +85,7 @@ public class Shelter {
 
     @Override
     public String toString() {
-        return shelterName;
+        return this.shelterName;
     }
 
 }

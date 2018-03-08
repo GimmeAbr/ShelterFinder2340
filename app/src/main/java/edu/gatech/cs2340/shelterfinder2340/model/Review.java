@@ -14,6 +14,14 @@ public class Review {
     private int rating;
     public int getRating() { return rating; }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
+
     private String reviewContent;
     public String getReviewContent() {return reviewContent; }
 
@@ -23,6 +31,6 @@ public class Review {
         this.reviewer = reviewer;
     }
 
-    public void updateReviewContent(String text) {this.reviewContent = text;}
-    public void updateRating(int rating) { this.rating = rating; }
+//    public void updateReviewContent(String text) {this.reviewContent = text;}
+//    public void updateRating(int rating) { this.rating = rating; }
 }
