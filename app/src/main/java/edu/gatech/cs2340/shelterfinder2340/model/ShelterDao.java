@@ -40,11 +40,18 @@ public class ShelterDao {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for(DataSnapshot snapshot: children) {
-                    Shelter shelter = snapshot.getValue(Shelter.class);
+                    String shelterName = snapshot.child("shelterName").getValue(String.class);
+                    String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
+                    String address = (String) snapshot.child("address").getValue();
+                    String capacity = (String) snapshot.child("capacity").getValue();
+                    String gender = (String) snapshot.child("gender").getValue();
+                    double latitude = (double) snapshot.child("latitude").getValue();
+                    double longitude = (double) snapshot.child("longitude").getValue();
+                    Shelter shelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
                     shelters.add(shelter);
-                    Log.d("debug","Shelter: " + shelter.toString());
                 }
                 isDone = true;
+                Log.d("debug", "Successful in loading");
             }
 
             @Override

@@ -73,29 +73,11 @@ public class Login_Success extends AppCompatActivity {
         // convertedSet.addAll(set);
         display.setText("Welcome!");
 
-//        parseCSV();
-//        Log.d("Success:", "CSV parsed");
-
-//        Shelter testSt = new Shelter("test shelter5", "female", "12", "ATL", "21133", 1.0, 2.0);
-//        Shelter testSt2 = new Shelter("test shelter6", "female", "12", "ATL", "21133", 1.0, 2.0);
-//        Shelter testSt3 = new Shelter("test shelter7", "female", "12", "ATL", "21133", 1.0, 2.0);
-//        Shelter testSt4 = new Shelter("test shelter8", "female", "12", "ATL", "21133", 1.0, 2.0);
         shelterList = new ArrayList<Shelter>();
-//        shelterList.add(testSt);
-//        shelterList.add(testSt2);
-//        shelterList.add(testSt3);
-//        shelterList.add(testSt4);
-        Log.d("Flag1", "before csv");
-        shelterList.addAll(parseCSV());
-//        ShelterDao dao = new ShelterDao();
-//        //dao.saveShelters(shelterList);
-//        List<Shelter> shelters = dao.getShelters();
-//        Log.d("debug", "Shelters pulled: " + shelters.size());
-//        shelterArray = new Shelter[shelterList.size()];
-//
-//        for (int i = 0; i < shelterList.size(); i++) {
-//            shelterArray[i] = shelterList.get(i);
-//        }
+
+        ShelterDao dao = new ShelterDao();
+        shelterList = dao.getShelters();
+
         shelterListView = (ListView) findViewById(R.id.shelter_list);
         shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
         shelterListView.setAdapter(shelterAdapter);
@@ -113,6 +95,16 @@ public class Login_Success extends AppCompatActivity {
                 intent.putExtra("shelterLongitude", st.getLongitude());
                 intent.putExtra("phoneNumber", st.getPhoneNumber());
                 startActivity(intent);
+            }
+        });
+
+        FloatingActionButton search = (FloatingActionButton) findViewById(R.id.search_button);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+
+                startActivity(i);
             }
         });
 
@@ -149,54 +141,54 @@ public class Login_Success extends AppCompatActivity {
 
     }
 
-    private List<Shelter> parseCSV() {
-        Log.d("Flag1","in CSV");
-        InputStream csvStream = getResources().openRawResource(R.raw.shelters);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(csvStream));
-        List<Shelter> shelterList = new ArrayList<>();
-        try {
-            String line = reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                String[] data = new String[9];
-                line = line.replaceAll(",,", ", N/A,");
-                int i = 0;
-                while (line.contains("\"") || line.contains(",")) {
-                    if (line.charAt(0) == '\"') {
-                        Log.d("Line with quotes", line);
-                        Log.d("index of quote", line.indexOf("\"") + "");
-                        line = line.substring(1);
-                        data[i] = line.substring(0, line.indexOf('\"'));
-                        Log.d("Data", data[i]);
-                        Log.d("the rest", line);
-                    } else {
-                        data[i] = line.substring(0, line.indexOf(","));
-                        Log.d("Data", data[i]);
-                        Log.d("the rest", line);
-                    }
-                    line = line.replaceFirst(data[i], "");
-                    line = line.substring(line.indexOf(",") + 1);
-                    i = i + 1;
-                }
-                data[8] = line;
-                for (int j = 0; j < data.length; j++) {
-                    Log.d("Number " + j, data[j]);
-                }
-                String shelterName = data[1];
-                String capacity = data[2];
-                String gender = data[3];
-                double longitude = Double.valueOf(data[4]);
-                double latitude = Double.valueOf(data[5]);
-                String address = data[6];
-                String phoneNumber = data[8];
-
-                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
-                shelterList.add(newShelter);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return shelterList;
-    }
+//    private List<Shelter> parseCSV() {
+//        Log.d("Flag1","in CSV");
+//        InputStream csvStream = getResources().openRawResource(R.raw.shelters);
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(csvStream));
+//        List<Shelter> shelterList = new ArrayList<>();
+//        try {
+//            String line = reader.readLine();
+//            while ((line = reader.readLine()) != null) {
+//                String[] data = new String[9];
+//                line = line.replaceAll(",,", ", N/A,");
+//                int i = 0;
+//                while (line.contains("\"") || line.contains(",")) {
+//                    if (line.charAt(0) == '\"') {
+//                        Log.d("Line with quotes", line);
+//                        Log.d("index of quote", line.indexOf("\"") + "");
+//                        line = line.substring(1);
+//                        data[i] = line.substring(0, line.indexOf('\"'));
+//                        Log.d("Data", data[i]);
+//                        Log.d("the rest", line);
+//                    } else {
+//                        data[i] = line.substring(0, line.indexOf(","));
+//                        Log.d("Data", data[i]);
+//                        Log.d("the rest", line);
+//                    }
+//                    line = line.replaceFirst(data[i], "");
+//                    line = line.substring(line.indexOf(",") + 1);
+//                    i = i + 1;
+//                }
+//                data[8] = line;
+//                for (int j = 0; j < data.length; j++) {
+//                    Log.d("Number " + j, data[j]);
+//                }
+//                String shelterName = data[1];
+//                String capacity = data[2];
+//                String gender = data[3];
+//                double longitude = Double.valueOf(data[4]);
+//                double latitude = Double.valueOf(data[5]);
+//                String address = data[6];
+//                String phoneNumber = data[8];
+//
+//                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
+//                shelterList.add(newShelter);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return shelterList;
+//    }
 
 
 
