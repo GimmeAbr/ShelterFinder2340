@@ -35,4 +35,5 @@
     <string name="reg_password"> Password </string>
     <string name="reg_userType"> User Type </string>
     <string name="reg"> Register </string>
+    <string name="title_activity_filter">FilterActivity</string>
 </resources>
