@@ -12,6 +12,12 @@ public abstract class User {
 
     private String userName;
 
+    public String getName() {
+        return name;
+    }
+
+    private String name;
+
     public String getPassWord() {
         return passWord;
     }
@@ -22,9 +28,10 @@ public abstract class User {
 
     private String passWord;
 
-    public User(String userName, String passWord) {
+    public User(String userName, String passWord, String name) {
         this.userName = userName;
         this.passWord = passWord;
+        this.name = name;
     }
 
     public boolean checkUserName(String uName) {

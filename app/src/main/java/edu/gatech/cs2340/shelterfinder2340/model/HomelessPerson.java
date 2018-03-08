@@ -13,8 +13,8 @@ public class HomelessPerson extends User {
 
     private List<Shelter> shelterList;
     private Location currentLocation;
-    public HomelessPerson(String userName, String passWord) {
-        super(userName, passWord);
+    public HomelessPerson(String userName, String passWord, String name) {
+        super(userName, passWord, name);
         shelterList = new ArrayList<>();
     }
 
@@ -35,16 +35,16 @@ public class HomelessPerson extends User {
     }
 
 
-    public Review submitReview(int rating, String reviewText, User reviewer) {
-        return new Review(rating, reviewText, reviewer);
+    public Review submitReview(int rating, String reviewText) {
+        return new Review(rating, reviewText, this);
     }
 
     public void updateReviewText(Review orReview, String text) {
-        orReview.updateReviewContent(text);
+        orReview.setReviewContent(text);
     }
 
     public void updateRating(Review orReview, int rating) {
-        orReview.updateRating(rating);
+        orReview.setRating(rating);
     }
 
     public void markInterest(Shelter shelter) {
