@@ -17,10 +17,13 @@ public abstract class User {
     }
 
     private String name;
+    private String id;
 
     public String getPassWord() {
         return passWord;
     }
+
+    public String getId() { return id;}
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
@@ -32,6 +35,10 @@ public abstract class User {
         this.userName = userName;
         this.passWord = passWord;
         this.name = name;
+    }
+
+    public User(String id) {
+        this.id = id;
     }
 
     public boolean checkUserName(String uName) {

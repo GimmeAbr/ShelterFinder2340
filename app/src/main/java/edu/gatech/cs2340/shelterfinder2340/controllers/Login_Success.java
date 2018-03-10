@@ -23,6 +23,9 @@ import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 
@@ -46,6 +50,7 @@ public class Login_Success extends AppCompatActivity {
     private ListView shelterListView;
     private ArrayAdapter<Shelter> shelterAdapter;
     private List<Shelter> shelterList;
+    private HomelessPerson user1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,22 @@ public class Login_Success extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button logoutButton = (Button) findViewById(R.id.logout_button);
+        Intent prevIntent = getIntent();
+        Bundle prevExtra = prevIntent.getExtras();
+        if (prevExtra.getString("Label").equals("start")) {
+            String homelessName = prevExtra.getString("homelessName");
+            String homelessGender = prevExtra.getString("homelessExtra");
+            boolean enabled = prevExtra.getBoolean("homelessRes");
+            String id = prevExtra.getString("homelessId");
+            user1 = new HomelessPerson(id, homelessGender, homelessName);
+        } else if (prevExtra.getString("Label").equals("search")) {
+            ////////////////////////
+            // Your Search things/ go here?
+        }
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +107,7 @@ public class Login_Success extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = shelterList.get(i);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
+                // The shelter information
                 intent.putExtra("shelterName", st.getShelterName());
                 intent.putExtra("shelterAddress", st.getAddress());
                 intent.putExtra("shelterCapacity", st.getCapacity());
@@ -94,6 +115,13 @@ public class Login_Success extends AppCompatActivity {
                 intent.putExtra("shelterLatitude", st.getLatitude());
                 intent.putExtra("shelterLongitude", st.getLongitude());
                 intent.putExtra("phoneNumber", st.getPhoneNumber());
+                // The user information
+                if (user1 != null) {
+                    intent.putExtra("homelessGender", user1.getGender());
+                    intent.putExtra("homelessRes", user1.isRes());
+                    intent.putExtra("userId", user1.getId());
+                }
+
                 startActivity(intent);
             }
         });

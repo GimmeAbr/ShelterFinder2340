@@ -13,8 +13,45 @@ public class HomelessPerson extends User {
 
     private List<Shelter> shelterList;
     private Location currentLocation;
-    public HomelessPerson(String userName, String passWord, String name) {
-        super(userName, passWord, name);
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String gender;
+    private String name;
+
+    public boolean isRes() {
+        return res;
+    }
+
+    public void setRes(boolean res) {
+        this.res = res;
+    }
+
+    private boolean res;
+    public HomelessPerson(String userName, String passWord) {
+        super(userName, passWord, "unknown");
+        shelterList = new ArrayList<>();
+    }
+
+    public HomelessPerson(String uid, String gender, String name) {
+        super(uid);
+        this.gender = gender;
+        this.name = name;
         shelterList = new ArrayList<>();
     }
 

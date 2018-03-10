@@ -8,4 +8,5 @@
     <color name="welcome_blue">#447AAC</color>
 
     <color name= "background_color">#7fabf2</color>
+    <color name="disable_grey">#d6737070</color>
 </resources>
