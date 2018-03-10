@@ -14,6 +14,7 @@ import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 
 public class ShelterDetailActivity extends AppCompatActivity {
 
+    private boolean homelessRes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Set onclick --> Be able to reserve a place
+                homelessRes = false;
+                // Use hashmaps to store different types and values?
             }
         });
 
