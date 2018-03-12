@@ -61,13 +61,13 @@ public class Login_Success extends AppCompatActivity {
 
         Intent prevIntent = getIntent();
         Bundle prevExtra = prevIntent.getExtras();
-        if (prevExtra.getString("Label").equals("start")) {
+        if (prevExtra != null && prevExtra.getString("Label").equals("start")) {
             String homelessName = prevExtra.getString("homelessName");
             String homelessGender = prevExtra.getString("homelessExtra");
             boolean enabled = prevExtra.getBoolean("homelessRes");
             String id = prevExtra.getString("homelessId");
             user1 = new HomelessPerson(id, homelessGender, homelessName);
-        } else if (prevExtra.getString("Label").equals("search")) {
+        } else if (prevExtra != null && prevExtra.getString("Label").equals("search")) {
             ////////////////////////
             // Your Search things/ go here?
         }
@@ -84,13 +84,7 @@ public class Login_Success extends AppCompatActivity {
         });
 
         Log.d("Flag1", "display");
-       display = (TextView) findViewById(R.id.displayID);
-//        Intent intent = getIntent();
-//        String id = intent.getStringExtra("id");
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        Set<String> set = preferences.getStringSet(id, null);
-//        List<String> convertedSet = new ArrayList<>();
-        // convertedSet.addAll(set);
+        display = (TextView) findViewById(R.id.displayID);
         display.setText("Welcome!");
 
         shelterList = new ArrayList<Shelter>();

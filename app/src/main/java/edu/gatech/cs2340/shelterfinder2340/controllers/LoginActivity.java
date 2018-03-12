@@ -378,6 +378,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid, getApplicationContext());
+                final Intent myIntent = new Intent(thisObj, Login_Success.class);
+                startActivity(myIntent);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
