@@ -26,7 +26,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
         if (tb != null) {
             tb.setTitle(extras.getString("shelterName"));
         }
-
         Button reserveButton = findViewById(R.id.reserveButton);
         if (!(extras.getBoolean("homelessRes"))) {
             reserveButton.setClickable(false);
