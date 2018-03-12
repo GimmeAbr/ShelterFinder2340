@@ -43,6 +43,8 @@ public class FilterActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (radioGroup.getCheckedRadioButtonId() == R.id.femaleButton) {
                     isMale = false;
+                } else {
+                    isMale = true;
                 }
             }
         });

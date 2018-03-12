@@ -110,7 +110,7 @@ public class Login_Success extends AppCompatActivity {
                     if (!(st.getShelterName().toLowerCase().contains(name.toLowerCase()))) {
                         shelterList.remove(st);
                     } else {
-                        if (!(st.getGender().toLowerCase().contains("women") == male)) {
+                        if (st.getGender().toLowerCase().contains("women") == male) {
                             shelterList.remove(st);
                         } else if (!anyone) {
                             if (!(st.getGender().toLowerCase().contains("families") == family)) {
