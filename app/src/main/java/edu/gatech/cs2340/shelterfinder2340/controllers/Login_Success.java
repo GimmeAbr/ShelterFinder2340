@@ -90,7 +90,15 @@ public class Login_Success extends AppCompatActivity {
         shelterList = new ArrayList<Shelter>();
 
         ShelterDao dao = new ShelterDao();
-        shelterList = dao.getShelters();
+        List<Shelter> toSave = new ArrayList<>();
+
+        Shelter shelter = new Shelter("test shelter", "test", "address", "10", "555-555-5555", 6d, 6d);
+        Shelter shelter1 = new Shelter("test shelter1", "test", "address", "10", "555-555-5555", 6d, 6d);
+        Shelter shelter2 = new Shelter("test shelter2", "test", "address", "10", "555-555-5555", 6d, 6d);
+        toSave.add(shelter);
+        toSave.add(shelter1);
+        toSave.add(shelter2);
+        dao.saveOrUpdateDayRates(toSave);
 
         shelterListView = (ListView) findViewById(R.id.shelter_list);
         shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
