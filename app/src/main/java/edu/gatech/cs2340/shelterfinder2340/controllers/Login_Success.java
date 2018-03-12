@@ -107,26 +107,29 @@ public class Login_Success extends AppCompatActivity {
                 Log.d("Is Man?", male + "");
 
                 for (Shelter st : backupShelters) {
-                    if (male) {
-                        if (st.getGender().contains("Women")) {
+                    if (male && (!st.getGender().contains("Men"))) {
+                        shelterList.remove(st);
+                    } else {
+                        if (!male && (st.getGender().contains("Men"))) {
                             shelterList.remove(st);
                         }
-                    } else if (family || children || young) {
-                        if (st.getGender().toLowerCase().contains("family") != family) {
-                            shelterList.remove(st);
-                        }
-                        if (st.getGender().toLowerCase().contains("children") != children) {
-                            shelterList.remove(st);
-                        }
-                        if (st.getGender().toLowerCase().contains("young") != young) {
-                            shelterList.remove(st);
+                        if (!anyone) {
+                            if (family && (!st.getGender().contains("Families"))) {
+                                shelterList.remove(st);
+                            } else if (children && (!st.getGender().toLowerCase().contains("children"))) {
+                                shelterList.remove(st);
+                            } else if (young && (!st.getGender().toLowerCase().contains("young"))) {
+                                shelterList.remove(st);
+                            }
                         }
                     }
 
                 }
 
+                }
+
             }
-        }
+
 
         shelterListView = (ListView) findViewById(R.id.shelter_list);
         shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
