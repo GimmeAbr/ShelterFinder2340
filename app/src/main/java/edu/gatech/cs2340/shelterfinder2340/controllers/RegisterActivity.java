@@ -153,10 +153,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (user != null) {
             Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
             myIntent.putExtra("Label", "start");
-//            String homelessName = prevExtra.getString("homelessName");
-//            String homelessGender = prevExtra.getString("homelessExtra");
-//            boolean enabled = prevExtra.getBoolean("homelessRes");
-//            String id = prevExtra.getString("homelessId");
             myIntent.putExtra("homelessName", hp.getName());
             myIntent.putExtra("homelessGender", hp.getGender());
             myIntent.putExtra("homelssRes", hp.isRes());
