@@ -104,26 +104,24 @@ public class Login_Success extends AppCompatActivity {
                 boolean young = prevExtra.getBoolean("young");
                 String name = prevExtra.getString("name");
 
+                Log.d("Is Man?", male + "");
+
                 for (Shelter st : backupShelters) {
                     if (!(st.getShelterName().toLowerCase().contains(name.toLowerCase()))) {
                         shelterList.remove(st);
-                    } else if (male) {
-                        if (st.getGender().toLowerCase().contains("women")) {
+                    } else {
+                        if (!(st.getGender().toLowerCase().contains("women") == male)) {
                             shelterList.remove(st);
-                        }
-                    } else if (!male) {
-                        if (st.getGender().toLowerCase().contains("men")) {
-                            shelterList.remove(st);
-                        }
-                    } else if (!anyone) {
-                        if (!(st.getGender().toLowerCase().contains("families") == family)) {
-                            shelterList.remove(st);
-                        }
-                        if (!(st.getGender().toLowerCase().contains("children") == children)) {
-                            shelterList.remove(st);
-                        }
-                        if (!(st.getGender().toLowerCase().contains("young") == young)) {
-                            shelterList.remove(st);
+                        } else if (!anyone) {
+                            if (!(st.getGender().toLowerCase().contains("families") == family)) {
+                                shelterList.remove(st);
+                            }
+                            if (!(st.getGender().toLowerCase().contains("children") == children)) {
+                                shelterList.remove(st);
+                            }
+                            if (!(st.getGender().toLowerCase().contains("young") == young)) {
+                                shelterList.remove(st);
+                            }
                         }
                     }
                 }

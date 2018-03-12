@@ -52,6 +52,7 @@ public class HomelessPerson extends User {
         super(uid);
         this.gender = gender;
         this.name = name;
+        this.res = true;
         shelterList = new ArrayList<>();
     }
 
