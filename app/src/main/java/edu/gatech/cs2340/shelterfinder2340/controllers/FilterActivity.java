@@ -65,6 +65,7 @@ public class FilterActivity extends AppCompatActivity {
                 searchIntent.putExtra("isMale", isMale);
                 searchIntent.putExtra("Label", "search");
                 startActivity(searchIntent);
+                finish();
             }
         });
         Button cancelB = findViewById(R.id.cancelButton);
@@ -73,6 +74,7 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
                 startActivity(myIntent);
+                finish();
             }
         });
 

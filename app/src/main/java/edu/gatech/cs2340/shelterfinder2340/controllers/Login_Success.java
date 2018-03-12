@@ -107,21 +107,22 @@ public class Login_Success extends AppCompatActivity {
                 for (Shelter st : backupShelters) {
                     if (!(st.getShelterName().toLowerCase().contains(name.toLowerCase()))) {
                         shelterList.remove(st);
-                    }
-                    if (male) {
-                        if (st.getCapacity().toLowerCase().contains("women")) {
+                    } else if (male) {
+                        if (st.getGender().toLowerCase().contains("women")) {
                             shelterList.remove(st);
                         }
-                    }
-                    if (!anyone) {
-
-                        if (!(st.getCapacity().toLowerCase().contains("families") == family)) {
+                    } else if (!male) {
+                        if (st.getGender().toLowerCase().contains("men")) {
                             shelterList.remove(st);
                         }
-                        if (!(st.getCapacity().toLowerCase().contains("children") == children)) {
+                    } else if (!anyone) {
+                        if (!(st.getGender().toLowerCase().contains("families") == family)) {
                             shelterList.remove(st);
                         }
-                        if (!(st.getCapacity().toLowerCase().contains("young") == young)) {
+                        if (!(st.getGender().toLowerCase().contains("children") == children)) {
+                            shelterList.remove(st);
+                        }
+                        if (!(st.getGender().toLowerCase().contains("young") == young)) {
                             shelterList.remove(st);
                         }
                     }
