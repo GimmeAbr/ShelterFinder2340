@@ -63,7 +63,7 @@ public class Login_Success extends AppCompatActivity {
         Bundle prevExtra = prevIntent.getExtras();
         if (prevExtra.getString("Label").equals("start")) {
             String homelessName = prevExtra.getString("homelessName");
-            String homelessGender = prevExtra.getString("homelessExtra");
+            String homelessGender = prevExtra.getString("homelessGender");
             boolean enabled = prevExtra.getBoolean("homelessRes");
             String id = prevExtra.getString("homelessId");
             user1 = new HomelessPerson(id, homelessGender, homelessName);

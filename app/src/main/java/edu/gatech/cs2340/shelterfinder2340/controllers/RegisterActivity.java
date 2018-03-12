@@ -106,11 +106,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         if (attribute.equals("User")) {
-                                            HomelessPerson hp = new HomelessPerson(user.getUid(), gender, name);
+                                            final HomelessPerson hp = new HomelessPerson(user.getUid(), gender, name);
                                             hp.setRes(true);
 
                                             UserDao dao = new UserDao();
                                             dao.saveHomelessPerson(hp);
+                                            updatUIHomeless(user, hp);
                                         }
                                         updateUI(user);
                                     } else {
@@ -143,6 +144,23 @@ public class RegisterActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
+            myIntent.putExtra("Label", "start");
+            startActivity(myIntent);
+        }
+    }
+
+    private void updatUIHomeless(FirebaseUser user, HomelessPerson hp) {
+        if (user != null) {
+            Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
+            myIntent.putExtra("Label", "start");
+//            String homelessName = prevExtra.getString("homelessName");
+//            String homelessGender = prevExtra.getString("homelessExtra");
+//            boolean enabled = prevExtra.getBoolean("homelessRes");
+//            String id = prevExtra.getString("homelessId");
+            myIntent.putExtra("homelessName", hp.getName());
+            myIntent.putExtra("homelessGender", hp.getGender());
+            myIntent.putExtra("homelssRes", hp.isRes());
+            myIntent.putExtra("homelessId", hp.getId());
             startActivity(myIntent);
         }
     }

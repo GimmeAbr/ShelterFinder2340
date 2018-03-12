@@ -27,15 +27,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/appBarLayout"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="371dp"
@@ -50,8 +41,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include" />
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/appBarLayout"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/shelterName"
         android:layout_width="367dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -78,10 +78,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintStart_toStartOf="@+id/shelterName"
+        app:layout_constraintTop_toBottomOf="@+id/shelterName" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/familiesButton"
         android:layout_width="155dp"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/childrenButton"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/youngAdultButton"
         android:layout_width="155dp"
         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/familiesButton" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/anyoneButton"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
@@ -136,25 +136,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <RadioButton
-        android:id="@+id/maleButton"
-        android:layout_width="155dp"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Male"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:orientation="horizontal"
+        android:id="@+id/genderGroup"
+        android:checkedButton="@id/maleButton"
+        app:layout_constraintTop_toBottomOf="@id/textView6">
 
-    <RadioButton
-        android:id="@+id/femaleButton"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Female"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        <RadioButton
+            android:id="@+id/maleButton"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Male"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <RadioButton
+            android:id="@+id/femaleButton"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Female"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </RadioGroup>
+
 
     <Button
         android:id="@+id/searchButton"
@@ -164,7 +172,7 @@
         android:layout_marginTop="68dp"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/femaleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -174,7 +182,7 @@
         android:layout_marginTop="68dp"
         android:text="Cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
 
 
 </android.support.constraint.ConstraintLayout>
