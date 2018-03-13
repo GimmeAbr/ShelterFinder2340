@@ -19,8 +19,9 @@ public class FilterActivity extends AppCompatActivity {
     private CheckBox young;
     private CheckBox any;
     private CheckBox child;
+    private CheckBox male;
+    private CheckBox female;
 
-    private boolean isMale = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +38,8 @@ public class FilterActivity extends AppCompatActivity {
         young = findViewById(R.id.youngAdultButton);
         any = findViewById(R.id.anyoneButton);
         child = findViewById(R.id.childrenButton);
-        RadioGroup genderG = findViewById(R.id.genderGroup);
-        genderG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (radioGroup.getCheckedRadioButtonId() == R.id.femaleButton) {
-                    isMale = false;
-                } else {
-                    isMale = true;
-                }
-            }
-        });
-
+        male = findViewById(R.id.maleButton);
+        female = findViewById(R.id.femaleButton);
         Button searchB = findViewById(R.id.searchButton);
         searchB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +48,8 @@ public class FilterActivity extends AppCompatActivity {
                 boolean hasYoung = young.isChecked();
                 boolean hasAny = any.isChecked();
                 boolean hasChild = child.isChecked();
+                boolean isMale = male.isChecked();
+                boolean isFemale = female.isChecked();
                 String stName = nameText.getText().toString();
                 Intent searchIntent = new Intent(getApplicationContext(), Login_Success.class);
                 searchIntent.putExtra("family", hasFamily);
@@ -64,7 +57,8 @@ public class FilterActivity extends AppCompatActivity {
                 searchIntent.putExtra("children", hasChild);
                 searchIntent.putExtra("any", hasAny);
                 searchIntent.putExtra("name", stName);
-                searchIntent.putExtra("isMale", isMale);
+                searchIntent.putExtra("male", isMale);
+                searchIntent.putExtra("female", isFemale);
                 searchIntent.putExtra("Label", "search");
                 startActivity(searchIntent);
                 finish();
