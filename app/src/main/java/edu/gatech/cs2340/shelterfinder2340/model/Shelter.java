@@ -31,8 +31,9 @@ public class Shelter{
     @Id
     private long id;
 
-    public Shelter() {
 
+    public Shelter() {
+        this("","","","","",0,0,0);
     }
 
     public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude, int id) {
@@ -47,13 +48,7 @@ public class Shelter{
     }
 
     public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
-        this.shelterName = shelterName;
-        this.gender = gender;
-        this.capacity = capacity;
-        this.phoneNumber = phoneNumber;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.address = address;
+        this(shelterName, gender, capacity, address, phoneNumber, longitude,latitude,0);
     }
 
     //Setters

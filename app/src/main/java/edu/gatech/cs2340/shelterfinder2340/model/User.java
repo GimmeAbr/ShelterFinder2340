@@ -13,23 +13,24 @@ public class User {
     private Shelter reservedShelter;
 
 
-    public User( String name, String username, String password, int id) {
+    public User( String name, String username, String password, long id) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.id = id;
     }
 
-    public User(String username, String password, int id) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
+    public User(String username, String password, long id) {
+        this("", username, password, id);
 
     }
 
+    public User(String name, long id) {
+        this(name, "","", id);
+
+    }
     public User(long id) {
         this.id = id;
-
     }
 
     public String getName() {
@@ -42,13 +43,13 @@ public class User {
         return password;
     }
     public long getId() { return id;}
-    public void setPassWord(String passWord) {
+    public void setPassword(String passWord) {
         this.password = passWord;
     }
-    public boolean checkUserName(String uName) {
+    public boolean checkUsername(String uName) {
         return (uName.equals(this.username));
     }
-    public boolean checkPassWord(String pWord) {
+    public boolean checkPassword(String pWord) {
         return (pWord.equals(this.password));
     }
     public boolean hasReservedShelter(){return !(reservedShelter == null);}
