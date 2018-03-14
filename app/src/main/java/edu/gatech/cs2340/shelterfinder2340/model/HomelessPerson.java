@@ -13,6 +13,22 @@ public class HomelessPerson extends User {
 
     private List<Shelter> shelterList;
     private Location currentLocation;
+    private String gender;
+    private String name;
+    private boolean res;
+
+
+    public HomelessPerson(long uid, String gender, String name) {
+        super(uid);
+        this.gender = gender;
+        this.name = name;
+        this.res = true;
+        shelterList = new ArrayList<>();
+    }
+    public HomelessPerson(String userName, String passWord) {
+        super(userName, passWord, 0);
+        shelterList = new ArrayList<>();
+    }
 
     public String getGender() {
         return gender;
@@ -31,8 +47,7 @@ public class HomelessPerson extends User {
         this.name = name;
     }
 
-    private String gender;
-    private String name;
+
 
     public boolean isRes() {
         return res;
@@ -42,19 +57,9 @@ public class HomelessPerson extends User {
         this.res = res;
     }
 
-    private boolean res;
-    public HomelessPerson(String userName, String passWord) {
-        super(userName, passWord, "unknown");
-        shelterList = new ArrayList<>();
-    }
 
-    public HomelessPerson(String uid, String gender, String name) {
-        super(uid);
-        this.gender = gender;
-        this.name = name;
-        this.res = true;
-        shelterList = new ArrayList<>();
-    }
+
+
 
     public List<Shelter> getShelterList() {
         return shelterList;

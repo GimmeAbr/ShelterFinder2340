@@ -30,7 +30,7 @@ public class UserDao {
         Log.d("debug", "about to save homeless person");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference homelessRef = ref.child("homeless");
-        homelessRef.child(hp.getId()).setValue(hp);
+        homelessRef.child("").setValue(hp);
     }
 
     public void queryHomelessUser(final String id, final Context context) {

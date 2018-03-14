@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         if (attribute.equals("User")) {
-                                            final HomelessPerson hp = new HomelessPerson(user.getUid(), gender, name);
+                                            final HomelessPerson hp = new HomelessPerson(0, gender, name);
                                             hp.setRes(true);
 
                                             UserDao dao = new UserDao();

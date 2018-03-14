@@ -5,47 +5,51 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  *
  */
 
-public abstract class User {
-    public String getUserName() {
-        return userName;
+public class User {
+    private String name;
+    private String username;
+    private String password;
+    private long id;
+    private Shelter reservedShelter;
+
+
+    public User( String name, String username, String password, int id) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.id = id;
     }
 
-    private String userName;
+    public User(String username, String password, int id) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+
+    }
+
+    public User(long id) {
+        this.id = id;
+
+    }
 
     public String getName() {
         return name;
     }
-
-    private String name;
-    private String id;
-
+    public String getUsername() {
+        return username;
+    }
     public String getPassWord() {
-        return passWord;
+        return password;
     }
-
-    public String getId() { return id;}
-
+    public long getId() { return id;}
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.password = passWord;
     }
-
-    private String passWord;
-
-    public User(String userName, String passWord, String name) {
-        this.userName = userName;
-        this.passWord = passWord;
-        this.name = name;
-    }
-
-    public User(String id) {
-        this.id = id;
-    }
-
     public boolean checkUserName(String uName) {
-        return (uName.equals(this.userName));
+        return (uName.equals(this.username));
     }
-
     public boolean checkPassWord(String pWord) {
-        return (pWord.equals(this.passWord));
+        return (pWord.equals(this.password));
     }
+    public boolean hasReservedShelter(){return !(reservedShelter == null);}
 }

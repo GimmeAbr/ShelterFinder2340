@@ -9,7 +9,7 @@ import android.os.Parcelable;
 public class ShelterCoordinator extends User {
     private Shelter workShelter;
     public ShelterCoordinator(String userName, String passWord, String name, Shelter workShelter) {
-        super(userName, passWord, name);
+        super(userName, passWord, 0);
         this.workShelter = workShelter;
     }
 

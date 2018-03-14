@@ -43,6 +43,7 @@ import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 
 public class Login_Success extends AppCompatActivity {
 
@@ -52,6 +53,7 @@ public class Login_Success extends AppCompatActivity {
     private List<Shelter> shelterList;
     private List<Shelter> backupShelters;
     private HomelessPerson user1;
+    private Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,104 +77,24 @@ public class Login_Success extends AppCompatActivity {
 
         Log.d("Flag1", "display");
         display = (TextView) findViewById(R.id.displayID);
-
-        shelterList = new ArrayList<Shelter>();
-        backupShelters = new ArrayList<Shelter>();
-
-        //ShelterDao dao = new ShelterDao();
-        //shelterList = dao.getShelters();
-        shelterList = parseCSV();
-        backupShelters.addAll(shelterList);
-        //backupShelters.addAll(shelterList);
-
-        Intent prevIntent = getIntent();
-        Bundle prevExtra = prevIntent.getExtras();
-        if (prevExtra != null) {
-            if (prevExtra.getString("Label").equals("start")) {
-                String homelessName = prevExtra.getString("homelessName");
-                String homelessGender = prevExtra.getString("homelessGender");
-                boolean enabled = prevExtra.getBoolean("homelessRes");
-                String id = prevExtra.getString("homelessId");
-                user1 = new HomelessPerson(id, homelessGender, homelessName);
-            } else if (prevExtra.getString("Label").equals("search")) {
-                ////////////////////////
-                // Your Search things/ go here?
-                boolean family = prevExtra.getBoolean("family");
-                boolean anyone = prevExtra.getBoolean("any");
-                boolean male = prevExtra.getBoolean("male");
-                boolean female = prevExtra.getBoolean("female");
-                boolean children = prevExtra.getBoolean("children");
-                boolean young = prevExtra.getBoolean("young");
-                String name = prevExtra.getString("name");
-
-                ArrayList<String> keyWord = new ArrayList<>();
-                if (!anyone) {
-                    if (male) {
-                        keyWord.add("Men");
-                    }
-                    if (female) {
-                        keyWord.add("Women");
-                    }
-                    if (family) {
-                        keyWord.add("Families");
-                    }
-                    if (children) {
-                        keyWord.add("Children");
-                    }
-                    if (young) {
-                        keyWord.add("Young");
-                    }
-                }
-
-                if (name.length() > 0 || male || female || children || young
-                        || anyone || family) {
-                    for (Shelter st : backupShelters) {
-                        if (!st.getShelterName().contains(name)) {
-                            shelterList.remove(st);
-                        }
-                        if (family || children || young
-                                 || female || male) {
-                            boolean result = false;
-                            for (String kw : keyWord) {
-                                result = result || st.getGender().contains(kw);
-                            }
-                            if (!result) {
-                                shelterList.remove(st);
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        }
-
-
         shelterListView = (ListView) findViewById(R.id.shelter_list);
-        shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
+        shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, model.getShelters());
         shelterListView.setAdapter(shelterAdapter);
 
+        /**
+         * On Click Listener class for the ShelterListView
+         */
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Shelter st = shelterList.get(i);
-                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                // The shelter information
-                intent.putExtra("shelterName", st.getShelterName());
-                intent.putExtra("shelterAddress", st.getAddress());
-                intent.putExtra("shelterCapacity", st.getCapacity());
-                intent.putExtra("shelterGender", st.getGender());
-                intent.putExtra("shelterLatitude", st.getLatitude());
-                intent.putExtra("shelterLongitude", st.getLongitude());
-                intent.putExtra("phoneNumber", st.getPhoneNumber());
-                // The user information
-                if (user1 != null) {
-                    intent.putExtra("homelessGender", user1.getGender());
-                    intent.putExtra("homelessRes", user1.isRes());
-                    intent.putExtra("userId", user1.getId());
-                }
-
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Instead of the passing extra details in the intent, pass a reference by position
+                /**
+                 * TODO: set the current shelter based on the position of the item clicked
+                 */
+                model.setCurrentShelter(model.getShelters().get(0));
+                Intent shelterDetailsIntent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
+                startActivity(shelterDetailsIntent);
+                finish();
             }
         });
 
@@ -181,7 +103,6 @@ public class Login_Success extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-
                 startActivity(i);
                 finish();
             }
@@ -189,6 +110,11 @@ public class Login_Success extends AppCompatActivity {
 
     }
 
+
+    /***
+     * Shelter adapter for populating each row of the shelterlistview
+     * based on the name and address of the shelters in the arraylist
+     */
     private class ShelterAdapter extends ArrayAdapter<Shelter> {
         private Context context;
         private List<Shelter> shelters;
@@ -213,62 +139,6 @@ public class Login_Success extends AppCompatActivity {
             shelterAddress.setText(st.getAddress());
             return rowView;
         }
-
-        @Override
-        public Shelter getItem(int pos) {
-            return shelterList.get(pos);
-        }
-
     }
-
-    private List<Shelter> parseCSV() {
-        Log.d("Flag1", "in CSV");
-        InputStream csvStream = getResources().openRawResource(R.raw.shelters);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(csvStream));
-        List<Shelter> shelterList = new ArrayList<>();
-        try {
-            String line = reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                String[] data = new String[9];
-                line = line.replaceAll(",,", ", N/A,");
-                int i = 0;
-                while (line.contains("\"") || line.contains(",")) {
-                    if (line.charAt(0) == '\"') {
-                        Log.d("Line with quotes", line);
-                        Log.d("index of quote", line.indexOf("\"") + "");
-                        line = line.substring(1);
-                        data[i] = line.substring(0, line.indexOf('\"'));
-                        Log.d("Data", data[i]);
-                        Log.d("the rest", line);
-                    } else {
-                        data[i] = line.substring(0, line.indexOf(","));
-                        Log.d("Data", data[i]);
-                        Log.d("the rest", line);
-                    }
-                    line = line.replaceFirst(data[i], "");
-                    line = line.substring(line.indexOf(",") + 1);
-                    i = i + 1;
-                }
-                data[8] = line;
-                for (int j = 0; j < data.length; j++) {
-                    Log.d("Number " + j, data[j]);
-                }
-                String shelterName = data[1];
-                String capacity = data[2];
-                String gender = data[3];
-                double longitude = Double.valueOf(data[4]);
-                double latitude = Double.valueOf(data[5]);
-                String address = data[6];
-                String phoneNumber = data[8];
-
-                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude,0);
-                shelterList.add(newShelter);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return shelterList;
-    }
-
 
 }
