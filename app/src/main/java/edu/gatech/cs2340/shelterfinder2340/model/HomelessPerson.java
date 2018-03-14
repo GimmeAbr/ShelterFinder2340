@@ -11,87 +11,62 @@ import java.util.List;
 
 public class HomelessPerson extends User {
 
-    private List<Shelter> shelterList;
+    private List<Shelter> shelterInterests;
     private Location currentLocation;
     private String gender;
-    private String name;
-    private boolean res;
+    private boolean reservation;
+    private Shelter reservedShelter;
 
 
-    public HomelessPerson(long uid, String gender, String name) {
-        super(uid);
-        this.gender = gender;
-        this.name = name;
-        this.res = true;
-        shelterList = new ArrayList<>();
+    //------------------------------- Constructors -------------------------------
+    public HomelessPerson( String name, String username, String password, String gender, long id) {
+        super(name, username, password, id);
+        this.setGender(gender);
+        shelterInterests = new ArrayList<Shelter>();
     }
-    public HomelessPerson(String userName, String passWord) {
-        super(userName, passWord, 0);
-        shelterList = new ArrayList<>();
+    public HomelessPerson(String name, String gender, long uid) {
+        this(name,"","", gender, uid);
+    }
+    public HomelessPerson(String username, String password) {
+        this("", username, password,"", 0);
     }
 
+    //------------------------------- Getters -------------------------------
     public String getGender() {
         return gender;
     }
+    public boolean hasReservation() {
+        return reservation;
+    }
+    public Shelter getReservedShelter() { return reservedShelter; }
+    public List<Shelter> getShelterInterests() {
+        return shelterInterests;
+    }
+    public Location getCurrentLocation() { return currentLocation; }
 
+    //------------------------------- Setters -------------------------------
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    @Override
-    public String getName() {
-        return name;
+    public void setReservation(boolean res) {
+        this.reservation = res;
     }
+    public void setReservedShelter(Shelter shelter) { this.reservedShelter = shelter;}
+    public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
+    public void setCurrentLocation(Location currentLocation) { this.currentLocation = currentLocation; }
+    
 
-    public void setName(String name) {
-        this.name = name;
+    //------------------------------- Actions -------------------------------
+    public void markInterest(Shelter shelter) {
+        shelterInterests.add(shelter);
     }
-
-
-
-    public boolean isRes() {
-        return res;
-    }
-
-    public void setRes(boolean res) {
-        this.res = res;
-    }
-
-
-
-
-
-    public List<Shelter> getShelterList() {
-        return shelterList;
-    }
-
-    public void setShelterList(List<Shelter> shelterList) {
-        this.shelterList = shelterList;
-    }
-
-    public Location getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(Location currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
-
-    public Review submitReview(int rating, String reviewText) {
-        return new Review(rating, reviewText, this);
-    }
-
-    public void updateReviewText(Review orReview, String text) {
-        orReview.setReviewContent(text);
-    }
-
     public void updateRating(Review orReview, int rating) {
         orReview.setRating(rating);
     }
-
-    public void markInterest(Shelter shelter) {
-        shelterList.add(shelter);
+    public void updateReviewText(Review orReview, String text) {
+        orReview.setReviewContent(text);
     }
+    public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this);}
+
 
 }
