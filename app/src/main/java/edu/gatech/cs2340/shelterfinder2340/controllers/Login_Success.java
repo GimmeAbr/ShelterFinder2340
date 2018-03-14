@@ -99,34 +99,54 @@ public class Login_Success extends AppCompatActivity {
                 // Your Search things/ go here?
                 boolean family = prevExtra.getBoolean("family");
                 boolean anyone = prevExtra.getBoolean("any");
-                boolean male = prevExtra.getBoolean("isMale");
+                boolean male = prevExtra.getBoolean("male");
+                boolean female = prevExtra.getBoolean("female");
                 boolean children = prevExtra.getBoolean("children");
                 boolean young = prevExtra.getBoolean("young");
                 String name = prevExtra.getString("name");
 
-                Log.d("Is Man?", male + "");
-
-                for (Shelter st : backupShelters) {
+                ArrayList<String> keyWord = new ArrayList<>();
+                if (!anyone) {
                     if (male) {
-                        if (st.getGender().contains("Women")) {
+                        keyWord.add("Men");
+                    }
+                    if (female) {
+                        keyWord.add("Women");
+                    }
+                    if (family) {
+                        keyWord.add("Families");
+                    }
+                    if (children) {
+                        keyWord.add("Children");
+                    }
+                    if (young) {
+                        keyWord.add("Young");
+                    }
+                }
+
+                if (name.length() > 0 || male || female || children || young
+                        || anyone || family) {
+                    for (Shelter st : backupShelters) {
+                        if (!st.getShelterName().contains(name)) {
                             shelterList.remove(st);
                         }
-                    } else if (family || children || young) {
-                        if (st.getGender().toLowerCase().contains("family") != family) {
-                            shelterList.remove(st);
-                        }
-                        if (st.getGender().toLowerCase().contains("children") != children) {
-                            shelterList.remove(st);
-                        }
-                        if (st.getGender().toLowerCase().contains("young") != young) {
-                            shelterList.remove(st);
+                        if (family || children || young
+                                 || female || male) {
+                            boolean result = false;
+                            for (String kw : keyWord) {
+                                result = result || st.getGender().contains(kw);
+                            }
+                            if (!result) {
+                                shelterList.remove(st);
+                            }
                         }
                     }
-
                 }
 
             }
+
         }
+
 
         shelterListView = (ListView) findViewById(R.id.shelter_list);
         shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);

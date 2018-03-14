@@ -121,47 +121,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/childrenButton" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="77dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="132dp"
-        android:text="Gender:"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+    <!--<TextView-->
+        <!--android:id="@+id/textView6"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="26dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="132dp"-->
+        <!--android:text="Gender:"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.501"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView5" />-->
 
-    <RadioGroup
-        android:layout_width="match_parent"
+
+    <CheckBox
+        android:id="@+id/maleButton"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/genderGroup"
-        android:checkedButton="@id/maleButton"
-        app:layout_constraintTop_toBottomOf="@id/textView6">
+        android:layout_marginTop="16dp"
+        android:text="Male"
+        app:layout_constraintStart_toStartOf="@id/youngAdultButton"
+        app:layout_constraintTop_toBottomOf="@id/youngAdultButton" />
 
-        <RadioButton
-            android:id="@+id/maleButton"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:text="Male"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <RadioButton
-            android:id="@+id/femaleButton"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="24dp"
-            android:text="Female"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </RadioGroup>
+    <CheckBox
+        android:id="@+id/femaleButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Female"
+        app:layout_constraintEnd_toEndOf="@id/anyoneButton"
+        app:layout_constraintTop_toBottomOf="@id/anyoneButton" />
 
 
     <Button
@@ -172,7 +164,7 @@
         android:layout_marginTop="68dp"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/femaleButton" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -182,7 +174,7 @@
         android:layout_marginTop="68dp"
         android:text="Cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/maleButton" />
 
 
 </android.support.constraint.ConstraintLayout>

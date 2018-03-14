@@ -34,7 +34,7 @@ public class Model {
     /** the current user */
      private User _currentUser;
 
-     /** the current user*/
+     /** the current shelter*/
      private Shelter _currentShelter;
 
      /** Null Object pattern, returned when no course is found */
@@ -60,7 +60,7 @@ public class Model {
      *
      * uses O(n) linear search for course
      *
-     * @param course  the course to be added
+     * @param shelter  the course to be added
      * @return true if added, false if a duplicate
      */
     public boolean addCourse(Shelter shelter) {
@@ -83,7 +83,7 @@ public class Model {
      * Return a course that has matching number.
      * This uses an O(n) linear search.
      *
-     * @param number the number of the course to find
+     * @param id the id of the course to find
      * @return  the course with that number or the NullCourse if no such number exists.
      *
      */
@@ -94,13 +94,6 @@ public class Model {
         return theNullShelter;
     }
 
-    /**
-     * Return a course that has the matching id
-     * This uses a linear O(n) search
-     *
-     * @param id the id number of the course
-     * @return the course with this id or theNullCourse if no such id exists.
-     */
     public Shelter getShelterByName(String name) {
         for (Shelter s : _shelters ) {
             if (s.getShelterName().equals(name)) {

@@ -27,6 +27,16 @@ public class Shelter{
         this.id = id;
     }
 
+    public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
+        this.shelterName = shelterName;
+        this.gender = gender;
+        this.capacity = capacity;
+        this.phoneNumber = phoneNumber;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.address = address;
+    }
+
     //Setters
     public void setShelterName(String shelterName) {
         this.shelterName = shelterName;
