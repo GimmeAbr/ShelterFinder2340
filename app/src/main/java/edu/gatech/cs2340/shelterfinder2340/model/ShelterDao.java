@@ -47,7 +47,7 @@ public class ShelterDao {
                     String gender = (String) snapshot.child("gender").getValue();
                     double latitude = (double) snapshot.child("latitude").getValue();
                     double longitude = (double) snapshot.child("longitude").getValue();
-                    Shelter shelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
+                    Shelter shelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude,0);
                     shelters.add(shelter);
                 }
                 isDone = true;

@@ -241,7 +241,7 @@ public class Login_Success extends AppCompatActivity {
                 String address = data[6];
                 String phoneNumber = data[8];
 
-                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
+                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude,0);
                 shelterList.add(newShelter);
             }
         } catch (IOException e) {
