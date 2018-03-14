@@ -54,7 +54,7 @@ public class HomelessPerson extends User {
     public void setReservedShelter(Shelter shelter) { this.reservedShelter = shelter;}
     public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
     public void setCurrentLocation(Location currentLocation) { this.currentLocation = currentLocation; }
-    
+
 
     //------------------------------- Actions -------------------------------
     public void markInterest(Shelter shelter) {

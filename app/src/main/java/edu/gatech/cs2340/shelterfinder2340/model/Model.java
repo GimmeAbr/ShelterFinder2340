@@ -39,7 +39,7 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Course", "", "", "", "",0,0,0);
+    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "", 0,0,0,0);
 
     /** holds the list of all courses */
     private ArrayList<Shelter> _shelters;
@@ -111,6 +111,7 @@ public class Model {
         return theNullShelter;
     }
 
+    //-----------------------------------Helpers----------------------------------
 
     /**
      * populate the model with some dummy data.  The full app would not require this.
@@ -118,10 +119,10 @@ public class Model {
      */
     private void loadDummyData() {
         _shelters = new ArrayList<Shelter>();
-        _shelters.add(new Shelter("Shelter1", "","","","", 0,0,0));
-        _shelters.add(new Shelter("Shelter2", "","","","", 0,0,0));
-        _shelters.add(new Shelter("Shelter3", "","","","", 0,0,0));
-        _shelters.add(new Shelter("Shelter4", "","","","", 0,0,0));
+        _shelters.add(new Shelter("Shelter1", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter2", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter3", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
 
     }
 

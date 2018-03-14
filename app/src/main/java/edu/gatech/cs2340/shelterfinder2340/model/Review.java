@@ -6,31 +6,28 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 
 public class Review {
     private String shelterName;
-    public String getShelterName() { return shelterName; }
-
     private User reviewer;
-    public User getReviewer() { return reviewer; }
-
     private int rating;
+    private String reviewContent;
+
+    public Review(int rating, String reviewText, User reviewer, String shelterName) {
+        this.rating = rating;
+        this.reviewContent = reviewText;
+        this.reviewer = reviewer;
+        this.shelterName = shelterName;
+
+    }
+
     public int getRating() { return rating; }
+    public String getReviewContent() {return reviewContent; }
+    public User getReviewer() { return reviewer; }
+    public String getShelterName() { return shelterName; }
 
     public void setRating(int rating) {
         this.rating = rating;
     }
-
     public void setReviewContent(String reviewContent) {
         this.reviewContent = reviewContent;
     }
 
-    private String reviewContent;
-    public String getReviewContent() {return reviewContent; }
-
-    public Review(int rating, String reviewText, User reviewer) {
-        this.rating = rating;
-        this.reviewContent = reviewText;
-        this.reviewer = reviewer;
-    }
-
-//    public void updateReviewContent(String text) {this.reviewContent = text;}
-//    public void updateRating(int rating) { this.rating = rating; }
 }
