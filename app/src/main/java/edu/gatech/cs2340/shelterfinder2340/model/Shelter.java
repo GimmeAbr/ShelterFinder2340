@@ -3,14 +3,33 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Property;
+
 /**
  * Created by admin on 2/26/18.
  */
-
+@Entity
 public class Shelter{
-    private String shelterName, gender, address, phoneNumber, capacity;
-    private double longitude, latitude;
-    private int vacancies, id;
+    @Property
+    private String shelterName;
+    @Property
+    private String gender;
+    @Property
+    private String address;
+    @Property
+    private String phoneNumber;
+    @Property
+    private String capacity;
+    @Property
+    private double longitude;
+    @Property
+    private double latitude;
+    @Property
+    private int vacancies;
+    @Id
+    private long id;
 
     public Shelter() {
 
@@ -66,6 +85,8 @@ public class Shelter{
         this.longitude = longitude;
     }
 
+    public void setId(long id) {this.id = id;}
+
 
 
     //Getters
@@ -97,7 +118,7 @@ public class Shelter{
         return longitude;
     }
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 
 
 

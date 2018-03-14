@@ -44,6 +44,8 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -363,6 +365,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
+            /*
+            ShelterDao dao = new ShelterDao();
+            List<Shelter> shelters = new ArrayList<>();
+            Shelter shelter = new Shelter("name", "male", "12", "234-", "2",2,4,0);
+            Shelter shelter1 = new Shelter("name1", "male", "12", "234-", "2",2,4,0);
+            Shelter shelter2 = new Shelter("name2", "male", "12", "234-", "2",2,4,0);
+            shelters.add(shelter);
+            shelters.add(shelter1);
+            shelters.add(shelter2);
+            dao.saveOrUpdateShelters(shelters);
+            Log.d("debug","done saving")
+            */
 
             // TODO: register the new account here.
             return true;
@@ -378,7 +392,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d("Userid", mAuth.getCurrentUser().getUid());
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
-                dao.queryHomelessUser(uid, getApplicationContext());
+                // dao.queryHomelessUser(uid, getApplicationContext());
+                Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
+                getApplicationContext().startActivity(loginSucess);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
