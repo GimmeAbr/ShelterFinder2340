@@ -58,11 +58,16 @@ public class Model {
     //-----------------------------------Setters-----------------------------------
 
     /**
-     * Getter for the current shelter
+     * Setter for the current shelter
      * @param shelter
      */
     public void setCurrentShelter(Shelter shelter) { _currentShelter = shelter; }
 
+    /**
+     * Getter for the current shelter
+     * @param user
+     */
+    public void setCurrentUser(User user) { _currentUser = user; }
 
     //-----------------------------------Getters----------------------------------
 

@@ -9,27 +9,27 @@ public class User {
     private String name;
     private String username;
     private String password;
-    private long id;
+    private String id;
     private Shelter reservedShelter;
 
 
-    public User( String name, String username, String password, long id) {
+    public User( String name, String username, String password, String id) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.id = id;
     }
 
-    public User(String username, String password, long id) {
+    public User(String username, String password, String id) {
         this("", username, password, id);
 
     }
 
-    public User(String name, long id) {
+    public User(String name, String id) {
         this(name, "","", id);
 
     }
-    public User(long id) {
+    public User(String id) {
         this.id = id;
     }
 
@@ -42,7 +42,7 @@ public class User {
     public String getPassWord() {
         return password;
     }
-    public long getId() { return id;}
+    public String getId() { return id; }
     public void setPassword(String passWord) {
         this.password = passWord;
     }

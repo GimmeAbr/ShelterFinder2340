@@ -19,16 +19,16 @@ public class HomelessPerson extends User {
 
 
     //------------------------------- Constructors -------------------------------
-    public HomelessPerson( String name, String username, String password, String gender, long id) {
+    public HomelessPerson( String name, String username, String password, String gender, String id) {
         super(name, username, password, id);
         this.setGender(gender);
         shelterInterests = new ArrayList<Shelter>();
     }
-    public HomelessPerson(String name, String gender, long uid) {
+    public HomelessPerson(String name, String gender, String uid) {
         this(name,"","", gender, uid);
     }
     public HomelessPerson(String username, String password) {
-        this("", username, password,"", 0);
+        this("", username, password,"", "");
     }
 
     //------------------------------- Getters -------------------------------

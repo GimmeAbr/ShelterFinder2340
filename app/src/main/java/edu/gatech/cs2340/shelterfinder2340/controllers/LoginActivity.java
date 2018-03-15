@@ -44,6 +44,7 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     private FirebaseAuth mAuth;
     private LoginActivity thisObj;
+    private Model model;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -86,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        model = Model.getInstance();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -357,6 +360,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's informa tion
                     FirebaseUser user = mAuth.getCurrentUser();
+
+                    //Change the user id to a string
+                    model.setCurrentUser(new HomelessPerson(user.getDisplayName(), user.getEmail(), user.getUid()));
                 } else {
                     throw new RuntimeException("Login failed");
                 }
