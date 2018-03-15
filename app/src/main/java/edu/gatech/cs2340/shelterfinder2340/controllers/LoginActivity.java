@@ -44,6 +44,8 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -378,7 +380,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d("Userid", mAuth.getCurrentUser().getUid());
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
-                dao.queryHomelessUser(uid, getApplicationContext());
+                // dao.queryHomelessUser(uid, getApplicationContext());
+                Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
+                getApplicationContext().startActivity(loginSucess);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

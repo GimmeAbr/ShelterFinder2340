@@ -66,7 +66,7 @@ public class HomelessPerson extends User {
     public void updateReviewText(Review orReview, String text) {
         orReview.setReviewContent(text);
     }
-    public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this);}
+    public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
 
 
 }

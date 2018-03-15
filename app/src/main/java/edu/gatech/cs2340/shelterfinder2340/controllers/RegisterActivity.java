@@ -106,8 +106,8 @@ public class RegisterActivity extends AppCompatActivity {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         if (attribute.equals("User")) {
-                                            final HomelessPerson hp = new HomelessPerson(0, gender, name);
-                                            hp.setRes(true);
+                                            final HomelessPerson hp = new HomelessPerson(gender, name);
+                                            hp.setReservation(true);
 
                                             UserDao dao = new UserDao();
                                             dao.saveHomelessPerson(hp);
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
             myIntent.putExtra("Label", "start");
             myIntent.putExtra("homelessName", hp.getName());
             myIntent.putExtra("homelessGender", hp.getGender());
-            myIntent.putExtra("homelssRes", hp.isRes());
+            myIntent.putExtra("homelssRes", hp.hasReservation());
             myIntent.putExtra("homelessId", hp.getId());
             startActivity(myIntent);
         }
