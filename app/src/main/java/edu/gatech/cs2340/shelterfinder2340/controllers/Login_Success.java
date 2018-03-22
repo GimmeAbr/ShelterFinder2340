@@ -41,8 +41,10 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
 
 public class Login_Success extends AppCompatActivity {
 
@@ -95,54 +97,8 @@ public class Login_Success extends AppCompatActivity {
                 String id = prevExtra.getString("homelessId");
                 user1 = new HomelessPerson(id, homelessGender, homelessName);
             } else if (prevExtra.getString("Label").equals("search")) {
-                ////////////////////////
-                // Your Search things/ go here?
-                boolean family = prevExtra.getBoolean("family");
-                boolean anyone = prevExtra.getBoolean("any");
-                boolean male = prevExtra.getBoolean("male");
-                boolean female = prevExtra.getBoolean("female");
-                boolean children = prevExtra.getBoolean("children");
-                boolean young = prevExtra.getBoolean("young");
-                String name = prevExtra.getString("name");
-
-                ArrayList<String> keyWord = new ArrayList<>();
-                if (!anyone) {
-                    if (male) {
-                        keyWord.add("Men");
-                    }
-                    if (female) {
-                        keyWord.add("Women");
-                    }
-                    if (family) {
-                        keyWord.add("Families");
-                    }
-                    if (children) {
-                        keyWord.add("Children");
-                    }
-                    if (young) {
-                        keyWord.add("Young");
-                    }
-                }
-
-                if (name.length() > 0 || male || female || children || young
-                        || anyone || family) {
-                    for (Shelter st : backupShelters) {
-                        if (!st.getShelterName().contains(name)) {
-                            shelterList.remove(st);
-                        }
-                        if (family || children || young
-                                 || female || male) {
-                            boolean result = false;
-                            for (String kw : keyWord) {
-                                result = result || st.getGender().contains(kw);
-                            }
-                            if (!result) {
-                                shelterList.remove(st);
-                            }
-                        }
-                    }
-                }
-
+                ShelterQuery query = Model.getInstance().get_query();
+                shelterList = query.filterShelter(shelterList);
             }
 
         }
@@ -156,6 +112,7 @@ public class Login_Success extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = shelterList.get(i);
+                Model.getInstance().setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 // The shelter information
                 intent.putExtra("shelterName", st.getShelterName());

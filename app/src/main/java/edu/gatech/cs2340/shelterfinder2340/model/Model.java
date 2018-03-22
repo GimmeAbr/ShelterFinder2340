@@ -24,6 +24,9 @@ public class Model {
     /** holds the list of all courses */
     private List<Shelter> _shelters;
 
+    /** the ShelterQuery object*/
+    private ShelterQuery _query;
+
     private Model() {
         _shelters = new ArrayList<>();
 
@@ -53,7 +56,7 @@ public class Model {
      * get the courses
      * @return a list of the courses in the app
      */
-    public List<Shelter> getCourses() { return _shelters; }
+    public List<Shelter> getShelters() { return _shelters; }
 
     /**
      * add a course to the app.  checks if the course is already entered
@@ -63,7 +66,7 @@ public class Model {
      * @param shelter  the course to be added
      * @return true if added, false if a duplicate
      */
-    public boolean addCourse(Shelter shelter) {
+    public boolean addShelter(Shelter shelter) {
         for (Shelter s : _shelters ) {
             if (s.equals(shelter)) return false;
         }
@@ -101,6 +104,14 @@ public class Model {
             }
         }
         return theNullShelter;
+    }
+
+    public ShelterQuery get_query() {
+        return _query;
+    }
+
+    public void set_query(ShelterQuery _query) {
+        this._query = _query;
     }
 
 }
