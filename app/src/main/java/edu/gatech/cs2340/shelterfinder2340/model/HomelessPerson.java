@@ -15,6 +15,7 @@ public class HomelessPerson extends User {
     private Location currentLocation;
     private String gender;
     private boolean reservation;
+    private int reservedRooms;
     private Shelter reservedShelter;
 
 
@@ -67,6 +68,9 @@ public class HomelessPerson extends User {
         orReview.setReviewContent(text);
     }
     public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
+    public void reserveRoom(Shelter shelterToReserve){
+
+    }
 
 
 }

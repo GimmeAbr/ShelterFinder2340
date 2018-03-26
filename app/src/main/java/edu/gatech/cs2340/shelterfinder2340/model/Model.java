@@ -116,6 +116,12 @@ public class Model {
         return theNullShelter;
     }
 
+    //-----------------------------------Actions----------------------------------
+    public List<Shelter> getSheltersFromDB() {
+        return ShelterDao.getShelters();
+    }
+
+
     //-----------------------------------Helpers----------------------------------
 
     /**
@@ -132,7 +138,8 @@ public class Model {
     }
 
     private void loadDummyUser(){
-        _currentUser = new User("Mya","myaetsang@gmail.com", "password", 1);
+        _currentUser = new User("Mya","myaetsang@gmail.com", "password", "idididi");
     }
+
 
 }

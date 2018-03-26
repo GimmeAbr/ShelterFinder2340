@@ -32,11 +32,9 @@ import java.util.Queue;
  */
 
 public class ShelterDao {
-    boolean isDone = false;
-    MongoFactory mongoFactory = new MongoFactory("ds133776.mlab.com",33776,"2340-test", "master2", "2340test","2340-test","");
+    static MongoFactory mongoFactory = new MongoFactory("ds133776.mlab.com",33776,"2340-test", "master2", "2340test","2340-test","");
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    public void saveOrUpdateShelters(List<Shelter> dayRates) {
-
+    public  void saveOrUpdateShelters(List<Shelter> dayRates) {
         // Preparing the day rate Objects to have the property month field, as well as the proper dayInvId Field
 
         // Prepare the bulk insert object
@@ -99,7 +97,7 @@ public class ShelterDao {
             operation.execute();
         }
     }
-    private Long generateIdChunk(List<Shelter> dayRates){
+    private static Long generateIdChunk(List<Shelter> dayRates){
         EntityId counter;
         String collName = mongoFactory.getDatastoreDriver().getCollection(Shelter.class).getName();
         org.mongodb.morphia.query.Query<EntityId> entityIdQuery = mongoFactory.getDatastoreDriver().find(EntityId.class);
@@ -116,12 +114,10 @@ public class ShelterDao {
         mongoFactory.getDatastoreDriver().save(counter);
         return startCount;
     }
-    public List<Shelter> getShelters() {
+    public static List<Shelter> getShelters() {
         Query<Shelter> shelterQuery = mongoFactory.getDatastoreDriver().createQuery(Shelter.class);
         return shelterQuery.asList();
     }
 
-    public boolean isDone() {
-        return isDone;
-    }
+
 }
