@@ -58,12 +58,15 @@ public class Login_Success extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login__success);
+        // This sets the toolbar of the activity as the toolbar defined in the xml
+        // So that the appbarlayout can work
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        final FirebaseUser user = mAuth.getCurrentUser();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
+        // Logout
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +77,11 @@ public class Login_Success extends AppCompatActivity {
             }
         });
 
-        Log.d("Flag1", "display");
         display = (TextView) findViewById(R.id.displayID);
 
+        // shelterList is the list we use for the listView, like, everything in the listView comes from shelterList
+        // backupShelters is a list used specifically for searching; backupShelter is a copy of shelterList
+        // so that ShelterQuery can loop through every shelter
         shelterList = new ArrayList<Shelter>();
         backupShelters = new ArrayList<Shelter>();
 
@@ -86,6 +91,9 @@ public class Login_Success extends AppCompatActivity {
         backupShelters.addAll(shelterList);
         //backupShelters.addAll(shelterList);
 
+        // get the previous intent
+        // because both FilterActivity and LoginActivity can come back to Login_Success
+        // so we need the Intent to act as a Label
         Intent prevIntent = getIntent();
         Bundle prevExtra = prevIntent.getExtras();
         if (prevExtra != null) {
@@ -95,8 +103,8 @@ public class Login_Success extends AppCompatActivity {
             }
         }
 
-
-        shelterListView = (ListView) findViewById(R.id.shelter_list);
+        // Set up the listrView
+        shelterListView = findViewById(R.id.shelter_list);
         shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
         shelterListView.setAdapter(shelterAdapter);
 
@@ -105,6 +113,7 @@ public class Login_Success extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = shelterList.get(i);
                 Model.getInstance().setCurrentShelter(st);
+                // Going into ShelterDetailActivity
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
             }
@@ -114,6 +123,7 @@ public class Login_Success extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Going into FilterActivity
                 Intent i = new Intent(getApplicationContext(), FilterActivity.class);
                 startActivity(i);
                 finish();
@@ -122,38 +132,8 @@ public class Login_Success extends AppCompatActivity {
 
     }
 
-    private class ShelterAdapter extends ArrayAdapter<Shelter> {
-        private Context context;
-        private List<Shelter> shelters;
-
-        public ShelterAdapter(Context context, List<Shelter> shelters) {
-            super(context, R.layout.shelter_list_content);
-            this.context = context;
-            this.shelters = shelters;
-        }
-
-        private int lastPosition = -1;
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.shelter_list_content, parent, false);
-            TextView shelterName = (TextView) rowView.findViewById(R.id.shelter_name);
-            TextView shelterAddress = (TextView) rowView.findViewById(R.id.shelter_address);
-            Shelter st = shelters.get(position);
-            shelterName.setText(st.getShelterName());
-            shelterAddress.setText(st.getAddress());
-            return rowView;
-        }
-
-        @Override
-        public Shelter getItem(int pos) {
-            return shelterList.get(pos);
-        }
-
-    }
-
+    // This methods reads CSV file and gives a list of shelters created from the file
+    // It works.
     private List<Shelter> parseCSV() {
         Log.d("Flag1", "in CSV");
         InputStream csvStream = getResources().openRawResource(R.raw.shelters);

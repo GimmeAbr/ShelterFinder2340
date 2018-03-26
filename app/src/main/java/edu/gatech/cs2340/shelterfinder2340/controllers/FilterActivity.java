@@ -46,6 +46,7 @@ public class FilterActivity extends AppCompatActivity {
         searchB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Retrieving use input for search criteria
                 boolean hasFamily = family.isChecked();
                 boolean hasYoung = young.isChecked();
                 boolean hasAny = any.isChecked();
@@ -54,6 +55,7 @@ public class FilterActivity extends AppCompatActivity {
                 boolean isFemale = female.isChecked();
                 String stName = nameText.getText().toString();
                 Intent searchIntent = new Intent(getApplicationContext(), Login_Success.class);
+                // ShelterQuery class is, well, a query class that can give you a filtered list of shelters based on criteria
                 ShelterQuery query = new ShelterQuery(hasFamily, hasAny, isMale, isFemale, hasChild, hasYoung, stName);
                 Model.getInstance().set_query(query);
                 searchIntent.putExtra("Label", "search");
