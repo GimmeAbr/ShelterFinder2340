@@ -12,6 +12,16 @@ public abstract class User {
 
     private String userName;
 
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    private String attribute;
+
     public String getName() {
         return name;
     }

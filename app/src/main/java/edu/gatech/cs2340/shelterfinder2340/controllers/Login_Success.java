@@ -53,7 +53,6 @@ public class Login_Success extends AppCompatActivity {
     private ArrayAdapter<Shelter> shelterAdapter;
     private List<Shelter> shelterList;
     private List<Shelter> backupShelters;
-    private HomelessPerson user1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +89,10 @@ public class Login_Success extends AppCompatActivity {
         Intent prevIntent = getIntent();
         Bundle prevExtra = prevIntent.getExtras();
         if (prevExtra != null) {
-            if (prevExtra.getString("Label").equals("start")) {
-                String homelessName = prevExtra.getString("homelessName");
-                String homelessGender = prevExtra.getString("homelessGender");
-                boolean enabled = prevExtra.getBoolean("homelessRes");
-                String id = prevExtra.getString("homelessId");
-                user1 = new HomelessPerson(id, homelessGender, homelessName);
-            } else if (prevExtra.getString("Label").equals("search")) {
+            if (prevExtra.getString("Label").equals("search")) {
                 ShelterQuery query = Model.getInstance().get_query();
                 shelterList = query.filterShelter(shelterList);
             }
-
         }
 
 
@@ -114,21 +106,6 @@ public class Login_Success extends AppCompatActivity {
                 Shelter st = shelterList.get(i);
                 Model.getInstance().setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                // The shelter information
-                intent.putExtra("shelterName", st.getShelterName());
-                intent.putExtra("shelterAddress", st.getAddress());
-                intent.putExtra("shelterCapacity", st.getCapacity());
-                intent.putExtra("shelterGender", st.getGender());
-                intent.putExtra("shelterLatitude", st.getLatitude());
-                intent.putExtra("shelterLongitude", st.getLongitude());
-                intent.putExtra("phoneNumber", st.getPhoneNumber());
-                // The user information
-                if (user1 != null) {
-                    intent.putExtra("homelessGender", user1.getGender());
-                    intent.putExtra("homelessRes", user1.isRes());
-                    intent.putExtra("userId", user1.getId());
-                }
-
                 startActivity(intent);
             }
         });

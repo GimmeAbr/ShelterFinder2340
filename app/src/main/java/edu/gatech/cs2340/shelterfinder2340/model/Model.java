@@ -41,7 +41,16 @@ public class Model {
      private Shelter _currentShelter;
 
      /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Course", "", "", "", "",0,0,0);
+    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "", "",0,0,0);
+
+
+    public User get_currentUser() {
+        return _currentUser;
+    }
+
+    public void set_currentUser(User _currentUser) {
+        this._currentUser = _currentUser;
+    }
 
 
     /**

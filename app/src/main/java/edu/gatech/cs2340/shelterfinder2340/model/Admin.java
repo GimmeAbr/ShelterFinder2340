@@ -20,8 +20,10 @@ import android.widget.Adapter;
 public class Admin extends User {
     public Admin(String userName, String passWord, String name) {
         super(userName, passWord, name);
+        this.setAttribute("Admin");
     }
     public Admin(String id) {
         super(id);
+        this.setAttribute("Admin");
     }
 }
