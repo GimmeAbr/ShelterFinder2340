@@ -1,6 +1,7 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,10 @@ public class ShelterDetailActivity extends AppCompatActivity {
             tb.setTitle(Model.getInstance().getCurrentShelter().getShelterName());
         }
         final Button reserveButton = findViewById(R.id.reserveButton);
+
+        HomelessPerson cannibal = new HomelessPerson("123", "Male", "Hannibal Lector");
+        cannibal.setRes(true);
+        Model.getInstance().set_currentUser(cannibal);
         // isRes() indicates whether the HomelessPerson is allowed to reserve
         if (!((HomelessPerson)Model.getInstance().get_currentUser()).isRes()) {
             reserveButton.setClickable(false);
@@ -54,39 +59,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Set onclick --> Be able to reserve a place
-
-                // Create a whole new AlertDialog box
-                // With a layout that allows users to pick the numbers of rooms to reserve
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                builder.setTitle("Reserve at Shelter");
-                builder.setView(R.layout.reservation_content);
-                ListView reserveList = findViewById(R.id.reserveList);
-                //shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
-                // BarsList is a list of ReservationBarLayout
-                // which is a costum layout that enables you to reserve rooms...??
-                Model.getInstance().getCurrentShelter().setBarsList(getApplicationContext());
-                List<ReservationBarLayout> barsList = Model.getInstance().getCurrentShelter().getBars();
-                Model.getInstance().setBars(barsList);
-                ArrayAdapter<ReservationBarLayout> bars = new ArrayAdapter<ReservationBarLayout>(getApplicationContext(), android.R.layout.simple_list_item_1, barsList);
-                reserveList.setAdapter(bars);
-                builder.setPositiveButton("Reserve", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // you update the vacancies however
-                        ////////////////////////////////////////
-                        ((HomelessPerson) Model.getInstance().get_currentUser()).setRes(false);
-                        Log.d("Selected", Model.getInstance().getBars().get(0).getType());
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+                startActivity(i);
             }
         });
 

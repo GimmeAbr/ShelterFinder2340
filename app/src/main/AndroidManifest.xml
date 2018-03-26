@@ -39,12 +39,13 @@
             android:name=".controllers.Login_Success"
             android:label="@string/title_activity_login__success"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controllers.ShelterDetailActivity"
-            android:theme="@style/Theme.AppCompat"/>
+        <activity android:name=".controllers.ShelterDetailActivity" />
         <activity
             android:name=".controllers.FilterActivity"
             android:label="@string/title_activity_filter"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".controllers.ReservationActivity"
+            android:label="Reserve at Shelter"/>
     </application>
 
 </manifest>

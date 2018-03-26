@@ -120,36 +120,43 @@ public class Shelter{
 
     public List<ReservationBarLayout> setBarsList(Context context) {
         bars = new ArrayList<>();
+        ReservationBarLayout dumdum = new ReservationBarLayout(context, 10, gender.toUpperCase());
+        bars.add(dumdum);
         int cap;
         String type;
-        if (capacity.equals("N/A")) {
-            ReservationBarLayout rb = new ReservationBarLayout(context, 0, gender);
-            bars.add(rb);
-            return bars;
-        }
-        if (capacity.contains(",")) {
-            String[] capacities = capacity.split(", ");
-            for (String s:capacities) {
-                if (s.contains(" ")) {
-                    cap = Integer.valueOf(s.substring(0, s.indexOf(" ")));
-                } else {
-                    cap = Integer.valueOf(s);
-                }
-                type = s.substring(s.indexOf(" ") + 1).toUpperCase();
-                ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
-                bars.add(r);
-            }
-            return bars;
-        }
-        if (capacity.contains(" ")) {
-            cap = Integer.valueOf(capacity.substring(0, capacity.indexOf(" ")));
-        } else {
-            cap = Integer.valueOf(capacity);
-        }
-        type = gender;
-        ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
-        bars.add(r);
+        // Collaborates with Room objects
         return bars;
+//        if (capacity.equals("N/A")) {
+//            ReservationBarLayout rb = new ReservationBarLayout(context, 0, gender);
+//            bars.add(rb);
+//            System.out.println(rb);
+//            return bars;
+//        }
+//        if (capacity.contains(",")) {
+//            String[] capacities = capacity.split(", ");
+//            for (String s:capacities) {
+//                if (s.contains(" ")) {
+//                    cap = Integer.valueOf(s.substring(0, s.indexOf(" ")));
+//                } else {
+//                    cap = Integer.valueOf(s);
+//                }
+//                type = s.substring(s.indexOf(" ") + 1).toUpperCase();
+//                ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
+//                bars.add(r);
+//                System.out.println(r);
+//            }
+//            return bars;
+//        }
+//        if (capacity.contains(" ")) {
+//            cap = Integer.valueOf(capacity.substring(0, capacity.indexOf(" ")));
+//        } else {
+//            cap = Integer.valueOf(capacity);
+//        }
+//        type = gender.toUpperCase();
+//        ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
+//        bars.add(r);
+//        System.out.println(r);
+//        return bars;
     }
 
 }

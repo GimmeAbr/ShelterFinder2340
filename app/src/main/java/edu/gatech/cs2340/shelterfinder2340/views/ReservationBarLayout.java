@@ -57,4 +57,9 @@ public class ReservationBarLayout extends LinearLayout {
             }
         });
     }
+
+    @Override
+    public String toString() {
+        return "Selected: " + selectedRoom + " " + getType() + " room(s)";
+    }
 }
