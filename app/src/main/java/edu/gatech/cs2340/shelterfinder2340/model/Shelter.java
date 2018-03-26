@@ -1,7 +1,13 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 /**
  * Created by admin on 2/26/18.
@@ -11,6 +17,12 @@ public class Shelter{
     private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
     private int vacancies, id;
+
+    public List<ReservationBarLayout> getBars() {
+        return bars;
+    }
+
+    ArrayList<ReservationBarLayout> bars;
 
     public Shelter() {
 
@@ -104,6 +116,40 @@ public class Shelter{
     @Override
     public String toString() {
         return this.shelterName;
+    }
+
+    public List<ReservationBarLayout> setBarsList(Context context) {
+        bars = new ArrayList<>();
+        int cap;
+        String type;
+        if (capacity.equals("N/A")) {
+            ReservationBarLayout rb = new ReservationBarLayout(context, 0, gender);
+            bars.add(rb);
+            return bars;
+        }
+        if (capacity.contains(",")) {
+            String[] capacities = capacity.split(", ");
+            for (String s:capacities) {
+                if (s.contains(" ")) {
+                    cap = Integer.valueOf(s.substring(0, s.indexOf(" ")));
+                } else {
+                    cap = Integer.valueOf(s);
+                }
+                type = s.substring(s.indexOf(" ") + 1).toUpperCase();
+                ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
+                bars.add(r);
+            }
+            return bars;
+        }
+        if (capacity.contains(" ")) {
+            cap = Integer.valueOf(capacity.substring(0, capacity.indexOf(" ")));
+        } else {
+            cap = Integer.valueOf(capacity);
+        }
+        type = gender;
+        ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
+        bars.add(r);
+        return bars;
     }
 
 }

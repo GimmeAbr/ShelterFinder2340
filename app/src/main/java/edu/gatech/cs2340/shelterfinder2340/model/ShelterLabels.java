@@ -5,5 +5,5 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  */
 
 public enum ShelterLabels {
-    NAME, ADDRESS, LATITUDE, LONGITUDE, PHONENUMBER, GENDER, CAPACITY
+    NAME, ADDRESS, LATITUDE, LONGITUDE, PHONENUMBER, GENDER, CAPACITY, VACANCIES
 }

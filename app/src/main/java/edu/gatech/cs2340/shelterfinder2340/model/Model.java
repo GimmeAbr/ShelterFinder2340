@@ -5,6 +5,8 @@ import android.support.compat.BuildConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
+
 
 /**
  * Created by robertwaters on 1/5/17.
@@ -26,6 +28,16 @@ public class Model {
 
     /** the ShelterQuery object*/
     private ShelterQuery _query;
+
+    public List<ReservationBarLayout> getBars() {
+        return bars;
+    }
+
+    public void setBars(List<ReservationBarLayout> bars) {
+        this.bars = bars;
+    }
+
+    private List<ReservationBarLayout> bars;
 
     private Model() {
         _shelters = new ArrayList<>();
@@ -59,6 +71,11 @@ public class Model {
      */
     private void loadDummyData() {
         _shelters.add(new Shelter("Objects and Design", "","","","", 0,0,0));
+    }
+
+    public void loadShelters() {
+        ShelterDao dao = new ShelterDao();
+        _shelters  = dao.getShelters();
     }
 
     /**
