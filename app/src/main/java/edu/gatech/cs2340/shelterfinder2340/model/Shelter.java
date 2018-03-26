@@ -17,6 +17,7 @@ public class Shelter{
     private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
     private int vacancies, id;
+    private List<Room> roomList;
 
     public List<ReservationBarLayout> getBars() {
         return bars;
@@ -37,6 +38,7 @@ public class Shelter{
         this.latitude = latitude;
         this.address = address;
         this.id = id;
+        roomList = new ArrayList<>();
     }
 
     public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
@@ -47,6 +49,15 @@ public class Shelter{
         this.longitude = longitude;
         this.latitude = latitude;
         this.address = address;
+        roomList = new ArrayList<>();
+    }
+
+    public void setRoomList(List<Room> r) {
+        roomList.addAll(r);
+    }
+
+    public List<Room> getRoomList() {
+        return roomList;
     }
 
     //Setters
@@ -120,10 +131,14 @@ public class Shelter{
 
     public List<ReservationBarLayout> setBarsList(Context context) {
         bars = new ArrayList<>();
+        for (Room room: roomList) {
+            ReservationBarLayout rb = new ReservationBarLayout(context, room);
+            bars.add(rb);
+        }
+
+        // This is also dummy. Remove once you have the roomList properly loaded w/ database stuff
         ReservationBarLayout dumdum = new ReservationBarLayout(context, 10, gender.toUpperCase());
         bars.add(dumdum);
-        int cap;
-        String type;
         // Collaborates with Room objects
         return bars;
 //        if (capacity.equals("N/A")) {

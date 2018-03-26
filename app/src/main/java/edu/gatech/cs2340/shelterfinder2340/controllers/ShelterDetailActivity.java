@@ -38,12 +38,10 @@ public class ShelterDetailActivity extends AppCompatActivity {
         }
         final Button reserveButton = findViewById(R.id.reserveButton);
 
-        HomelessPerson cannibal = new HomelessPerson("123", "Male", "Hannibal Lector");
-        cannibal.setRes(true);
-        Model.getInstance().set_currentUser(cannibal);
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (!((HomelessPerson)Model.getInstance().get_currentUser()).isRes()) {
+        if (!(((HomelessPerson)Model.getInstance().get_currentUser()).isRes())) {
             reserveButton.setClickable(false);
+            reserveButton.setEnabled(false);
             reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
         }
 
@@ -61,6 +59,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

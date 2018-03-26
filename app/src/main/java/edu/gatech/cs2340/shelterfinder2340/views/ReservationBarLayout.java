@@ -8,6 +8,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 
 /**
  * Created by Sylvia Li on 2018/3/25.
@@ -30,6 +31,11 @@ public class ReservationBarLayout extends LinearLayout {
     public ReservationBarLayout(Context context, int cap, String type) {
         super(context);
         initView(context, cap, type);
+    }
+
+    public ReservationBarLayout(Context context, Room room) {
+        super(context);
+        initView(context, room.getNumVacancies(), room.getRoomType());
     }
 
     public ReservationBarLayout(Context context, AttributeSet attrs, int cap, String type) {
@@ -60,6 +66,6 @@ public class ReservationBarLayout extends LinearLayout {
 
     @Override
     public String toString() {
-        return "Selected: " + selectedRoom + " " + getType() + " room(s)";
+        return selectedRoom + " " + getType() + " room(s)";
     }
 }

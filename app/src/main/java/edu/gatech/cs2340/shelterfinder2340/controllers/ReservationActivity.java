@@ -51,6 +51,8 @@ public class ReservationActivity extends AppCompatActivity {
                 String s = "";
                 for (ReservationBarLayout r: barsList) {
                     s = s + r.toString();
+                    // r.toString is like this: 3 WOMEN/CHILDREN room(s)
+                    // You can update vacancies using this?
                 }
                 Log.d("Reserved", s);
 

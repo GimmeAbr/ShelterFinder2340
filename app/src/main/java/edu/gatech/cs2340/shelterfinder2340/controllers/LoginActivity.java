@@ -44,6 +44,7 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -377,6 +378,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //// User Authentication???
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid, getApplicationContext());
+
+                /// This is some dummy things for testing
+                HomelessPerson cannibal = new HomelessPerson("123", "Male", "Hannibal Lector");
+                cannibal.setRes(true);
+                Model.getInstance().set_currentUser(cannibal);
+                /////
                 Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
                 myIntent.putExtra("Label", "start");
                 //String shelterInterest = snapshot.child("shelters").getValue(String.class);
