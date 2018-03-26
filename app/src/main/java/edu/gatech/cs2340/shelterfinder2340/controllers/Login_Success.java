@@ -91,7 +91,7 @@ public class Login_Success extends AppCompatActivity {
                 /**
                  * TODO: set the current shelter based on the position of the item clicked
                  */
-                model.setCurrentShelter(model.getShelters().get(0));
+                model.setCurrentShelter(model.getShelters().get(position));
                 Intent shelterDetailsIntent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(shelterDetailsIntent);
                 finish();

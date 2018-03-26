@@ -13,13 +13,20 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public boolean reserveSpot(int numSpots) {
+    public boolean reserveRoom(int numSpots) {
         if (numVacancies >= numSpots) {
             numVacancies = numVacancies - numSpots;
+            return true;
         }
-        
-
-
+        return false;
     }
+
+    public boolean releaseRoom(int numSpots) {
+        numVacancies = numVacancies + numSpots;
+        return true;
+    }
+
+
+
 
 }
