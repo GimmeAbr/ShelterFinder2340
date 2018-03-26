@@ -11,6 +11,7 @@ public class ShelterCoordinator extends User {
     public ShelterCoordinator(String userName, String passWord, String name, Shelter workShelter) {
         super(userName, passWord, name);
         this.workShelter = workShelter;
+        this.setAttribute("Coordinator");
     }
 
     public void changeShelterInfo(String update, ShelterLabels label) {

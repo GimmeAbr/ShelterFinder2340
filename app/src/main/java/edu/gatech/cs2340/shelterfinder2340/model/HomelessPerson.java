@@ -45,6 +45,7 @@ public class HomelessPerson extends User {
     private boolean res;
     public HomelessPerson(String userName, String passWord) {
         super(userName, passWord, "unknown");
+        this.setAttribute("Homeless");
         shelterList = new ArrayList<>();
     }
 
@@ -52,6 +53,8 @@ public class HomelessPerson extends User {
         super(uid);
         this.gender = gender;
         this.name = name;
+        this.res = true;
+        this.setAttribute("Homeless");
         shelterList = new ArrayList<>();
     }
 

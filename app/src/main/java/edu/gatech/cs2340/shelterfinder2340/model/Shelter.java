@@ -10,10 +10,23 @@ import android.os.Parcelable;
 public class Shelter{
     private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
+    private int vacancies, id;
 
     public Shelter() {
 
     }
+
+    public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude, int id) {
+        this.shelterName = shelterName;
+        this.gender = gender;
+        this.capacity = capacity;
+        this.phoneNumber = phoneNumber;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.address = address;
+        this.id = id;
+    }
+
     public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
         this.shelterName = shelterName;
         this.gender = gender;
@@ -54,6 +67,7 @@ public class Shelter{
     }
 
 
+
     //Getters
     public String getShelterName() {
         return shelterName;
@@ -82,6 +96,10 @@ public class Shelter{
     public double getLongitude() {
         return longitude;
     }
+
+    public int getId() { return id; }
+
+
 
     @Override
     public String toString() {

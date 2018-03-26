@@ -373,12 +373,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Log.d("Flag", "starting login success");
-                Log.d("Userid", mAuth.getCurrentUser().getUid());
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
-                dao.queryHomelessUser(uid, getApplicationContext());
-                final Intent myIntent = new Intent(thisObj, Login_Success.class);
+                dao.queryHomelessUser(uid);
+                Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
+                myIntent.putExtra("Label", "start");
+                //String shelterInterest = snapshot.child("shelters").getValue(String.class);
                 startActivity(myIntent);
                 finish();
             } else {

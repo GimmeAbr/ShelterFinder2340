@@ -8,6 +8,14 @@
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.Login_Success"
     tools:showIn="@layout/activity_login__success">
 
+    <ProgressBar
+        android:id="@+id/login_progress2"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:visibility="gone" />
+
     <ListView
         android:id="@+id/shelter_list"
         android:layout_width="368dp"
