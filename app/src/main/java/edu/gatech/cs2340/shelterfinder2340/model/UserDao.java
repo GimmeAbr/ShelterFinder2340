@@ -33,7 +33,7 @@ public class UserDao {
         homelessRef.child("").setValue(hp);
     }
 
-    public void queryHomelessUser(final String id) {
+    public void queryHomelessUser(final String id, final Context context) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference homelessRef = ref.child("homeless");
         final List<HomelessPerson> homelessList = new ArrayList<>();
@@ -50,15 +50,20 @@ public class UserDao {
                         Log.d("HomelessGender: ", gender);
                         Log.d("Enabled: ", enabledReservation + "");
                         Log.d("NameHomeless", name);
+                        Intent myIntent = new Intent(context, Login_Success.class);
+                        myIntent.putExtra("homelessName", name);
+                        myIntent.putExtra("homelessGender", gender);
+                        myIntent.putExtra("homelessRes", enabledReservation);
+                        myIntent.putExtra("homelessId", id);
+                        myIntent.putExtra("Label", "start");
+                        //String shelterInterest = snapshot.child("shelters").getValue(String.class);
+                        context.startActivity(myIntent);
 //                        if (shelterInterest.length() > 0) {
 //
 //                        } else {
 //                            hp.setShelterList(new ArrayList<Shelter>());
 //                        }
-                        // If it is a homeless person
-                        HomelessPerson hp = new HomelessPerson(uid, gender, name);
-                        hp.setRes(enabledReservation);
-                        Model.getInstance().set_currentUser(hp);
+
                     }
                 }
                 isDone = true;

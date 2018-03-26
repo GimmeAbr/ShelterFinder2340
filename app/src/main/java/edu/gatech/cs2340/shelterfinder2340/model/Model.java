@@ -39,7 +39,7 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "", 0,0,0,0);
+    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "", 0,0,"0",0);
 
     /** holds the list of all courses */
     private ArrayList<Shelter> _shelters;
@@ -124,15 +124,15 @@ public class Model {
      */
     private void loadDummyData() {
         _shelters = new ArrayList<Shelter>();
-        _shelters.add(new Shelter("Shelter1", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter2", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter3", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter1", "","","",0, 0,"0",0));
+        _shelters.add(new Shelter("Shelter2", "","","",0, 0,"0",0));
+        _shelters.add(new Shelter("Shelter3", "","","",0, 0,"0",0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"0",0));
 
     }
 
     private void loadDummyUser(){
-        _currentUser = new User("Mya","myaetsang@gmail.com", "password", 1);
+        _currentUser = new User("Mya","myaetsang@gmail.com", "password", "1");
     }
 
 }

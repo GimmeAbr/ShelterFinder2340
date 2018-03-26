@@ -83,15 +83,15 @@ public class Login_Success extends AppCompatActivity {
         shelterListView = (ListView) findViewById(R.id.shelter_list);
         mProgressView = findViewById(R.id.login_progress2);
 
-        // Loads Data from the Filter View With Intent Data
-        Intent prev1Intent = getIntent();
-        Bundle prev1Extra = prev1Intent.getExtras();
-        if (prev1Extra != null) {
-            if (prev1Extra.getString("Label").equals("search")) {
-                ShelterQuery query = Model.getInstance().get_query();
-                shelterList = query.filterShelter(shelterList);
-            }
-        }
+//        // Loads Data from the Filter View With Intent Data
+//        Intent prev1Intent = getIntent();
+//        Bundle prev1Extra = prev1Intent.getExtras();
+//        if (prev1Extra != null) {
+//            if (prev1Extra.getString("Label").equals("search")) {
+//                ShelterQuery query = Model.getInstance().get_query();
+//                shelterList = query.filterShelter(shelterList);
+//            }
+//        }
 
         // Authentication -> getting the current user
         // TODO: load current user here
@@ -225,8 +225,7 @@ public class Login_Success extends AppCompatActivity {
                 double latitude = Double.valueOf(data[5]);
                 String address = data[6];
                 String phoneNumber = data[8];
-
-                Shelter newShelter = new Shelter(shelterName, gender, capacity, address, phoneNumber, longitude, latitude);
+                Shelter newShelter = new Shelter(shelterName, gender, address, phoneNumber, longitude, latitude, capacity);
                 shelterList.add(newShelter);
             }
         } catch (IOException e) {

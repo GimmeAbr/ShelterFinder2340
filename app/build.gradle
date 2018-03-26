@@ -32,8 +32,6 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.4.2'
     compile 'com.google.android.gms:play-services:11.4.2'
     compile 'com.google.firebase:firebase-firestore:11.4.2'
-    testCompile 'junit:junit:4.12'
-    compile ('org.mongodb.morphia:morphia:1.1.0')
-            {exclude group: 'cglib', module: 'cglib-nodep'}
+
 }
 apply plugin: 'com.google.gms.google-services'

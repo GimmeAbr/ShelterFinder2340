@@ -3,41 +3,27 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Property;
-
 /**
  * Created by admin on 2/26/18.
  */
-@Entity
 public class Shelter{
 
 
-    @Property
     private String shelterName;
-    @Property
     private String gender;
-    @Property
     private String address;
-    @Property
     private String phoneNumber;
-    @Property
-    private double longitude;
-    @Property
     private double latitude;
-    @Property
+    private double longitude;
     private int vacancies;
-    @Property
-    private int capacity;
-    @Id
+    private String capacity;
     private long id;
 
 
 
 
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  int capacity, int id) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, int id) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -48,12 +34,12 @@ public class Shelter{
         this.id = id;
     }
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, int capacity) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
         this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, 0);
     }
 
     public Shelter() {
-        this("","","","",0,0,0,0);
+        this("","","","",0,0,"",0);
     }
 
     //Setters
@@ -69,7 +55,7 @@ public class Shelter{
         this.address = address;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
@@ -102,7 +88,7 @@ public class Shelter{
         return address;
     }
 
-    public int getCapacity() {
+    public String getCapacity() {
         return capacity;
     }
 
