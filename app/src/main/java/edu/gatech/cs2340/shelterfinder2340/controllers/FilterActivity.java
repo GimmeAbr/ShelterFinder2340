@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
-import edu.gatech.cs2340.shelterfinder2340.model.Model;
-import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
 
 public class FilterActivity extends AppCompatActivity {
     private CheckBox family;
@@ -54,8 +52,13 @@ public class FilterActivity extends AppCompatActivity {
                 boolean isFemale = female.isChecked();
                 String stName = nameText.getText().toString();
                 Intent searchIntent = new Intent(getApplicationContext(), Login_Success.class);
-                ShelterQuery query = new ShelterQuery(hasFamily, hasAny, isMale, isFemale, hasChild, hasYoung, stName);
-                Model.getInstance().set_query(query);
+                searchIntent.putExtra("family", hasFamily);
+                searchIntent.putExtra("young", hasYoung);
+                searchIntent.putExtra("children", hasChild);
+                searchIntent.putExtra("any", hasAny);
+                searchIntent.putExtra("name", stName);
+                searchIntent.putExtra("male", isMale);
+                searchIntent.putExtra("female", isFemale);
                 searchIntent.putExtra("Label", "search");
                 startActivity(searchIntent);
                 finish();

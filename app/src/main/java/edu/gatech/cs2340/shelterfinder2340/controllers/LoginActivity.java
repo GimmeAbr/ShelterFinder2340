@@ -44,6 +44,9 @@ import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -59,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     private FirebaseAuth mAuth;
     private LoginActivity thisObj;
+    private Model model;
+
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -83,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        model = Model.getInstance();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -354,6 +360,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's informa tion
                     FirebaseUser user = mAuth.getCurrentUser();
+
+                    //Change the user id to a string
+                    model.setCurrentUser(new HomelessPerson(user.getDisplayName(), user.getEmail(), user.getUid()));
                 } else {
                     throw new RuntimeException("Login failed");
                 }
@@ -375,11 +384,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
-                dao.queryHomelessUser(uid);
-                Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
-                myIntent.putExtra("Label", "start");
-                //String shelterInterest = snapshot.child("shelters").getValue(String.class);
-                startActivity(myIntent);
+                // dao.queryHomelessUser(uid, getApplicationContext());
+                Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
+                getApplicationContext().startActivity(loginSucess);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

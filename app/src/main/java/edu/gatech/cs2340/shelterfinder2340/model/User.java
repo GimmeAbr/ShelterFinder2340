@@ -5,57 +5,52 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  *
  */
 
-public abstract class User {
-    public String getUserName() {
-        return userName;
-    }
-
-    private String userName;
-
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
-    }
-
-    private String attribute;
-
-    public String getName() {
-        return name;
-    }
-
+public class User {
     private String name;
+    private String username;
+    private String password;
     private String id;
+    private Shelter reservedShelter;
 
-    public String getPassWord() {
-        return passWord;
-    }
 
-    public String getId() { return id;}
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    private String passWord;
-
-    public User(String userName, String passWord, String name) {
-        this.userName = userName;
-        this.passWord = passWord;
+    public User( String name, String username, String password, String id) {
+        this.username = username;
+        this.password = password;
         this.name = name;
+        this.id = id;
     }
 
+    public User(String username, String password, String id) {
+        this("", username, password, id);
+
+    }
+
+    public User(String name, String id) {
+        this(name, "","", id);
+
+    }
     public User(String id) {
         this.id = id;
     }
 
-    public boolean checkUserName(String uName) {
-        return (uName.equals(this.userName));
+    public String getName() {
+        return name;
     }
-
-    public boolean checkPassWord(String pWord) {
-        return (pWord.equals(this.passWord));
+    public String getUsername() {
+        return username;
     }
+    public String getPassWord() {
+        return password;
+    }
+    public String getId() { return id; }
+    public void setPassword(String passWord) {
+        this.password = passWord;
+    }
+    public boolean checkUsername(String uName) {
+        return (uName.equals(this.username));
+    }
+    public boolean checkPassword(String pWord) {
+        return (pWord.equals(this.password));
+    }
+    public boolean hasReservedShelter(){return !(reservedShelter == null);}
 }
