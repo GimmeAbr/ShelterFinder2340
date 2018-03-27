@@ -183,4 +183,23 @@ public class Shelter{
         return s;
     }
 
+    public void updateVacancies(int cap, String type) {
+        for (Room r: roomList) {
+            if (r.getRoomType().equals(type)) {
+                r.reserveRoom(cap);
+                return;
+            }
+        }
+    }
+
+    public void releaseByList(List<Room> resList) {
+        for (Room r: resList) {
+            for (Room e: roomList) {
+                if (e.getRoomType().equals(r.getRoomType())) {
+                    e.releaseRoom(r.getNumVacancies());
+                }
+            }
+        }
+    }
+
 }

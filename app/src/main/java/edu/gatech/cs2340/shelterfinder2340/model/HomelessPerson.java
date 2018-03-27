@@ -13,6 +13,7 @@ public class HomelessPerson extends User {
 
     private List<Shelter> shelterList;
     private Location currentLocation;
+    private List<Room> reserveList;
 
     public String getGender() {
         return gender;
@@ -91,4 +92,27 @@ public class HomelessPerson extends User {
         shelterList.add(shelter);
     }
 
+    public void reserveRoom(int num, String type, String shelterName) {
+        if (num > 0) {
+            Room reserve = new Room(num, type, shelterName);
+            reserveList.add(reserve);
+        }
+    }
+
+    public List<Room> getReserveList() {
+        return reserveList;
+    }
+
+    public void releaseRooms(String shelterName) {
+        reserveList.clear();
+    }
+
+    public boolean checkShelter(String shelterName) {
+        for (Room r: reserveList) {
+            if (r.compareShelter(shelterName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

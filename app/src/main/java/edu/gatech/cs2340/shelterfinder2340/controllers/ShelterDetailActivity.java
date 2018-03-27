@@ -32,6 +32,9 @@ public class ShelterDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail);
 
+        // We can change this bit later. An admin / sheltercoordinator can visit this page too
+        final HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+        final Shelter shelter = Model.getInstance().getCurrentShelter();
         ActionBar tb = getSupportActionBar();
 
         if (tb != null) {
@@ -40,10 +43,30 @@ public class ShelterDetailActivity extends AppCompatActivity {
         final Button reserveButton = findViewById(R.id.reserveButton);
 
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (!(((HomelessPerson)Model.getInstance().get_currentUser()).isRes())) {
-            reserveButton.setClickable(false);
-            reserveButton.setEnabled(false);
-            reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+        if (!hp.isRes()) {
+            if (hp.checkShelter(shelter.getShelterName())) {
+                reserveButton.setText("Release");
+                reserveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shelter.releaseByList(hp.getReserveList());
+                        hp.setRes(true);
+                    }
+                });
+            } else {
+                reserveButton.setClickable(false);
+                reserveButton.setEnabled(false);
+                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+            }
+        } else {
+            reserveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
         }
 
 
@@ -55,37 +78,29 @@ public class ShelterDetailActivity extends AppCompatActivity {
          */
 
 
-        reserveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         // Sets up all the information of the shelters
 
         TextView capacity = (TextView) findViewById(R.id.capacity);
-        capacity.setText(Model.getInstance().getCurrentShelter().getCapacity());
+        capacity.setText(shelter.getCapacity());
 
         TextView gender = (TextView) findViewById(R.id.gender);
-        gender.setText(Model.getInstance().getCurrentShelter().getGender());
+        gender.setText(shelter.getGender());
 
         TextView longtitude = (TextView) findViewById(R.id.longitude);
-        longtitude.setText(Model.getInstance().getCurrentShelter().getLongitude() + "");
+        longtitude.setText(shelter.getLongitude() + "");
 
         TextView latitude = (TextView) findViewById(R.id.latitude);
-        latitude.setText(Model.getInstance().getCurrentShelter().getLatitude() + "");
+        latitude.setText(shelter.getLatitude() + "");
 
         TextView address = (TextView) findViewById(R.id.address);
-        address.setText(Model.getInstance().getCurrentShelter().getAddress());
+        address.setText(shelter.getAddress());
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
-        phone.setText(Model.getInstance().getCurrentShelter().getPhoneNumber());
+        phone.setText(shelter.getPhoneNumber());
 
         TextView vacancies = findViewById(R.id.vacancies);
-        vacancies.setText(Model.getInstance().getCurrentShelter().getVacancies());
+        vacancies.setText(shelter.getVacancies());
 
     }
 }

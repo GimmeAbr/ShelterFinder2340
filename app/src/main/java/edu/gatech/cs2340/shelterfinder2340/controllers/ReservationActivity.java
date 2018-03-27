@@ -46,13 +46,19 @@ public class ReservationActivity extends AppCompatActivity {
         reservePos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((HomelessPerson) Model.getInstance().get_currentUser()).setRes(false);
+                HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+                hp.setRes(false);
                 // Update current shelter
                 String s = "";
                 for (ReservationBarLayout r: barsList) {
                     s = s + r.toString();
                     // r.toString is like this: 3 WOMEN/CHILDREN room(s)
                     // You can update vacancies using this?
+
+                    // reserveRoom function creates a new Room object within the HomelessPerson
+                    // So that we know the person reserved here
+                    hp.reserveRoom(r.getSelectedRoom(), r.getType(), Model.getInstance().getCurrentShelter().getShelterName());
+                    Model.getInstance().getCurrentShelter().updateVacancies(r.getSelectedRoom(), r.getType());
                 }
                 Log.d("Reserved", s);
 
