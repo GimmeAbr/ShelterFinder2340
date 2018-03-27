@@ -39,6 +39,7 @@ public class Shelter{
         this.address = address;
         this.id = id;
         roomList = new ArrayList<>();
+        setInitialRooms();
     }
 
     public Shelter (String shelterName, String gender, String capacity, String address, String phoneNumber, double longitude, double latitude) {
@@ -50,6 +51,7 @@ public class Shelter{
         this.latitude = latitude;
         this.address = address;
         roomList = new ArrayList<>();
+        setInitialRooms();
     }
 
     public void setRoomList(List<Room> r) {
@@ -135,43 +137,8 @@ public class Shelter{
             ReservationBarLayout rb = new ReservationBarLayout(context, room);
             bars.add(rb);
         }
-
-        // This is also dummy. Remove once you have the roomList properly loaded w/ database stuff
-        ReservationBarLayout dumdum = new ReservationBarLayout(context, 10, gender.toUpperCase());
-        bars.add(dumdum);
         // Collaborates with Room objects
         return bars;
-//        if (capacity.equals("N/A")) {
-//            ReservationBarLayout rb = new ReservationBarLayout(context, 0, gender);
-//            bars.add(rb);
-//            System.out.println(rb);
-//            return bars;
-//        }
-//        if (capacity.contains(",")) {
-//            String[] capacities = capacity.split(", ");
-//            for (String s:capacities) {
-//                if (s.contains(" ")) {
-//                    cap = Integer.valueOf(s.substring(0, s.indexOf(" ")));
-//                } else {
-//                    cap = Integer.valueOf(s);
-//                }
-//                type = s.substring(s.indexOf(" ") + 1).toUpperCase();
-//                ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
-//                bars.add(r);
-//                System.out.println(r);
-//            }
-//            return bars;
-//        }
-//        if (capacity.contains(" ")) {
-//            cap = Integer.valueOf(capacity.substring(0, capacity.indexOf(" ")));
-//        } else {
-//            cap = Integer.valueOf(capacity);
-//        }
-//        type = gender.toUpperCase();
-//        ReservationBarLayout r = new ReservationBarLayout(context, cap, type);
-//        bars.add(r);
-//        System.out.println(r);
-//        return bars;
     }
 
     public String getVacancies() {
@@ -200,6 +167,11 @@ public class Shelter{
                 }
             }
         }
+    }
+
+    // Deprecate after firestore works
+    public void setInitialRooms() {
+        roomList.add(new Room(10, gender.toUpperCase(), shelterName));
     }
 
 }

@@ -48,6 +48,7 @@ public class HomelessPerson extends User {
         super(userName, passWord, "unknown");
         this.setAttribute("Homeless");
         shelterList = new ArrayList<>();
+        reserveList = new ArrayList<>();
     }
 
     public HomelessPerson(String uid, String gender, String name) {
@@ -57,6 +58,7 @@ public class HomelessPerson extends User {
         this.res = true;
         this.setAttribute("Homeless");
         shelterList = new ArrayList<>();
+        reserveList = new ArrayList<>();
     }
 
     public List<Shelter> getShelterList() {
@@ -103,7 +105,7 @@ public class HomelessPerson extends User {
         return reserveList;
     }
 
-    public void releaseRooms(String shelterName) {
+    public void releaseRooms() {
         reserveList.clear();
     }
 
@@ -114,5 +116,18 @@ public class HomelessPerson extends User {
             }
         }
         return false;
+    }
+
+    public String getResString(String shelterName) {
+        String s = "";
+        for (Room r: reserveList) {
+            if (r.compareShelter(shelterName)) {
+                s += r.toString() + " ";
+            }
+        }
+        if (s.length() > 0) {
+            return s;
+        }
+        return "0 Room";
     }
 }

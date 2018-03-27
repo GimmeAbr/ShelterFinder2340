@@ -52,11 +52,13 @@ public class ReservationActivity extends AppCompatActivity {
                 String s = "";
                 for (ReservationBarLayout r: barsList) {
                     s = s + r.toString();
+                    Log.d("Room", r.toString());
                     // r.toString is like this: 3 WOMEN/CHILDREN room(s)
                     // You can update vacancies using this?
 
                     // reserveRoom function creates a new Room object within the HomelessPerson
                     // So that we know the person reserved here
+                    Log.d("Current shelter", Model.getInstance().getCurrentShelter().getShelterName());
                     hp.reserveRoom(r.getSelectedRoom(), r.getType(), Model.getInstance().getCurrentShelter().getShelterName());
                     Model.getInstance().getCurrentShelter().updateVacancies(r.getSelectedRoom(), r.getType());
                 }

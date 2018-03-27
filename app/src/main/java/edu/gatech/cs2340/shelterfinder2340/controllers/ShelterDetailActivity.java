@@ -51,6 +51,10 @@ public class ShelterDetailActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         shelter.releaseByList(hp.getReserveList());
                         hp.setRes(true);
+                        hp.releaseRooms();
+                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
+                        startActivity(i);
+                        finish();
                     }
                 });
             } else {
@@ -102,5 +106,9 @@ public class ShelterDetailActivity extends AppCompatActivity {
         TextView vacancies = findViewById(R.id.vacancies);
         vacancies.setText(shelter.getVacancies());
 
+        TextView reserved = findViewById(R.id.reservedText);
+        String i = reserved.getText().toString();
+        i = i + hp.getResString(shelter.getShelterName());
+        reserved.setText(i);
     }
 }
