@@ -145,16 +145,28 @@
             android:textSize="20dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
-
-        <Button
-            android:id="@+id/reserveButton"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/colorAccent"
-            android:text="Reserve"
-            android:textColor="@android:color/white" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/reserveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@color/colorAccent"
+                android:text="Reserve"
+                android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="You have reserved"
+                android:id="@+id/reservedText"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 

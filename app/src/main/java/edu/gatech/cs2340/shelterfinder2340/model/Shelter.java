@@ -174,4 +174,13 @@ public class Shelter{
 //        return bars;
     }
 
+    public String getVacancies() {
+        String s = "";
+        for (Room r: roomList) {
+            s = s + r.toString();
+            s = s + ".";
+        }
+        return s;
+    }
+
 }

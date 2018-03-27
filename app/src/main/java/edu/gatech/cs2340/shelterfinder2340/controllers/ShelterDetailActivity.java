@@ -21,6 +21,7 @@ import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
@@ -82,6 +83,9 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
         phone.setText(Model.getInstance().getCurrentShelter().getPhoneNumber());
+
+        TextView vacancies = findViewById(R.id.vacancies);
+        vacancies.setText(Model.getInstance().getCurrentShelter().getVacancies());
 
     }
 }
