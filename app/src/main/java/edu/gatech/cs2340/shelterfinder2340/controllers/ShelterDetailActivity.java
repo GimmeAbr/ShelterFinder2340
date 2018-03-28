@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,9 +30,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
          * Get the current shelter from the model
          */
         model = Model.getInstance();
-        Shelter currentShelter = model.getCurrentShelter();
-        HomelessPerson hp = model.getCurrentUser();
-        Shelter shelter = model.getCurrentShelter();
+        final Shelter currentShelter = model.getCurrentShelter();
+        final HomelessPerson hp = model.getCurrentUser();
 
         /**
          * Set all of the text fields based on shelter data
@@ -57,13 +57,13 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         // isRes() indicates whether the HomelessPerson is allowed to reserve
         if (!hp.hasReservation()) {
-            if (hp.getReservedShelter().getShelterName().equals(shelter.getShelterName())) {
+            if (hp.getReservedShelter().getShelterName().equals(currentShelter.getShelterName())) {
                 reserveButton.setText("Release");
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        shelter.releaseByList(hp.getReserveList());
-                        hp.setRes(true);
+                        model.getCurrentShelter().releaseByList(hp.getReserveList());
+                        hp.setReservation(true);
                         hp.releaseRooms();
                         Intent i = new Intent(getApplicationContext(), Login_Success.class);
                         startActivity(i);
@@ -76,7 +76,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
             }
         } else {
-            if (!shelter.reservedOut()) {
+            if (!currentShelter.reservedOut()) {
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

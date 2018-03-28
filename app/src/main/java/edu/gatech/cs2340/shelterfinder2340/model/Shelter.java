@@ -2,6 +2,9 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.ArrayList;
+import java.util.List;
+import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 /**
  * Created by admin on 2/26/18.
@@ -18,6 +21,13 @@ public class Shelter{
     private int vacancies;
     private String capacity;
     private long id;
+    ArrayList<ReservationBarLayout> bars;
+
+    private ArrayList<Room> roomList;
+    public List<ReservationBarLayout> getBars() {
+        return bars;
+    }
+
 
 
 
@@ -106,6 +116,41 @@ public class Shelter{
 
     public long getId() { return id; }
 
+    public String getVacancies() {
+        String s = "";
+        for (Room r: roomList) {
+            s = s + r.toString();
+            s = s + ".";
+        }
+        return s;
+    }
+
+    public void updateVacancies(int cap, String type) {
+        for (Room r: roomList) {
+            if (r.getRoomType().equals(type)) {
+                r.reserveRoom(cap);
+                return;
+            }
+        }
+    }
+
+    public void releaseByList(List<Room> resList) {
+        for (Room r: resList) {
+            for (Room e: roomList) {
+                if (e.getRoomType().equals(r.getRoomType())) {
+                    e.releaseRoom(r.getNumVacancies());
+                }
+            }
+        }
+    }
+
+    public boolean reservedOut() {
+        boolean ro = true;
+        for (Room r: roomList) {
+            ro = ro && (r.reservedOut());
+        }
+        return ro;
+    }
 
 
     @Override
