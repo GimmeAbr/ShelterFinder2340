@@ -379,11 +379,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid, getApplicationContext());
 
-                /// This is some dummy things for testing
+                ///////////////////// This is some dummy things for testing
                 HomelessPerson cannibal = new HomelessPerson("123", "Male", "Hannibal Lector");
                 cannibal.setRes(true);
                 Model.getInstance().set_currentUser(cannibal);
-                /////
+                //////////////////////////////////////////////////////////////////////////////////////////////////
                 Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
                 myIntent.putExtra("Label", "start");
                 //String shelterInterest = snapshot.child("shelters").getValue(String.class);

@@ -169,9 +169,17 @@ public class Shelter{
         }
     }
 
-    // Deprecate after firestore works
+    public boolean reservedOut() {
+        boolean ro = true;
+        for (Room r: roomList) {
+            ro = ro && (r.reservedOut());
+        }
+        return ro;
+    }
+
+    // ///////////////////////////////////Deprecate after firestore works
     public void setInitialRooms() {
         roomList.add(new Room(10, gender.toUpperCase(), shelterName));
     }
-
+///////////////////////////////////////////////////////////////////////////////
 }

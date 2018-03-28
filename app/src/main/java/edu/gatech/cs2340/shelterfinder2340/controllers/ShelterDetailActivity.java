@@ -63,14 +63,21 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
             }
         } else {
-            reserveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            });
+            if (!shelter.reservedOut()) {
+                reserveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+            } else {
+                reserveButton.setClickable(false);
+                reserveButton.setEnabled(false);
+                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+            }
+
         }
 
 
