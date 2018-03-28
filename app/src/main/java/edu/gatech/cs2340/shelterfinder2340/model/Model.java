@@ -75,6 +75,12 @@ public class Model {
      * get the courses
      * @return a list of the courses in the app
      */
+    public HomelessPerson getCurrentUser(){ return (HomelessPerson) _currentUser; }
+
+    /**
+     * get the courses
+     * @return a list of the courses in the app
+     */
     public ArrayList<Shelter> getShelters() { return _shelters; }
 
 

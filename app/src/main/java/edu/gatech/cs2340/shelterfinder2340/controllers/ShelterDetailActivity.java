@@ -12,6 +12,8 @@ import android.widget.Toolbar;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+
 
 
 public class ShelterDetailActivity extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
          */
         model = Model.getInstance();
         Shelter currentShelter = model.getCurrentShelter();
+        HomelessPerson hp = model.getCurrentUser();
+        Shelter shelter = model.getCurrentShelter();
 
         /**
          * Set all of the text fields based on shelter data
@@ -49,19 +53,54 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         TextView phone = (TextView) findViewById(R.id.phonenumber);
         phone.setText(currentShelter.getPhoneNumber());
+        final Button reserveButton = findViewById(R.id.reserveButton);
+
+        // isRes() indicates whether the HomelessPerson is allowed to reserve
+        if (!hp.hasReservation()) {
+            if (hp.getReservedShelter().getShelterName().equals(shelter.getShelterName())) {
+                reserveButton.setText("Release");
+                reserveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shelter.releaseByList(hp.getReserveList());
+                        hp.setRes(true);
+                        hp.releaseRooms();
+                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+            } else {
+                reserveButton.setClickable(false);
+                reserveButton.setEnabled(false);
+                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+            }
+        } else {
+            if (!shelter.reservedOut()) {
+                reserveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+            } else {
+                reserveButton.setClickable(false);
+                reserveButton.setEnabled(false);
+                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+            }
+
+        }
+
 
         /**
-         * Handle button click based on the reservation status of the user
+         * This Block is dedicated to deciding if the HomelessPerson reserved rooms at the place
+         *
+         * If he/she does reserve a room here, the button should change its text to "Release"
+         * And then maybe either release all the rooms or just release some of them, whatever the user wants
          */
-        Button reserveButton = findViewById(R.id.reserveButton);
-        reserveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Set onclick --> Be able to reserve a place
-                homelessRes = false;
-                // Use hashmaps to store different types and values?
-            }
-        });
+
 
     }
 }

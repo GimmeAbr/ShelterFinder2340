@@ -14,8 +14,9 @@ public class HomelessPerson extends User {
     private List<Shelter> shelterInterests;
     private Location currentLocation;
     private String gender;
-    private boolean reservation;
+    private boolean hasReservation;
     private Shelter reservedShelter;
+    private ArrayList<Room> reserveList;
 
 
     //------------------------------- Constructors -------------------------------
@@ -36,7 +37,7 @@ public class HomelessPerson extends User {
         return gender;
     }
     public boolean hasReservation() {
-        return reservation;
+        return hasReservation;
     }
     public Shelter getReservedShelter() { return reservedShelter; }
     public List<Shelter> getShelterInterests() {
@@ -49,7 +50,7 @@ public class HomelessPerson extends User {
         this.gender = gender;
     }
     public void setReservation(boolean res) {
-        this.reservation = res;
+        this.hasReservation = res;
     }
     public void setReservedShelter(Shelter shelter) { this.reservedShelter = shelter;}
     public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
@@ -69,4 +70,18 @@ public class HomelessPerson extends User {
     public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
 
 
+    public void reserveRoom(int num, String type, String shelterName) {
+        if (num > 0) {
+            Room reserve = new Room(num, type, shelterName);
+            reserveList.add(reserve);
+        }
+    }
+
+    public List<Room> getReserveList() {
+        return reserveList;
+    }
+
+    public void releaseRooms() {
+        reserveList.clear();
+    }
 }
