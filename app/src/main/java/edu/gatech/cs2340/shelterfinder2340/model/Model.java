@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 
 /**
@@ -44,6 +45,7 @@ public class Model {
     /** holds the list of all courses */
     private ArrayList<Shelter> _shelters;
 
+    private List<ReservationBarLayout> bars;
 
     //-----------------------------------Constructor-----------------------------------
 
@@ -68,6 +70,13 @@ public class Model {
      * @param user
      */
     public void setCurrentUser(User user) { _currentUser = user; }
+
+
+    public void setBars(List<ReservationBarLayout> bars) {
+        this.bars = bars;
+    }
+
+
 
     //-----------------------------------Getters----------------------------------
 
@@ -122,6 +131,10 @@ public class Model {
         return theNullShelter;
     }
 
+
+    public List<ReservationBarLayout> getBars() {
+        return bars;
+    }
     //-----------------------------------Helpers----------------------------------
 
     /**

@@ -46,8 +46,8 @@ public class ReservationActivity extends AppCompatActivity {
         reservePos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
-                hp.setRes(false);
+                HomelessPerson hp = (HomelessPerson) Model.getInstance().getCurrentUser();
+                hp.setReservation(false);
                 // Update current shelter
                 String s = "";
                 for (ReservationBarLayout r: barsList) {
@@ -80,5 +80,5 @@ public class ReservationActivity extends AppCompatActivity {
             }
         });
     }
-    }
+
 }

@@ -23,7 +23,7 @@ public class Shelter{
     private int vacancies;
     private String capacity;
     private long id;
-    ArrayList<ReservationBarLayout> bars;
+    List<ReservationBarLayout> bars;
 
     private ArrayList<Room> roomList;
     public List<ReservationBarLayout> getBars() {
@@ -85,6 +85,9 @@ public class Shelter{
 
     public void setId(long id) {this.id = id;}
 
+    public void setBars(List<ReservationBarLayout> bars) {
+        this.bars = bars;
+    }
 
 
     //Getters
@@ -163,6 +166,9 @@ public class Shelter{
         // Collaborates with Room objects
         return bars;
     }
+
+
+
 
     @Override
     public String toString() {
