@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
+import android.content.Context;
+
 
 /**
  * Created by admin on 2/26/18.
@@ -152,6 +154,15 @@ public class Shelter{
         return ro;
     }
 
+    public List<ReservationBarLayout> setBarsList(Context context) {
+        bars = new ArrayList<>();
+        for (Room room: roomList) {
+            ReservationBarLayout rb = new ReservationBarLayout(context, room);
+            bars.add(rb);
+        }
+        // Collaborates with Room objects
+        return bars;
+    }
 
     @Override
     public String toString() {
