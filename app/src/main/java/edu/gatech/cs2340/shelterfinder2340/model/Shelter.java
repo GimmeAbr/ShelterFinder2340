@@ -25,7 +25,7 @@ public class Shelter{
     private double latitude;
     private double longitude;
     private int vacancies;
-    private int capacity;
+    private String capacity;
     private long id;
     List<ReservationBarLayout> bars;
 
@@ -35,7 +35,7 @@ public class Shelter{
     }
 
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  int capacity, int id) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, int id) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -46,12 +46,12 @@ public class Shelter{
         this.id = id;
     }
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, int capacity) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
         this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, 0);
     }
 
     public Shelter() {
-        this("","","","",0,0,0,0);
+        this("","","","",0,0,"",0);
     }
 
     //Setters
@@ -67,7 +67,7 @@ public class Shelter{
         this.address = address;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
@@ -103,7 +103,7 @@ public class Shelter{
         return address;
     }
 
-    public int getCapacity() {
+    public String getCapacity() {
         return capacity;
     }
 

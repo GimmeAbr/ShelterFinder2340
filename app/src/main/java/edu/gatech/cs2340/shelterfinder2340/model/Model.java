@@ -45,10 +45,10 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, 0 ,0);
+    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, "" ,0);
 
     /** holds the list of all shelters */
-    private ArrayList<Shelter> _shelters;
+    private List<Shelter> _shelters;
 
     /** holds a list of the filtered shelters*/
     private ArrayList<Shelter> _filteredShelters;
@@ -65,7 +65,6 @@ public class Model {
     private Model() {
         _shelters = new ArrayList<>();
         //comment this out after full app developed -- for homework leave in
-        loadDummyData();
     }
 
 
@@ -79,17 +78,18 @@ public class Model {
         this._currentUser = _currentUser;
     }
 
-    /**
-     * Setter for the current shelter
-     * @param shelter
-     */
-    public void setCurrentShelter(Shelter shelter) { _currentShelter = shelter; }
 
-    /**
-     * Getter for the current shelter
-     * @param user
-     */
-    public void setCurrentUser(User user) { _currentUser = user; }
+    public void setCurrentShelter(Shelter shelter) {
+        _currentShelter = shelter;
+    }
+
+    public void setSheltersList(List<Shelter> shelterList) {
+        _shelters = shelterList;
+    }
+
+    public void setCurrentUser(User user) {
+        _currentUser = user;
+    }
 
 
     public void setBars(List<ReservationBarLayout> bars) {
@@ -120,25 +120,6 @@ public class Model {
     }
 
 
-    /**
-     * This loads all the shelters from the database
-     * Should be called at the beginning of the application, takes
-     * and onCompleteListener as a parameter
-     */
-    public void loadShelters(OnCompleteListener<QuerySnapshot>) {
-        ShelterDao dao = new ShelterDao();
-        dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for(DocumentSnapshot d : task.getResult().getDocuments()) {
-                        Shelter s = d.toObject(Shelter.class);
-                        _shelters.add(s);
-                    }
-                }
-            }
-        });
-    }
 
 
     /**
@@ -151,7 +132,7 @@ public class Model {
      * get the courses
      * @return a list of the courses in the app
      */
-    public ArrayList<Shelter> getShelters() { return _shelters; }
+    public List<Shelter> getShelters() { return _shelters; }
 
     public boolean addShelter(Shelter shelter) {
         for (Shelter s : _shelters ) {
@@ -212,10 +193,10 @@ public class Model {
      */
     private void loadDummyData() {
         _shelters = new ArrayList<Shelter>();
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter3", "","","",0, 0,0,0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
+        _shelters.add(new Shelter("Shelter3", "","","",0, 0,"",0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
 
     }
 

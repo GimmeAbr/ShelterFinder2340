@@ -121,37 +121,31 @@ public class Login_Success extends AppCompatActivity {
         shelterList = new ArrayList<Shelter>();
         showProgress(true);
         ShelterDao dao = new ShelterDao();
-        model.loadShelters(jfdlska);
-        setAdapter
+
         dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     // Load each shelter from a successful task
-                    final List<Shelter> shelterListLoaded = new ArrayList<>();
+                    final List <Shelter> shelterListLoaded = new ArrayList<>();
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Shelter shelter = snapshot.toObject(Shelter.class);
                         shelterListLoaded.add(shelter);
                     }
-
-                    shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, shelterListLoaded);
-                    shelterListView.setAdapter(shelterAdapter);
-                    shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Shelter st = shelterListLoaded.get(i);
-                            Model.getInstance().setCurrentShelter(st);
-                            Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                            startActivity(intent);
-                        }
-                    });
+                    //Now shelterList is populated set changes in the model
+                    model.setSheltersList(shelterListLoaded);
                     showProgress(false);
-
+                    populateListView();
                 } else {
-
+                    /**
+                     * TODO: insert code for on fail
+                     */
                 }
             }
         });
+
+
+
 
 
         FloatingActionButton search = (FloatingActionButton) findViewById(R.id.search_button);
@@ -161,6 +155,21 @@ public class Login_Success extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), FilterActivity.class);
                 startActivity(i);
                 finish();
+            }
+        });
+    }
+
+
+    private void populateListView () {
+        shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, model.getShelters());
+        shelterListView.setAdapter(shelterAdapter);
+        shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Shelter st = model.getShelters().get(i);
+                Model.getInstance().setCurrentShelter(st);
+                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
+                startActivity(intent);
             }
         });
     }
