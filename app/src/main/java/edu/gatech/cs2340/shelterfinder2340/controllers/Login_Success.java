@@ -121,6 +121,8 @@ public class Login_Success extends AppCompatActivity {
         shelterList = new ArrayList<Shelter>();
         showProgress(true);
         ShelterDao dao = new ShelterDao();
+        model.loadShelters(jfdlska);
+        setAdapter
         dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -131,7 +133,6 @@ public class Login_Success extends AppCompatActivity {
                         Shelter shelter = snapshot.toObject(Shelter.class);
                         shelterListLoaded.add(shelter);
                     }
-                    model.setShelters
 
                     shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, shelterListLoaded);
                     shelterListView.setAdapter(shelterAdapter);

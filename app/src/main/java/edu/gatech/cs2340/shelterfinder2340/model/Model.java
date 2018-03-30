@@ -125,7 +125,7 @@ public class Model {
      * Should be called at the beginning of the application, takes
      * and onCompleteListener as a parameter
      */
-    public void loadShelters(OnCompleteListener<QuerySnapshot> ) {
+    public void loadShelters(OnCompleteListener<QuerySnapshot>) {
         ShelterDao dao = new ShelterDao();
         dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
             @Override
