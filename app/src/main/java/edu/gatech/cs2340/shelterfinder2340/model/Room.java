@@ -4,7 +4,16 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  * Created by Sylvia Li on 2018/3/26.
  */
 
+/**
+ * Class representing a type of room available at a Shelter
+ * Users have a roo
+ */
 public class Room {
+    private int initialCap;
+    private int numVacancies;
+    private String roomType;
+    private String shelterName;
+
     public int getNumVacancies() {
         return numVacancies;
     }
@@ -13,10 +22,6 @@ public class Room {
         return roomType;
     }
 
-    private int initialCap;
-    private int numVacancies;
-    private String roomType;
-    private String shelterName;
 
     public Room(int numVacancies, String roomType, String shelterName) {
         this.initialCap = numVacancies;

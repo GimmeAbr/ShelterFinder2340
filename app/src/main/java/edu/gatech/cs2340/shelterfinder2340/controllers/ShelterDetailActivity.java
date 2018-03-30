@@ -30,7 +30,7 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 public class ShelterDetailActivity extends AppCompatActivity {
     private boolean homelessRes;
-    Model model;
+    Model model = Model.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
         /**
          * Get the current shelter from the model
          */
-        model = Model.getInstance();
         final Shelter currentShelter = model.getCurrentShelter();
         final HomelessPerson hp = model.getCurrentUser();
 
@@ -67,42 +66,42 @@ public class ShelterDetailActivity extends AppCompatActivity {
         final Button reserveButton = findViewById(R.id.reserveButton);
 
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (!hp.hasReservation()) {
-            if (hp.getReservedShelter().getShelterName().equals(currentShelter.getShelterName())) {
-                reserveButton.setText("Release");
-                reserveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        model.getCurrentShelter().releaseByList(hp.getReserveList());
-                        hp.setReservation(true);
-                        hp.releaseRooms();
-                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
-                        startActivity(i);
-                        finish();
-                    }
-                });
-            } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-            }
-        } else {
-            if (!currentShelter.reservedOut()) {
-                reserveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                });
-            } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-            }
-
-        }
+//        if (!hp.hasReservation()) {
+//            if (hp.getReservedShelter().getShelterName().equals(currentShelter.getShelterName())) {
+//                reserveButton.setText("Release");
+//                reserveButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        model.getCurrentShelter().releaseByList(hp.getReserveList());
+//                        hp.setReservation(true);
+//                        hp.releaseRooms();
+//                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                });
+//            } else {
+//                reserveButton.setClickable(false);
+//                reserveButton.setEnabled(false);
+//                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+//            }
+//        } else {
+//            if (!currentShelter.reservedOut()) {
+//                reserveButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                });
+//            } else {
+//                reserveButton.setClickable(false);
+//                reserveButton.setEnabled(false);
+//                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+//            }
+//
+//        }
 
 
         /**
