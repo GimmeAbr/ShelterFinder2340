@@ -383,19 +383,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 String uid = mAuth.getCurrentUser().getUid();
-                //// User Authentication???
                 UserDao dao = new UserDao();
-<<<<<<< HEAD
                 // dao.queryHomelessUser(uid, getApplicationContext());
                 Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
                 getApplicationContext().startActivity(loginSucess);
-=======
-                dao.queryHomelessUser(uid, getApplicationContext());
-                Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
-                myIntent.putExtra("Label", "start");
-                //String shelterInterest = snapshot.child("shelters").getValue(String.class);
-                startActivity(myIntent);
->>>>>>> sylvia-stuff
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -410,4 +401,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-

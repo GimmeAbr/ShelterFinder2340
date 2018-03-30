@@ -59,7 +59,7 @@ public class UserDao {
 //                        }
                                 // If it is a homeless person /////
                                 HomelessPerson hp = new HomelessPerson(id, gender, name);
-                                hp.setRes(enabledReservation);
+                                //hp.setRes(enabledReservation);
                                 Model.getInstance().set_currentUser(hp);
                                 Log.d("current user", Model.getInstance().get_currentUser().toString());
                             }
@@ -92,7 +92,7 @@ public class UserDao {
 //                        }
                         // If it is a homeless person /////
                         HomelessPerson hp = new HomelessPerson(uid, gender, name);
-                        hp.setRes(enabledReservation);
+                        //.setRes(enabledReservation);
                         Model.getInstance().set_currentUser(hp);
                         Log.d("current user", Model.getInstance().get_currentUser().toString());
                         Intent myIntent = new Intent(context, Login_Success.class);

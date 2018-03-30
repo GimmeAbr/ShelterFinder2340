@@ -47,8 +47,11 @@ public class Model {
     /** Null Object pattern, returned when no course is found */
     private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, 0 ,0);
 
-    /** holds the list of all courses */
+    /** holds the list of all shelters */
     private ArrayList<Shelter> _shelters;
+
+    /** holds a list of the filtered shelters*/
+    private ArrayList<Shelter> _filteredShelters;
 
 
     //-----------------------------------Constructor-----------------------------------
@@ -102,6 +105,27 @@ public class Model {
      * Should be called at the beginning of the application
      */
     public void loadShelters() {
+        ShelterDao dao = new ShelterDao();
+        dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(DocumentSnapshot d : task.getResult().getDocuments()) {
+                        Shelter s = d.toObject(Shelter.class);
+                        _shelters.add(s);
+                    }
+                }
+            }
+        });
+    }
+
+
+    /**
+     * This loads all the shelters from the database
+     * Should be called at the beginning of the application, takes
+     * and onCompleteListener as a parameter
+     */
+    public void loadShelters(OnCompleteListener<QuerySnapshot> ) {
         ShelterDao dao = new ShelterDao();
         dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
             @Override
