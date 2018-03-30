@@ -24,6 +24,7 @@ public class HomelessPerson extends User {
         super(name, username, password, id);
         this.setGender(gender);
         shelterInterests = new ArrayList<Shelter>();
+
     }
     public HomelessPerson(String name, String gender, String uid) {
         this(name,"","", gender, uid);

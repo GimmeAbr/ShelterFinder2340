@@ -3,14 +3,19 @@ import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import edu.gatech.cs2340.shelterfinder2340.R;
+
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 
@@ -40,15 +45,19 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "", 0,0,"0",0);
+    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, 0 ,0);
 
     /** holds the list of all courses */
     private ArrayList<Shelter> _shelters;
 
-    private List<ReservationBarLayout> bars;
 
     //-----------------------------------Constructor-----------------------------------
 
+
+    /** the ShelterQuery object*/
+    private ShelterQuery _query;
+
+    private List<ReservationBarLayout> bars;
 
     private Model() {
         _shelters = new ArrayList<>();
@@ -58,6 +67,14 @@ public class Model {
 
 
     //-----------------------------------Setters-----------------------------------
+
+    public User get_currentUser() {
+        return _currentUser;
+    }
+
+    public void set_currentUser(User _currentUser) {
+        this._currentUser = _currentUser;
+    }
 
     /**
      * Setter for the current shelter
@@ -81,6 +98,26 @@ public class Model {
     //-----------------------------------Getters----------------------------------
 
     /**
+     * This loads all the shelters from the database
+     * Should be called at the beginning of the application
+     */
+    public void loadShelters() {
+        ShelterDao dao = new ShelterDao();
+        dao.getShelters(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(DocumentSnapshot d : task.getResult().getDocuments()) {
+                        Shelter s = d.toObject(Shelter.class);
+                        _shelters.add(s);
+                    }
+                }
+            }
+        });
+    }
+
+
+    /**
      * get the courses
      * @return a list of the courses in the app
      */
@@ -91,6 +128,14 @@ public class Model {
      * @return a list of the courses in the app
      */
     public ArrayList<Shelter> getShelters() { return _shelters; }
+
+    public boolean addShelter(Shelter shelter) {
+        for (Shelter s : _shelters ) {
+            if (s.equals(shelter)) return false;
+        }
+        _shelters.add(shelter);
+        return true;
+    }
 
 
     /**
@@ -143,15 +188,22 @@ public class Model {
      */
     private void loadDummyData() {
         _shelters = new ArrayList<Shelter>();
-        _shelters.add(new Shelter("Shelter1", "","","",0, 0,"0",0));
-        _shelters.add(new Shelter("Shelter2", "","","",0, 0,"0",0));
-        _shelters.add(new Shelter("Shelter3", "","","",0, 0,"0",0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"0",0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter3", "","","",0, 0,0,0));
+        _shelters.add(new Shelter("Shelter4", "","","",0, 0,0,0));
 
     }
 
-    private void loadDummyUser(){
-        _currentUser = new User("Mya","myaetsang@gmail.com", "password", "1");
+    private void loadDummyUser() {
+        _currentUser = new User("Mya", "myaetsang@gmail.com", "password", "1");
+    }
+    public ShelterQuery get_query() {
+        return _query;
+    }
+
+    public void set_query(ShelterQuery _query) {
+        this._query = _query;
     }
 
 }

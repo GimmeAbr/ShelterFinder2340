@@ -10,6 +10,7 @@ import android.widget.TextView;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 
+
 /**
  * Created by Sylvia Li on 2018/3/25.
  */

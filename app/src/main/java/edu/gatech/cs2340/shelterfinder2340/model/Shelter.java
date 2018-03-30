@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
@@ -8,12 +9,15 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 import android.content.Context;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
+
 /**
  * Created by admin on 2/26/18.
  */
 public class Shelter{
-
-
     private String shelterName;
     private String gender;
     private String address;
@@ -21,7 +25,7 @@ public class Shelter{
     private double latitude;
     private double longitude;
     private int vacancies;
-    private String capacity;
+    private int capacity;
     private long id;
     List<ReservationBarLayout> bars;
 
@@ -31,11 +35,7 @@ public class Shelter{
     }
 
 
-
-
-
-
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, int id) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  int capacity, int id) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -46,12 +46,12 @@ public class Shelter{
         this.id = id;
     }
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, int capacity) {
         this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, 0);
     }
 
     public Shelter() {
-        this("","","","",0,0,"",0);
+        this("","","","",0,0,0,0);
     }
 
     //Setters
@@ -67,7 +67,7 @@ public class Shelter{
         this.address = address;
     }
 
-    public void setCapacity(String capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
@@ -103,7 +103,7 @@ public class Shelter{
         return address;
     }
 
-    public String getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -166,7 +166,6 @@ public class Shelter{
         // Collaborates with Room objects
         return bars;
     }
-
 
 
 

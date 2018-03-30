@@ -37,9 +37,44 @@ public class UserDao {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference homelessRef = ref.child("homeless");
         final List<HomelessPerson> homelessList = new ArrayList<>();
+        Log.d("Query", "CALLED");
+        Query query = ref.child("homeless").orderByChild("id").equalTo(id);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // dataSnapshot is the "issue" node with all children with id 0
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                // do something with the individual "issues"
+                                String gender = snapshot.child("gender").getValue(String.class);
+                                boolean enabledReservation = snapshot.child("res").getValue(Boolean.class);
+                                String name = snapshot.child("name").getValue(String.class);
+                                System.out.println("HomelessGender: " +  gender);
+                                Log.d("Enabled: ", enabledReservation + "");
+                                Log.d("NameHomeless", name);
+//                        if (shelterInterest.length() > 0) {
+//
+//                        } else {
+//                            hp.setShelterList(new ArrayList<Shelter>());
+//                        }
+                                // If it is a homeless person /////
+                                HomelessPerson hp = new HomelessPerson(id, gender, name);
+                                hp.setRes(enabledReservation);
+                                Model.getInstance().set_currentUser(hp);
+                                Log.d("current user", Model.getInstance().get_currentUser().toString());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
         homelessRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("On Data Change", "CALLED");
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for(DataSnapshot snapshot: children) {
                     String uid = snapshot.child("id").getValue(String.class);
@@ -50,20 +85,20 @@ public class UserDao {
                         Log.d("HomelessGender: ", gender);
                         Log.d("Enabled: ", enabledReservation + "");
                         Log.d("NameHomeless", name);
-                        Intent myIntent = new Intent(context, Login_Success.class);
-                        myIntent.putExtra("homelessName", name);
-                        myIntent.putExtra("homelessGender", gender);
-                        myIntent.putExtra("homelessRes", enabledReservation);
-                        myIntent.putExtra("homelessId", id);
-                        myIntent.putExtra("Label", "start");
-                        //String shelterInterest = snapshot.child("shelters").getValue(String.class);
-                        context.startActivity(myIntent);
 //                        if (shelterInterest.length() > 0) {
 //
 //                        } else {
 //                            hp.setShelterList(new ArrayList<Shelter>());
 //                        }
-
+                        // If it is a homeless person /////
+                        HomelessPerson hp = new HomelessPerson(uid, gender, name);
+                        hp.setRes(enabledReservation);
+                        Model.getInstance().set_currentUser(hp);
+                        Log.d("current user", Model.getInstance().get_currentUser().toString());
+                        Intent myIntent = new Intent(context, Login_Success.class);
+                        myIntent.putExtra("Label", "start");
+                        //String shelterInterest = snapshot.child("shelters").getValue(String.class);
+                        context.startActivity(myIntent);
                     }
                 }
                 isDone = true;
