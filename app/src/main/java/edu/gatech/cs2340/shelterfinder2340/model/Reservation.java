@@ -20,10 +20,11 @@ public class Reservation {
         this(resOwner, resRoom, "");
     }
 
-    public releaseReservation() {
+    public void releaseReservation() {
         /**
          * TODO: the user releases the reservation
          */
+
     }
 
 

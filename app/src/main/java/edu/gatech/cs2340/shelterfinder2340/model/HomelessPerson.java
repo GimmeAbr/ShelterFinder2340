@@ -3,6 +3,7 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class HomelessPerson extends User {
     private String gender;
     private boolean hasReservation;
     private Shelter reservedShelter;
-    private ArrayList<Room> reserveList;
+    private ArrayList<Reservation> reserveList;
 
 
     //------------------------------- Constructors -------------------------------
@@ -45,6 +46,9 @@ public class HomelessPerson extends User {
         return shelterInterests;
     }
     public Location getCurrentLocation() { return currentLocation; }
+    public List<Reservation> getReserveList() {
+        return reserveList;
+    }
 
     //------------------------------- Setters -------------------------------
     public void setGender(String gender) {
@@ -74,15 +78,28 @@ public class HomelessPerson extends User {
     public void reserveRoom(int num, String type, String shelterName) {
         if (num > 0) {
             Room reserve = new Room(num, type, shelterName);
-            reserveList.add(reserve);
+            Reservation res = new Reservation(this, reserve, Calendar.getInstance().getTime().toString());
+            reserveList.add(res);
         }
     }
 
-    public List<Room> getReserveList() {
-        return reserveList;
+    /*
+     * Releases one specific reservation
+     */
+    public void releaseRes(Reservation reservation) {
+        reserveList.remove(reservation);
+        hasReservation = !(reserveList.isEmpty());
     }
 
+    /*
+        Releases all the rooms at once
+     */
     public void releaseRooms() {
         reserveList.clear();
+        hasReservation = false;
+        /*--------------Or This--------------*/
+//        for (Reservation r: reserveList) {
+//            r.releaseReservation();
+//        }
     }
 }
