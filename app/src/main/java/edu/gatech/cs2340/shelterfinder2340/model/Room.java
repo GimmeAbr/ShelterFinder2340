@@ -12,6 +12,7 @@ public class Room {
     private int initialCap;
     private int numVacancies;
     private String roomType;
+
     private String shelterName;
 
     public int getNumVacancies() {
@@ -20,6 +21,10 @@ public class Room {
 
     public String getRoomType() {
         return roomType;
+    }
+
+    public String getShelterName() {
+        return shelterName;
     }
 
 
