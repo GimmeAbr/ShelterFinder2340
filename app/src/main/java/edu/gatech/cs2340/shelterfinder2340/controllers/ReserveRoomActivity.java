@@ -17,13 +17,18 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Line;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 
@@ -162,14 +167,31 @@ public class ReserveRoomActivity extends AppCompatActivity {
             }
         });
 
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Reservation> reservations = new ArrayList<>();
 
+                for (int i = 0; i < layout.getChildCount(); i++) {
+                    LinearLayout linearLayout = (LinearLayout) layout.getChildAt(i);
+                    Spinner roomStringSpn = (Spinner)linearLayout.getChildAt(0);
+                    Spinner numToReserveSpn = (Spinner)linearLayout.getChildAt(0);
+                    Room reservered = roomMap.get((String)roomStringSpn.getSelectedItem());
+                    Integer numReserved = (Integer)numToReserveSpn.getSelectedItem();
+                    Reservation reservation = new Reservation(Model.getInstance().getCurrentUser(),reservered,numReserved);
+                    reservations.add(reservation);
+                    ((HomelessPerson)Model.getInstance().get_currentUser()).addReservation(reservation);
+                    // TODO: UPDATE EVERY FUCKING THING
+                }
+            }
+        });
+        // TODO: CANCEL BUTTON
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }
