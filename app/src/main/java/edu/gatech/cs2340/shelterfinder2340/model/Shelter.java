@@ -3,9 +3,8 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 import android.content.Context;
@@ -19,7 +18,7 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 /**
  * Created by admin on 2/26/18.
  */
-public class Shelter implements Serializable {
+public class Shelter{
     private String shelterName;
     private String gender;
     private String address;
@@ -29,9 +28,11 @@ public class Shelter implements Serializable {
     private int vacancies;
     private String capacity;
     private long id;
+
     List<ReservationBarLayout> bars;
 
-    private List<Room> roomList;
+    private ArrayList<Room> roomList;
+    private List<Reservation> reserveList;
     public List<ReservationBarLayout> getBars() {
         return bars;
     }
@@ -91,10 +92,6 @@ public class Shelter implements Serializable {
         this.bars = bars;
     }
 
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
-    }
-
 
     //Getters
     public String getShelterName() {
@@ -127,10 +124,6 @@ public class Shelter implements Serializable {
 
     public long getId() { return id; }
 
-    public List<Room> getRoomList () {
-        return this.roomList;
-    }
-
     public String getVacancies() {
         String s = "";
         for (Room r: roomList) {
@@ -140,10 +133,10 @@ public class Shelter implements Serializable {
         return s;
     }
 
-    public void reserveRooms(int cap, String type) {
+    public void reserveBedss(int cap, String type) {
         for (Room r: roomList) {
             if (r.getRoomType().equals(type)) {
-                r.reserveRoom(cap);
+                r.reserveBeds(cap);
                 return;
             }
         }
@@ -153,7 +146,7 @@ public class Shelter implements Serializable {
         for (Room r: resList) {
             for (Room e: roomList) {
                 if (e.getRoomType().equals(r.getRoomType())) {
-                    e.releaseRoom(r.getNumVacancies());
+                    e.releaseBeds(r.getNumVacancies());
                 }
             }
         }
@@ -161,11 +154,35 @@ public class Shelter implements Serializable {
 
     public void releaseReservation(Reservation reservation) {
         // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
-        Room r = reservation.getResRoom();
-        for (Room e: roomList) {
-            if (e.getRoomType().equals(r.getRoomType())) {
-                e.releaseRoom(r.getNumVacancies());
+        Room room = reservation.getResRoom();
+        HomelessPerson hp = reservation.getResOwner();
+        int numRes = reservation.getNumRooms();
+        for (Room r: roomList) {
+            if (r.getRoomType().equals(room.getRoomType())) {
+                r.releaseBeds(numRes);
             }
+        }
+
+        hp.releaseReservation(reservation);
+        for (int i = 0; i < reserveList.size(); i++) {
+            if(reserveList.get(i).getId().equals(reservation.getId())) {
+                reserveList.remove(i);
+            }
+        }
+
+
+    }
+
+    public void createReservation(HomelessPerson reserver, int num, Room room) {
+        //create reservation
+        //add reservation to SHelter's reservation list
+        //add reservation to User's reservation list
+        if (num > 0) {
+            Reservation res = new Reservation(reserver, num, room, Calendar.getInstance().getTime().toString());
+            reserver.setReservation(true);
+            reserver.addReservation(res);
+            reserveList.add(res);
+            room.reserveBeds(num);
         }
     }
 
@@ -186,6 +203,8 @@ public class Shelter implements Serializable {
         // Collaborates with Room objects
         return bars;
     }
+
+
 
 
 

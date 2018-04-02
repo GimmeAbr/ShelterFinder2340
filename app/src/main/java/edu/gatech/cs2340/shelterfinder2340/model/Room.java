@@ -37,7 +37,7 @@ public class Room implements Serializable{
         this.shelterName = shelterName;
     }
 
-    public boolean reserveRoom(int numSpots) {
+    public boolean reserveBeds(int numSpots) {
         if (numVacancies >= numSpots) {
             numVacancies = numVacancies - numSpots;
             return true;
@@ -45,7 +45,16 @@ public class Room implements Serializable{
         return false;
     }
 
-    public boolean releaseRoom(int numSpots) {
+    public boolean canReserve(int numSpots) {
+        if (numVacancies >= numSpots) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public boolean releaseBeds(int numSpots) {
         numVacancies = numVacancies + numSpots;
         if (numVacancies >= initialCap) {
             numVacancies = initialCap;
@@ -56,10 +65,6 @@ public class Room implements Serializable{
     @Override
     public String toString() {
         return "" + numVacancies + " " + roomType + "room(s)";
-    }
-
-    public boolean compareShelter(String sname) {
-        return this.shelterName.equals(sname);
     }
 
     public boolean reservedOut() {
