@@ -123,6 +123,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
             reserveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //List<Room> roomList = Model.getInstance().getCurrentShelter().getRoomList();
                     List<Room> roomList = new ArrayList<>();
                     roomList.add(new Room(4,"Deluxe", Model.getInstance().getCurrentShelter().getShelterName()));
                     roomList.add(new Room(2,"Lesure", Model.getInstance().getCurrentShelter().getShelterName()));
