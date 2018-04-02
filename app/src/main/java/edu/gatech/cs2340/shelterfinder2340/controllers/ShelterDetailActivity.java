@@ -21,6 +21,7 @@ import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
@@ -122,6 +123,11 @@ public class ShelterDetailActivity extends AppCompatActivity {
             reserveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    List<Room> roomList = new ArrayList<>();
+                    roomList.add(new Room(4,"Deluxe", Model.getInstance().getCurrentShelter().getShelterName()));
+                    roomList.add(new Room(2,"Lesure", Model.getInstance().getCurrentShelter().getShelterName()));
+                    roomList.add(new Room(7,"Crap", Model.getInstance().getCurrentShelter().getShelterName()));
+                    Model.getInstance().getCurrentShelter().setRoomList(roomList);
                     Intent intent = new Intent(getApplicationContext(), ReserveRoomActivity.class);
                     startActivity(intent);
                 }

@@ -132,15 +132,15 @@ public class Login_Success extends AppCompatActivity {
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Shelter shelter = snapshot.toObject(Shelter.class);
                         // TODO: Remove when done testing reserve shelter screen
-                        Intent intent = new Intent(login_success,ReserveRoomActivity.class);
-                        intent.putExtra("shelter",(Serializable) shelter);
-                        Model.getInstance().setCurrentShelter(shelter);
-                        List<Room> roomList = new ArrayList<>();
-                        roomList.add(new Room(4,"Deluxe", shelter.getShelterName()));
-                        roomList.add(new Room(2,"Lesure", shelter.getShelterName()));
-                        roomList.add(new Room(7,"Crap", shelter.getShelterName()));
-                        shelter.setRoomList(roomList);
-                        startActivity(intent);
+                        //Intent intent = new Intent(login_success,ReserveRoomActivity.class);
+                        //intent.putExtra("shelter",(Serializable) shelter);
+                        //Model.getInstance().setCurrentShelter(shelter);
+//                        List<Room> roomList = new ArrayList<>();
+//                        roomList.add(new Room(4,"Deluxe", shelter.getShelterName()));
+//                        roomList.add(new Room(2,"Lesure", shelter.getShelterName()));
+//                        roomList.add(new Room(7,"Crap", shelter.getShelterName()));
+//                        shelter.setRoomList(roomList);
+//                        startActivity(intent);
                         shelterListLoaded.add(shelter);
                     }
                     //Now shelterList is populated set changes in the model
