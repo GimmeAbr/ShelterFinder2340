@@ -66,6 +66,7 @@ public class ShelterDao {
                             Log.w("debug", "Error adding document", e);
                         }
                     });
+
         }
     }
     public void getShelters(OnCompleteListener<QuerySnapshot> listener) {

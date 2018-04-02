@@ -3,6 +3,8 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
@@ -17,7 +19,7 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 /**
  * Created by admin on 2/26/18.
  */
-public class Shelter{
+public class Shelter implements Serializable {
     private String shelterName;
     private String gender;
     private String address;
@@ -29,7 +31,7 @@ public class Shelter{
     private long id;
     List<ReservationBarLayout> bars;
 
-    private ArrayList<Room> roomList;
+    private List<Room> roomList;
     public List<ReservationBarLayout> getBars() {
         return bars;
     }
@@ -89,6 +91,10 @@ public class Shelter{
         this.bars = bars;
     }
 
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+    }
+
 
     //Getters
     public String getShelterName() {
@@ -120,6 +126,10 @@ public class Shelter{
     }
 
     public long getId() { return id; }
+
+    public List<Room> getRoomList () {
+        return this.roomList;
+    }
 
     public String getVacancies() {
         String s = "";

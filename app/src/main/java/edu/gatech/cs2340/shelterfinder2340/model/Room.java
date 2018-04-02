@@ -4,11 +4,13 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  * Created by Sylvia Li on 2018/3/26.
  */
 
+import java.io.Serializable;
+
 /**
  * Class representing a type of room available at a Shelter
  * Users have a roo
  */
-public class Room {
+public class Room implements Serializable{
     private int initialCap;
     private int numVacancies;
     private String roomType;

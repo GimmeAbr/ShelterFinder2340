@@ -12,32 +12,39 @@
         android:id="@+id/shelter_name_reserve"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="$ShelterName"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
         android:text="Reserve A Room"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shelter_name_reserve" />
 
     <Button
         android:id="@+id/add_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
         android:text="Add Room"
-        tools:layout_editor_absoluteX="259dp"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintStart_toStartOf="@+id/reserveBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="368dp"
         android:layout_height="377dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="126dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_room">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -45,18 +52,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/RoomTypes"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number"
-                android:text="Number Of Rooms:" />
+                <Spinner
+                    android:id="@+id/RoomTypes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/NumData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -64,8 +78,10 @@
         android:id="@+id/reserveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="16dp"
         android:text="Reserve"
-        tools:layout_editor_absoluteX="259dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

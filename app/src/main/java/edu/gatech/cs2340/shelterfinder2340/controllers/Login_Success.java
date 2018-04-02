@@ -52,6 +52,7 @@ import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
@@ -130,6 +131,14 @@ public class Login_Success extends AppCompatActivity {
                     final List <Shelter> shelterListLoaded = new ArrayList<>();
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Shelter shelter = snapshot.toObject(Shelter.class);
+                        Intent intent = new Intent(login_success,ReserveRoomActivity.class);
+                        intent.putExtra("shelter",(Serializable) shelter);
+                        List<Room> roomList = new ArrayList<>();
+                        roomList.add(new Room(4,"Deluxe", shelter.getShelterName()));
+                        roomList.add(new Room(2,"Lesure", shelter.getShelterName()));
+                        roomList.add(new Room(7,"Crap", shelter.getShelterName()));
+                        shelter.setRoomList(roomList);
+                        startActivity(intent);
                         shelterListLoaded.add(shelter);
                     }
                     //Now shelterList is populated set changes in the model
