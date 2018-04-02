@@ -9,7 +9,7 @@ public class Reservation {
     Room resRoom;
     String date;
     int numRooms;
-    String id;
+    String id = "";
 
     /*--------------- Constructors ----------------------*/
 
@@ -44,11 +44,21 @@ public class Reservation {
     /*---------- Setters ------------*/
     public void setId(String id) { this.id = id; }
 
-
-
-
-
-    
-
+    /*---------- Helpers ------------*/
+    @Override
+    public boolean equals(Object r) {
+        if (r == null) {
+            return false;
+        }
+        if (!(r instanceof Reservation)) {
+            return false;
+        }
+        if (((Reservation) r).getId().equals("")) {
+            return (((Reservation) r).getResOwner().getId().equals(resOwner.getId())
+            && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName()))
+            && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getNumVacancies())));
+        }
+        return false;
+    }
 
 }

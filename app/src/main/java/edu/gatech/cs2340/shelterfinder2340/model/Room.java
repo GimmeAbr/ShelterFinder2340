@@ -65,10 +65,6 @@ public class Room {
         return "" + numVacancies + " " + roomType + "room(s)";
     }
 
-    public boolean compareShelter(String sname) {
-        return this.shelterName.equals(sname);
-    }
-
     public boolean reservedOut() {
         return numVacancies == 0;
     }
