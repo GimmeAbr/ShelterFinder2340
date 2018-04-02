@@ -31,7 +31,7 @@ public class Shelter{
 
     List<ReservationBarLayout> bars;
 
-    private ArrayList<Room> roomList;
+    private List<Room> roomList;
     private List<Reservation> reserveList;
     public List<ReservationBarLayout> getBars() {
         return bars;
@@ -92,7 +92,9 @@ public class Shelter{
         this.bars = bars;
     }
 
-
+    public void setRoomList(List<Room> list) {
+        roomList = list;
+    }
     //Getters
     public String getShelterName() {
         return shelterName;
@@ -124,6 +126,9 @@ public class Shelter{
 
     public long getId() { return id; }
 
+    public List<Room> getRoomList() {
+        return roomList;
+    }
     public String getVacancies() {
         String s = "";
         for (Room r: roomList) {
