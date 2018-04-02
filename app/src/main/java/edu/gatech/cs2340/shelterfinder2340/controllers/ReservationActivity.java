@@ -1,18 +1,12 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -60,7 +54,7 @@ public class ReservationActivity extends AppCompatActivity {
                     // So that we know the person reserved here
                     Log.d("Current shelter", Model.getInstance().getCurrentShelter().getShelterName());
                     hp.reserveRoom(r.getSelectedRoom(), r.getType(), Model.getInstance().getCurrentShelter().getShelterName());
-                    Model.getInstance().getCurrentShelter().updateVacancies(r.getSelectedRoom(), r.getType());
+                    Model.getInstance().getCurrentShelter().reserveRooms(r.getSelectedRoom(), r.getType());
                 }
                 Log.d("Reserved", s);
 

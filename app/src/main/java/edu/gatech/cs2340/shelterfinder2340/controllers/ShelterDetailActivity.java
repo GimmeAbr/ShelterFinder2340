@@ -30,7 +30,7 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 public class ShelterDetailActivity extends AppCompatActivity {
     private boolean homelessRes;
-    Model model;
+    Model model = Model.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
         /**
          * Get the current shelter from the model
          */
-        model = Model.getInstance();
         final Shelter currentShelter = model.getCurrentShelter();
         final HomelessPerson hp = model.getCurrentUser();
 
@@ -67,42 +66,42 @@ public class ShelterDetailActivity extends AppCompatActivity {
         final Button reserveButton = findViewById(R.id.reserveButton);
 
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (!hp.hasReservation()) {
-            if (hp.getReservedShelter().getShelterName().equals(currentShelter.getShelterName())) {
-                reserveButton.setText("Release");
-                reserveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        model.getCurrentShelter().releaseByList(hp.getReserveList());
-                        hp.setReservation(true);
-                        hp.releaseRooms();
-                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
-                        startActivity(i);
-                        finish();
-                    }
-                });
-            } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-            }
-        } else {
-            if (!currentShelter.reservedOut()) {
-                reserveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                });
-            } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-            }
-
-        }
+//        if (!hp.hasReservation()) {
+//            if (hp.getReservedShelter().getShelterName().equals(currentShelter.getShelterName())) {
+//                reserveButton.setText("Release");
+//                reserveButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        model.getCurrentShelter().releaseByList(hp.getReserveList());
+//                        hp.setReservation(true);
+//                        hp.releaseRooms();
+//                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                });
+//            } else {
+//                reserveButton.setClickable(false);
+//                reserveButton.setEnabled(false);
+//                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+//            }
+//        } else {
+//            if (!currentShelter.reservedOut()) {
+//                reserveButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                });
+//            } else {
+//                reserveButton.setClickable(false);
+//                reserveButton.setEnabled(false);
+//                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+//            }
+//
+//        }
 
 
         /**
@@ -130,43 +129,43 @@ public class ShelterDetailActivity extends AppCompatActivity {
          */
 
 
-        reserveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Set onclick --> Be able to reserve a place
-
-                // Create a whole new AlertDialog box
-                // With a layout that allows users to pick the numbers of rooms to reserve
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                builder.setTitle("Reserve at Shelter");
-                builder.setView(R.layout.reservation_content);
-                ListView reserveList = findViewById(R.id.reserveList);
-                //shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
-                // BarsList is a list of ReservationBarLayout
-                // which is a costum layout that enables you to reserve rooms...??
-                Model.getInstance().getCurrentShelter().setBarsList(getApplicationContext());
-                List<ReservationBarLayout> barsList = Model.getInstance().getCurrentShelter().getBars();
-                Model.getInstance().setBars(barsList);
-                ArrayAdapter<ReservationBarLayout> bars = new ArrayAdapter<ReservationBarLayout>(getApplicationContext(), android.R.layout.simple_list_item_1, barsList);
-                reserveList.setAdapter(bars);
-                builder.setPositiveButton("Reserve", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // you update the vacancies however
-                        ////////////////////////////////////////
-                        ((HomelessPerson) Model.getInstance().get_currentUser()).setReservation(false);
-                        Log.d("Selected", Model.getInstance().getBars().get(0).getType());
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+//        reserveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Set onclick --> Be able to reserve a place
+//
+//                // Create a whole new AlertDialog box
+//                // With a layout that allows users to pick the numbers of rooms to reserve
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+//                builder.setTitle("Reserve at Shelter");
+//                builder.setView(R.layout.reservation_content);
+//                ListView reserveList = findViewById(R.id.reserveList);
+//                //shelterAdapter = new ArrayAdapter<Shelter>(this, android.R.layout.simple_list_item_1, shelterList);
+//                // BarsList is a list of ReservationBarLayout
+//                // which is a costum layout that enables you to reserve rooms...??
+//                Model.getInstance().getCurrentShelter().setBarsList(getApplicationContext());
+//                List<ReservationBarLayout> barsList = Model.getInstance().getCurrentShelter().getBars();
+//                Model.getInstance().setBars(barsList);
+//                ArrayAdapter<ReservationBarLayout> bars = new ArrayAdapter<ReservationBarLayout>(getApplicationContext(), android.R.layout.simple_list_item_1, barsList);
+//                reserveList.setAdapter(bars);
+//                builder.setPositiveButton("Reserve", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // you update the vacancies however
+//                        ////////////////////////////////////////
+//                        ((HomelessPerson) Model.getInstance().get_currentUser()).setReservation(false);
+//                        Log.d("Selected", Model.getInstance().getBars().get(0).getType());
+//                    }
+//                });
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//            }
+//        });
     }
 }

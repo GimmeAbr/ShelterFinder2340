@@ -130,7 +130,7 @@ public class Shelter{
         return s;
     }
 
-    public void updateVacancies(int cap, String type) {
+    public void reserveRooms(int cap, String type) {
         for (Room r: roomList) {
             if (r.getRoomType().equals(type)) {
                 r.reserveRoom(cap);
@@ -145,6 +145,16 @@ public class Shelter{
                 if (e.getRoomType().equals(r.getRoomType())) {
                     e.releaseRoom(r.getNumVacancies());
                 }
+            }
+        }
+    }
+
+    public void releaseReservation(Reservation reservation) {
+        // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
+        Room r = reservation.getResRoom();
+        for (Room e: roomList) {
+            if (e.getRoomType().equals(r.getRoomType())) {
+                e.releaseRoom(r.getNumVacancies());
             }
         }
     }

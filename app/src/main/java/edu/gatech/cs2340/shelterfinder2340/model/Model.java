@@ -45,7 +45,7 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    private final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, "" ,0);
+    public static final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, "" ,0);
 
     /** holds the list of all shelters */
     private List<Shelter> _shelters;

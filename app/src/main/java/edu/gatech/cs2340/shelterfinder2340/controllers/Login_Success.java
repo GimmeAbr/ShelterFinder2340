@@ -167,7 +167,7 @@ public class Login_Success extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = model.getShelters().get(i);
-                Model.getInstance().setCurrentShelter(st);
+                model.setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
             }
