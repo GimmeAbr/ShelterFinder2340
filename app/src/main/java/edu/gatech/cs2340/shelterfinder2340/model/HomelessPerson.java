@@ -81,8 +81,8 @@ public class HomelessPerson extends User {
 
     public void releaseReservation(Reservation res) {
         for (int i = 0; i < reserveList.size(); i++) {
-            if(reserveList.get(i).equals(res)) {
-                reserveList.remove(res);
+            if(reserveList.get(i).getId().equals(res.getId())) {
+                reserveList.remove(i);
             }
         }
 

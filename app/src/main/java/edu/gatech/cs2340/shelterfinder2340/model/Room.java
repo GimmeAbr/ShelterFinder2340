@@ -35,7 +35,7 @@ public class Room {
         this.shelterName = shelterName;
     }
 
-    public boolean reserveRoom(int numSpots) {
+    public boolean reserveBeds(int numSpots) {
         if (numVacancies >= numSpots) {
             numVacancies = numVacancies - numSpots;
             return true;
@@ -43,7 +43,16 @@ public class Room {
         return false;
     }
 
-    public boolean releaseRoom(int numSpots) {
+    public boolean canReserve(int numSpots) {
+        if (numVacancies >= numSpots) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public boolean releaseBeds(int numSpots) {
         numVacancies = numVacancies + numSpots;
         if (numVacancies >= initialCap) {
             numVacancies = initialCap;

@@ -133,10 +133,10 @@ public class Shelter{
         return s;
     }
 
-    public void reserveRooms(int cap, String type) {
+    public void reserveBedss(int cap, String type) {
         for (Room r: roomList) {
             if (r.getRoomType().equals(type)) {
-                r.reserveRoom(cap);
+                r.reserveBeds(cap);
                 return;
             }
         }
@@ -146,7 +146,7 @@ public class Shelter{
         for (Room r: resList) {
             for (Room e: roomList) {
                 if (e.getRoomType().equals(r.getRoomType())) {
-                    e.releaseRoom(r.getNumVacancies());
+                    e.releaseBeds(r.getNumVacancies());
                 }
             }
         }
@@ -155,15 +155,25 @@ public class Shelter{
     public void releaseReservation(Reservation reservation) {
         // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
         Room room = reservation.getResRoom();
+        HomelessPerson hp = reservation.getResOwner();
         int numRes = reservation.getNumRooms();
         for (Room r: roomList) {
             if (r.getRoomType().equals(room.getRoomType())) {
-                r.releaseRoom(numRes);
+                r.releaseBeds(numRes);
             }
         }
+
+        hp.releaseReservation(reservation);
+        for (int i = 0; i < reserveList.size(); i++) {
+            if(reserveList.get(i).getId().equals(reservation.getId())) {
+                reserveList.remove(i);
+            }
+        }
+
+
     }
 
-    public void createReservation( HomelessPerson reserver, int num, Room room) {
+    public void createReservation(HomelessPerson reserver, int num, Room room) {
         //create reservation
         //add reservation to SHelter's reservation list
         //add reservation to User's reservation list
@@ -172,6 +182,7 @@ public class Shelter{
             reserver.setReservation(true);
             reserver.addReservation(res);
             reserveList.add(res);
+            room.reserveBeds(num);
         }
     }
 

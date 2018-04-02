@@ -9,7 +9,7 @@ public class Reservation {
     Room resRoom;
     String date;
     int numRooms;
-    int id;
+    String id;
 
     /*--------------- Constructors ----------------------*/
 
@@ -37,19 +37,18 @@ public class Reservation {
         return numRooms;
     }
 
+    public HomelessPerson getResOwner() { return resOwner; }
 
-//    /*----------- Actions --------------*/
-//    public void releaseReservation() {
-//        /**
-//         * TODO: the user releases the reservation and so does the shelter
-//         */
-//        resOwner.releaseRes(this);
-//        Room room = resRoom;
-//        Shelter shelter = Model.getInstance().getShelterByName(room.getShelterName());
-//        if (!shelter.equals(Model.theNullShelter)) {
-//            shelter.releaseReservation(this);
-//        }
-//    }
+    public String getId() { return id;}
+
+    /*---------- Setters ------------*/
+    public void setId(String id) { this.id = id; }
+
+
+
+
+
+    
 
 
 }
