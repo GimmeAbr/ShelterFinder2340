@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 
@@ -61,7 +63,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
 
         Intent prev1Intent = getIntent();
         Bundle prev1Extra = prev1Intent.getExtras();
-        shelter = (Shelter) prev1Extra.getSerializable("shelter");
+        shelter = Model.getInstance().getCurrentShelter();
         for (Room d: shelter.getRoomList()) {
             roomMap.put(d.getRoomType(),d);
         }
