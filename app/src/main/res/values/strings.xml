@@ -30,9 +30,10 @@
 
 
     <!-- Strings related to registration -->
-    <string name="reg_name"> Name </string>
-    <string name="reg_id"> ID </string>
+    <string name="reg_email"> Email </string>
+    <string name="reg_name"> Name</string>
     <string name="reg_password"> Password </string>
     <string name="reg_userType"> User Type </string>
     <string name="reg"> Register </string>
+    <string name="title_activity_filter">FilterActivity</string>
 </resources>

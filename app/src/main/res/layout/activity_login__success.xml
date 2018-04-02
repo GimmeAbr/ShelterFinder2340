@@ -7,24 +7,37 @@
     tools:context="edu.gatech.cs2340.shelterfinder2340.controllers.Login_Success">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="569dp"
         tools:layout_editor_absoluteY="4dp">
 
-        <TextView
-            android:id="@+id/displayID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="119dp"
-            android:layout_marginTop="194dp" />
     </RelativeLayout>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimary"
+            android:text="Logout"
+            android:layout_gravity="right"/>
+
+        <TextView
+            android:id="@+id/displayID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Welcome!"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -38,11 +51,14 @@
     <include layout="@layout/content_login__success" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_lock_idle_lock" />
+        android:id="@+id/search_button"
+        android:layout_width="64dp"
+        android:layout_height="54dp"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="right|bottom"
+        tools:layout_editor_absoluteX="320dp"
+        tools:layout_editor_absoluteY="513dp"
+        android:src="@drawable/search"
+        android:backgroundTint="@android:color/holo_blue_light"/>
 
 </android.support.design.widget.CoordinatorLayout>

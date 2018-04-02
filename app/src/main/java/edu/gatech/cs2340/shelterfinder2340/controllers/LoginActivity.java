@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,10 +32,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -47,7 +57,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
+    private FirebaseAuth mAuth;
+    private LoginActivity thisObj;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -68,8 +79,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        thisObj = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -91,6 +104,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cancelIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                startActivity(cancelIntent);
             }
         });
 
@@ -191,16 +213,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            Intent myIntent = new Intent(this, Login_Success.class);
-            if (email.equals("1234@gmail.com") && password.equals("12345")) {
-                startActivity(myIntent);
-            } else {
-                Toast error_toast = Toast.makeText(getApplicationContext(), "Email and Password do not match, please try again", Toast.LENGTH_LONG);
-                error_toast.show();
-                mEmailView.setText("");
-                mPasswordView.setText("");
-            }
         }
+    }
+
+    private void updateUI() {
+        Log.d("debug","WHAT THE HELL IS HAPPENING");
+        Log.d("error","WHAT THE HELL IS HAPPENING");
+        Log.d("verbose","WHAT THE HELL IS HAPPENING");
+        showProgress(false);
+        mEmailView.setError("Invalid email or password");
+        View focusView = mEmailView;
+        focusView.requestFocus();
     }
 
     private boolean isEmailValid(String email) {
@@ -322,19 +345,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                Task task = mAuth.signInWithEmailAndPassword(mEmail, mPassword);
+                while (!task.isComplete()) {
+
+                }
+                Log.d("debug", "WHAT HAPPENED");
+                // If sign in fails, display a message to the
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's informa tion
+                    FirebaseUser user = mAuth.getCurrentUser();
+                } else {
+                    throw new RuntimeException("Login failed");
+                }
+            } catch (RuntimeException e) {
+                Log.d("debug", e.toString());
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
             return true;
@@ -346,6 +373,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                String uid = mAuth.getCurrentUser().getUid();
+                UserDao dao = new UserDao();
+                dao.queryHomelessUser(uid);
+                Intent myIntent = new Intent(getApplicationContext(), Login_Success.class);
+                myIntent.putExtra("Label", "start");
+                //String shelterInterest = snapshot.child("shelters").getValue(String.class);
+                startActivity(myIntent);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -5,16 +5,35 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  *
  */
 
-public class User {
+public abstract class User {
     public String getUserName() {
         return userName;
     }
 
     private String userName;
 
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    private String attribute;
+
+    public String getName() {
+        return name;
+    }
+
+    private String name;
+    private String id;
+
     public String getPassWord() {
         return passWord;
     }
+
+    public String getId() { return id;}
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
@@ -22,9 +41,14 @@ public class User {
 
     private String passWord;
 
-    public User(String userName, String passWord) {
+    public User(String userName, String passWord, String name) {
         this.userName = userName;
         this.passWord = passWord;
+        this.name = name;
+    }
+
+    public User(String id) {
+        this.id = id;
     }
 
     public boolean checkUserName(String uName) {
