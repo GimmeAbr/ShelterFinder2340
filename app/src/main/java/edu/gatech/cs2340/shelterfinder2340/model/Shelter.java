@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 import android.content.Context;
@@ -27,9 +28,11 @@ public class Shelter{
     private int vacancies;
     private String capacity;
     private long id;
+
     List<ReservationBarLayout> bars;
 
     private ArrayList<Room> roomList;
+    private List<Reservation> reserveList;
     public List<ReservationBarLayout> getBars() {
         return bars;
     }
@@ -151,11 +154,24 @@ public class Shelter{
 
     public void releaseReservation(Reservation reservation) {
         // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
-        Room r = reservation.getResRoom();
-        for (Room e: roomList) {
-            if (e.getRoomType().equals(r.getRoomType())) {
-                e.releaseRoom(r.getNumVacancies());
+        Room room = reservation.getResRoom();
+        int numRes = reservation.getNumRooms();
+        for (Room r: roomList) {
+            if (r.getRoomType().equals(room.getRoomType())) {
+                r.releaseRoom(numRes);
             }
+        }
+    }
+
+    public void createReservation( HomelessPerson reserver, int num, Room room) {
+        //create reservation
+        //add reservation to SHelter's reservation list
+        //add reservation to User's reservation list
+        if (num > 0) {
+            Reservation res = new Reservation(reserver, num, room, Calendar.getInstance().getTime().toString());
+            reserver.setReservation(true);
+            reserver.addReservation(res);
+            reserveList.add(res);
         }
     }
 
@@ -176,6 +192,8 @@ public class Shelter{
         // Collaborates with Room objects
         return bars;
     }
+
+
 
 
 

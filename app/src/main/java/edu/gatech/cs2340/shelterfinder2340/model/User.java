@@ -30,7 +30,6 @@ public class User {
     private String username;
     private String password;
     private String id;
-    private Shelter reservedShelter;
 
 
     public User( String name, String username, String password, String id) {
@@ -49,6 +48,7 @@ public class User {
         this(name, "","", id);
 
     }
+
     public User(String id) {
         this.id = id;
     }
@@ -68,5 +68,8 @@ public class User {
     public boolean checkPassword(String pWord) {
         return (pWord.equals(this.password));
     }
-    public boolean hasReservedShelter(){return !(reservedShelter == null);}
+
+    public void releaseReservation(Reservation res) {
+
+    }
 }

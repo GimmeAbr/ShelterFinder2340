@@ -25,6 +25,7 @@ public class HomelessPerson extends User {
         super(name, username, password, id);
         this.setGender(gender);
         shelterInterests = new ArrayList<Shelter>();
+        reserveList = new ArrayList<Reservation>();
 
     }
     public HomelessPerson(String name, String gender, String uid) {
@@ -74,32 +75,24 @@ public class HomelessPerson extends User {
     }
     public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
 
+    public void addReservation(Reservation res) {
+        reserveList.add(res);
+    }
 
-    public void reserveRoom(int num, String type, String shelterName) {
-        if (num > 0) {
-            Room reserve = new Room(num, type, shelterName);
-            Reservation res = new Reservation(this, reserve, Calendar.getInstance().getTime().toString());
-            reserveList.add(res);
+    public void releaseReservation(Reservation res) {
+        for (int i = 0; i < reserveList.size(); i++) {
+            if(reserveList.get(i).equals(res)) {
+                reserveList.remove(res);
+            }
+        }
+
+        if (reserveList.isEmpty()) {
+            hasReservation = false;
         }
     }
 
-    /*
-     * Releases one specific reservation
-     */
-    public void releaseRes(Reservation reservation) {
-        reserveList.remove(reservation);
-        hasReservation = !(reserveList.isEmpty());
-    }
-
-    /*
-        Releases all the rooms at once
-     */
-    public void releaseRooms() {
+    public void releaseAllReservations() {
         reserveList.clear();
         hasReservation = false;
-        /*--------------Or This--------------*/
-//        for (Reservation r: reserveList) {
-//            r.releaseReservation();
-//        }
     }
 }
