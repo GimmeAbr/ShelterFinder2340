@@ -53,8 +53,8 @@ public class ReservationActivity extends AppCompatActivity {
                     // reserveRoom function creates a new Room object within the HomelessPerson
                     // So that we know the person reserved here
                     Log.d("Current shelter", Model.getInstance().getCurrentShelter().getShelterName());
-                    hp.reserveRoom(r.getSelectedRoom(), r.getType(), Model.getInstance().getCurrentShelter().getShelterName());
-                    Model.getInstance().getCurrentShelter().reserveRooms(r.getSelectedRoom(), r.getType());
+//                    hp.reserveBeds(r.getSelectedRoom(), r.getType(), Model.getInstance().getCurrentShelter().getShelterName());
+//                    Model.getInstance().getCurrentShelter().reserveRooms(r.getSelectedRoom(), r.getType());
                 }
                 Log.d("Reserved", s);
 
