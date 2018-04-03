@@ -16,7 +16,7 @@ public class HomelessPerson extends User {
     private Location currentLocation;
     private String gender;
     private boolean hasReservation;
-    private Shelter reservedShelter;
+
     private ArrayList<Reservation> reserveList;
 
 
@@ -39,10 +39,9 @@ public class HomelessPerson extends User {
     public String getGender() {
         return gender;
     }
-    public boolean hasReservation() {
+    public boolean getHasReservation() {
         return hasReservation;
     }
-    public Shelter getReservedShelter() { return reservedShelter; }
     public List<Shelter> getShelterInterests() {
         return shelterInterests;
     }
@@ -55,13 +54,14 @@ public class HomelessPerson extends User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    public void setReservation(boolean res) {
+    public void setHasReservation(boolean res) {
         this.hasReservation = res;
     }
-    public void setReservedShelter(Shelter shelter) { this.reservedShelter = shelter;}
     public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
     public void setCurrentLocation(Location currentLocation) { this.currentLocation = currentLocation; }
-
+    public void setReserveList(ArrayList<Reservation> reserveList) {
+        this.reserveList = reserveList;
+    }
 
     //------------------------------- Actions -------------------------------
     public void markInterest(Shelter shelter) {
@@ -85,7 +85,6 @@ public class HomelessPerson extends User {
                 reserveList.remove(i);
             }
         }
-
         if (reserveList.isEmpty()) {
             hasReservation = false;
         }

@@ -116,7 +116,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
             tb.setTitle(Model.getInstance().getCurrentShelter().getShelterName());
         }
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (((HomelessPerson)Model.getInstance().get_currentUser()).hasReservation()) {
+        if (((HomelessPerson)Model.getInstance().get_currentUser()).getHasReservation()) {
             reserveButton.setClickable(false);
             reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
         } else {

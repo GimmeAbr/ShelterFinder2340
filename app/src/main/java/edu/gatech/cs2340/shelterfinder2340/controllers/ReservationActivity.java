@@ -41,7 +41,7 @@ public class ReservationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 HomelessPerson hp = (HomelessPerson) Model.getInstance().getCurrentUser();
-                hp.setReservation(false);
+                hp.setHasReservation(false);
                 // Update current shelter
                 String s = "";
                 for (ReservationBarLayout r: barsList) {

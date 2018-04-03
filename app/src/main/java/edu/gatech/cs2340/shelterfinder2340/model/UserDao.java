@@ -17,6 +17,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,45 +40,36 @@ public class UserDao {
 
     public void saveHomelessPerson(HomelessPerson user) {
         Log.d("debug", "about to save homeless person");
-        Map<String, Object> homelessMap = new HashMap<>();
-        homelessMap.put("name", user.getName());
-        homelessMap.put("id", user.getId());
-        //homelessMap.put("gender", user.getGender());
-        homelessMap.put("hasReservation", user.hasReservation());
-        homelessMap.put("reservationList", user.getReserveList());
-        db.collection("homeless")
-                .add(homelessMap)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("debug", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("debug", "Error adding document", e);
-                    }
-                });
+        db.collection("homeless").document(user.getId()).set(user);
     }
 
-    public void queryHomelessUser(String id) {
+    public void queryHomelessUser(final String id) {
         Log.d("Id", id);
-        db.collection("homeless")
-                .whereEqualTo("id", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("homeless").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     // TODO: Make this work; right now it is null
-                    HomelessPerson hp = task.getResult().getDocuments().get(0).toObject(HomelessPerson.class);
-                    Model.getInstance().set_currentUser(hp);
-                    Log.d("Grabbed User", hp.getId() + " => " + hp.getName());
+                    Log.d("Id from user", task.getResult().getString("name"));
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot.exists()) {
+                        String name = snapshot.getString("name");
+                        boolean hasReservation = snapshot.getBoolean("hasReservation");
+                        String gender = snapshot.getString("gender");
+                        ArrayList<Reservation> reservationList = (ArrayList<Reservation>) snapshot.get("reserveList");
+                        HomelessPerson hp = new HomelessPerson(name, gender, id);
+                        hp.setHasReservation(hasReservation);
+                        hp.setReserveList(reservationList);
+                        Model.getInstance().set_currentUser(hp);
+                        Log.d("Grabbed User", hp.getId() + " => " + hp.getName());
+                    }
                 } else {
                     Log.d("Oh No", "Not successful");
                 }
             }
         });
     }
+
     public boolean isDone() {
         return isDone;
     }

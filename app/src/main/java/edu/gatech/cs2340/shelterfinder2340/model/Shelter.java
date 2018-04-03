@@ -47,6 +47,8 @@ public class Shelter{
         this.address = address;
         this.capacity = capacity;
         this.id = id;
+        reserveList = new ArrayList<>();
+        roomList = new ArrayList<>();
     }
 
     public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
@@ -184,7 +186,7 @@ public class Shelter{
         //add reservation to User's reservation list
         if (num > 0) {
             Reservation res = new Reservation(reserver, num, room, Calendar.getInstance().getTime().toString());
-            reserver.setReservation(true);
+            reserver.setHasReservation(true);
             reserver.addReservation(res);
             reserveList.add(res);
             room.reserveBeds(num);

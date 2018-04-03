@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         if (attribute.equals("User")) {
                                             final HomelessPerson hp = new HomelessPerson(name, gender, user.getUid());
-                                            hp.setReservation(true);
+                                            hp.setHasReservation(true);
                                             UserDao dao = new UserDao();
                                             dao.saveHomelessPerson(hp);
                                             Model.getInstance().set_currentUser(hp);
