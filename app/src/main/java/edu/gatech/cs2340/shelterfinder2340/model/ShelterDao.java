@@ -53,6 +53,7 @@ public class ShelterDao {
                 shelterMap.put("latitude", shelter.getLatitude());
                 shelterMap.put("address", shelter.getAddress());
                 shelterMap.put("roomList", shelter.getRoomList());
+                shelterMap.put("reserveList", shelter.getReserveList());
             db.collection("shelters")
                     .add(shelterMap)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -70,9 +71,26 @@ public class ShelterDao {
 
         }
     }
+
     public void getShelters(OnCompleteListener<QuerySnapshot> listener) {
         Task<QuerySnapshot> task = db.collection("shelters").get();
         task.addOnCompleteListener(listener);
+    }
+
+    public void updateShelter(Shelter shelter) {
+        Map<String, Object> shelterMap = new HashMap<>();
+        shelterMap.put("shelterName", shelter.getShelterName());
+        shelterMap.put("gender", shelter.getGender());
+        shelterMap.put("capacity", shelter.getCapacity());
+        shelterMap.put("phoneNumber", shelter.getPhoneNumber());
+        shelterMap.put("longitude", shelter.getLongitude());
+        shelterMap.put("latitude", shelter.getLatitude());
+        shelterMap.put("address", shelter.getAddress());
+        shelterMap.put("id", shelter.getId());
+        shelterMap.put("roomList", (Object) shelter.getRoomList());
+        shelterMap.put("reserveList", shelter.getReserveList());
+
+        db.collection("shelters").document(shelter.getId()).set(shelterMap);
     }
 
     public boolean isDone() {

@@ -131,6 +131,7 @@ public class Login_Success extends AppCompatActivity {
                     final List <Shelter> shelterListLoaded = new ArrayList<>();
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Shelter shelter = snapshot.toObject(Shelter.class);
+                        shelter.setId(snapshot.getId());
                         // TODO: Remove when done testing reserve shelter screen
                         //Intent intent = new Intent(login_success,ReserveRoomActivity.class);
                         //intent.putExtra("shelter",(Serializable) shelter);

@@ -31,6 +31,8 @@ import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
+import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 public class ReserveRoomActivity extends AppCompatActivity {
 
@@ -175,14 +177,21 @@ public class ReserveRoomActivity extends AppCompatActivity {
                 for (int i = 0; i < layout.getChildCount(); i++) {
                     LinearLayout linearLayout = (LinearLayout) layout.getChildAt(i);
                     Spinner roomStringSpn = (Spinner)linearLayout.getChildAt(0);
-                    Spinner numToReserveSpn = (Spinner)linearLayout.getChildAt(0);
+                    Spinner numToReserveSpn = (Spinner)linearLayout.getChildAt(1);
                     Room reservered = roomMap.get((String)roomStringSpn.getSelectedItem());
-                    Integer numReserved = (Integer)numToReserveSpn.getSelectedItem();
+                    Integer numReserved = Integer.valueOf(numToReserveSpn.getSelectedItem().toString());
                     Reservation reservation = new Reservation(Model.getInstance().getCurrentUser(),reservered,numReserved);
                     reservations.add(reservation);
                     ((HomelessPerson)Model.getInstance().get_currentUser()).addReservation(reservation);
                     // TODO: UPDATE EVERY FUCKING THING
+                    ShelterDao sDao = new ShelterDao();
+                    sDao.updateShelter(shelter);
+                    UserDao userDao = new UserDao();
+                    userDao.saveHomelessPerson((HomelessPerson)Model.getInstance().get_currentUser());
                 }
+                Intent backIntent = new Intent(getApplicationContext(), Login_Success.class);
+                startActivity(backIntent);
+                finish();
             }
         });
         // TODO: CANCEL BUTTON

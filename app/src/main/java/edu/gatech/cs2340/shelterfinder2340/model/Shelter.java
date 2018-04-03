@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 import android.content.Context;
+import android.util.Log;
 
 
 import java.util.ArrayList;
@@ -27,18 +28,23 @@ public class Shelter{
     private double longitude;
     private int vacancies;
     private String capacity;
-    private long id;
+    private String id;
 
     List<ReservationBarLayout> bars;
 
     private List<Room> roomList;
+
+    public List<Reservation> getReserveList() {
+        return reserveList;
+    }
+
     private List<Reservation> reserveList;
     public List<ReservationBarLayout> getBars() {
         return bars;
     }
 
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, int id) {
+    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, String id) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -52,11 +58,11 @@ public class Shelter{
     }
 
     public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
-        this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, 0);
+        this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, "");
     }
 
     public Shelter() {
-        this("","","","",0,0,"",0);
+        this("","","","",0,0,"","");
     }
 
     //Setters
@@ -88,7 +94,7 @@ public class Shelter{
         this.longitude = longitude;
     }
 
-    public void setId(long id) {this.id = id;}
+    public void setId(String id) {this.id = id;}
 
     public void setBars(List<ReservationBarLayout> bars) {
         this.bars = bars;
@@ -126,18 +132,14 @@ public class Shelter{
         return longitude;
     }
 
-    public long getId() { return id; }
+    public String getId() { return id; }
 
     public List<Room> getRoomList() {
-        return roomList;
-    }
-    public String getVacancies() {
-        String s = "";
-        for (Room r: roomList) {
-            s = s + r.toString();
-            s = s + ".";
+        if (roomList.size() == 0
+                || roomList == null) {
+            loadInitialRoomList();
         }
-        return s;
+        return roomList;
     }
 
     public void reserveBedss(int cap, String type) {
@@ -211,9 +213,35 @@ public class Shelter{
         return bars;
     }
 
+    /**
+     * This method loads the initial roomList based on the csv file
+     */
+    public void loadInitialRoomList() {
+        if (shelterName.contains("Eden")) {
+            roomList.add(new Room(32, "FAMILY", shelterName));
+            roomList.add(new Room(80, "SINGLE", shelterName));
+        } else if (shelterName.contains("Hope")) {
+            roomList.add(new Room(22, "ANYONE", shelterName));
+        } else if (capacity.contains("N/A")) {
+            roomList.add(new Room(0, gender.toUpperCase(), shelterName));
+        } else {
+            Room r = new Room(Integer.valueOf(capacity), gender.toUpperCase(), shelterName);
+            roomList.add(r);
+            Log.d("Room String", r.toString());
+        }
+    }
 
-
-
+    public int calculateVacancies() {
+        int vac = 0;
+        for (Room r: roomList) {
+            if (r.getRoomType().toLowerCase().contains("famil")) {
+                vac += 3 * r.getNumVacancies();
+            } else {
+                vac += r.getNumVacancies();
+            }
+        }
+        return vac;
+    }
 
     @Override
     public String toString() {

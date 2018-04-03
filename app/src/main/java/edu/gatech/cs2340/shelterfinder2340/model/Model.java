@@ -45,7 +45,7 @@ public class Model {
     private Shelter _currentShelter;
 
     /** Null Object pattern, returned when no course is found */
-    public static final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, "" ,0);
+    public static final Shelter theNullShelter = new Shelter("No Such Shelter", "", "", "",0,0, "" ,"");
 
     /** holds the list of all shelters */
     private List<Shelter> _shelters;
@@ -160,7 +160,7 @@ public class Model {
      */
     public Shelter getShelterById (int id) {
         for (Shelter s : _shelters ) {
-            if (s.getId() == id) return s;
+            if (s.getId().equals(id)) return s;
         }
         return theNullShelter;
     }
@@ -191,14 +191,14 @@ public class Model {
      * populate the model with some dummy data.  The full app would not require this.
      * comment out when adding new courses functionality is present.
      */
-    private void loadDummyData() {
-        _shelters = new ArrayList<Shelter>();
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
-        _shelters.add(new Shelter("Shelter3", "","","",0, 0,"",0));
-        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
-
-    }
+//    private void loadDummyData() {
+//        _shelters = new ArrayList<Shelter>();
+//        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
+//        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
+//        _shelters.add(new Shelter("Shelter3", "","","",0, 0,"",0));
+//        _shelters.add(new Shelter("Shelter4", "","","",0, 0,"",0));
+//
+//    }
 
     private void loadDummyUser() {
         _currentUser = new User("Mya", "myaetsang@gmail.com", "password", "1");
