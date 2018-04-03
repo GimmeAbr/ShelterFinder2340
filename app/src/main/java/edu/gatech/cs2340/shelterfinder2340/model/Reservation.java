@@ -58,7 +58,7 @@ public class Reservation {
         if (((Reservation) r).getId().equals("")) {
             return (((Reservation) r).getResOwnerId().equals(resOwnerId)
             && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName()))
-            && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getNumVacancies())));
+                    && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getRoomType())));
         }
         return false;
     }

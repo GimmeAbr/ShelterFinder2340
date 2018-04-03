@@ -12,6 +12,11 @@ import java.io.Serializable;
  */
 public class Room implements Serializable{
     private int initialCap;
+
+    public void setNumVacancies(int numVacancies) {
+        this.numVacancies = numVacancies;
+    }
+
     private int numVacancies;
     private String roomType;
 
@@ -52,14 +57,11 @@ public class Room implements Serializable{
         return false;
     }
 
-
-
-    public boolean releaseBeds(int numSpots) {
-        numVacancies = numVacancies + numSpots;
+    public void releaseBeds(int numSpots) {
+        this.numVacancies = this.numVacancies + numSpots;
         if (numVacancies >= initialCap) {
             numVacancies = initialCap;
         }
-        return true;
     }
 
     @Override

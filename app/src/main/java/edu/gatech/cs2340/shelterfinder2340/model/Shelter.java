@@ -162,13 +162,15 @@ public class Shelter{
         int numRes = reservation.getNumRooms();
         for (Room r: roomList) {
             if (r.getRoomType().equals(room.getRoomType())) {
-                r.releaseBeds(numRes);
+                Log.d("numRes", numRes + "");
+                r.setNumVacancies(r.getNumVacancies() + numRes);
             }
         }
         hp.releaseReservation(reservation);
-        for (int i = 0; i < reserveList.size(); i++) {
-            if(reserveList.get(i).getId().equals(reservation.getId())) {
-                reserveList.remove(i);
+        for (Reservation rsv : reserveList) {
+            if (rsv.equals(reservation)) {
+                Log.d("Match", reservation.resOwnerId);
+                reserveList.remove(rsv);
             }
         }
     }

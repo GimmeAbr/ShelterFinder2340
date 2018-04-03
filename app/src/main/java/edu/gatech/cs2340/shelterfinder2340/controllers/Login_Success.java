@@ -233,6 +233,7 @@ public class Login_Success extends AppCompatActivity {
                 model.setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

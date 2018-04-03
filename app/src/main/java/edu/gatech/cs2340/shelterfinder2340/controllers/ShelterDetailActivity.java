@@ -27,6 +27,8 @@ import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 
+import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
+import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 
@@ -107,8 +109,10 @@ public class ShelterDetailActivity extends AppCompatActivity {
                         for (Reservation reservation: hp.getReserveList()) {
                             currentShelter.releaseReservation(reservation);
                         }
-                        hp.releaseAllReservations();
-                        hp.setHasReservation(false);
+                        ShelterDao sDao = new ShelterDao();
+                        sDao.updateShelter(currentShelter);
+                        UserDao userDao = new UserDao();
+                        userDao.saveHomelessPerson((HomelessPerson) Model.getInstance().get_currentUser());
                         Intent i = new Intent(getApplicationContext(), Login_Success.class);
                         startActivity(i);
                         finish();
@@ -125,24 +129,24 @@ public class ShelterDetailActivity extends AppCompatActivity {
             tb.setTitle(Model.getInstance().getCurrentShelter().getShelterName());
         }
         // isRes() indicates whether the HomelessPerson is allowed to reserve
-        if (((HomelessPerson)Model.getInstance().get_currentUser()).getHasReservation()) {
-            reserveButton.setClickable(false);
-            reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-        } else {
-            reserveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    List<Room> roomList = Model.getInstance().getCurrentShelter().getRoomList();
-//                    List<Room> roomList = new ArrayList<>();
-//                    roomList.add(new Room(4,"Deluxe", Model.getInstance().getCurrentShelter().getShelterName()));
-//                    roomList.add(new Room(2,"Lesure", Model.getInstance().getCurrentShelter().getShelterName()));
-//                    roomList.add(new Room(7,"Crap", Model.getInstance().getCurrentShelter().getShelterName()));
-                    Model.getInstance().getCurrentShelter().setRoomList(roomList);
-                    Intent intent = new Intent(getApplicationContext(), ReserveRoomActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
+//        if (((HomelessPerson)Model.getInstance().get_currentUser()).getHasReservation()) {
+//            reserveButton.setClickable(false);
+//            reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+//        } else {
+//            reserveButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    List<Room> roomList = Model.getInstance().getCurrentShelter().getRoomList();
+////                    List<Room> roomList = new ArrayList<>();
+////                    roomList.add(new Room(4,"Deluxe", Model.getInstance().getCurrentShelter().getShelterName()));
+////                    roomList.add(new Room(2,"Lesure", Model.getInstance().getCurrentShelter().getShelterName()));
+////                    roomList.add(new Room(7,"Crap", Model.getInstance().getCurrentShelter().getShelterName()));
+//                    Model.getInstance().getCurrentShelter().setRoomList(roomList);
+//                    Intent intent = new Intent(getApplicationContext(), ReserveRoomActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
+//        }
 
     }
 }
