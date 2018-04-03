@@ -35,6 +35,10 @@ public class Shelter{
         return reserveList;
     }
 
+    public void setReserveList(List<Reservation> reserveList) {
+        this.reserveList = reserveList;
+    }
+
     private List<Reservation> reserveList;
 
 
@@ -201,10 +205,10 @@ public class Shelter{
             roomList.add(new Room(22, "ANYONE", shelterName));
         } else if (shelterName.contains("Our House")) {
             roomList.add(new Room(76, "FAMILY", shelterName));
-        } else if (gender.toUpperCase().contains("FAMI")) {
-            roomList.add(new Room(Integer.valueOf(capacity), "FAMILY", shelterName));
         } else if (capacity.contains("N/A")) {
             roomList.add(new Room(0, gender.toUpperCase(), shelterName));
+        } else if (gender.toUpperCase().contains("FAMI")) {
+            roomList.add(new Room(Integer.valueOf(capacity), "FAMILY", shelterName));
         } else {
             Room r = new Room(Integer.valueOf(capacity), gender.toUpperCase().replaceAll("/", " AND "), shelterName);
             roomList.add(r);

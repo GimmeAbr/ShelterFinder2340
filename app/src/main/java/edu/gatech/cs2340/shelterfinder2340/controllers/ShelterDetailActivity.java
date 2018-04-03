@@ -97,7 +97,10 @@ public class ShelterDetailActivity extends AppCompatActivity {
         } else {
             // hp does have a reservation
             if (hp.getReserveList().get(0).getResRoom().getShelterName().equals(currentShelter.getShelterName())) {
-                reserveButton.setText("Release");
+                reserveButton.setClickable(true);
+                reserveButton.setEnabled(true);
+                reserveButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                reserveButton.setText("Release All Rooms");
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

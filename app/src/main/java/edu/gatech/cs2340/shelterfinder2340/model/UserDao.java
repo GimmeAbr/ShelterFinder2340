@@ -53,7 +53,26 @@ public class UserDao {
                     Log.d("Id from user", task.getResult().getString("name"));
                     DocumentSnapshot snapshot = task.getResult();
                     if (snapshot.exists()) {
-                        HomelessPerson hp = snapshot.toObject(HomelessPerson.class);
+                        String name = snapshot.getString("name");
+                        boolean hasReservation = snapshot.getBoolean("hasReservation");
+                        String gender = snapshot.getString("gender");
+                        ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
+                        ArrayList<Reservation> reservationList = new ArrayList<>();
+                        for (Object o : preReserveList) {
+                            HashMap<String, Object> preReservation = (HashMap<String, Object>) o;
+                            int numRoom = ((Long) preReservation.get("numRooms")).intValue();
+                            String resOwnerId = (String) preReservation.get("resOwnerId");
+                            HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
+                            int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                            String roomType = (String) preRoom.get("roomType");
+                            String roomShelterName = (String) preRoom.get("shelterName");
+                            Room resRoom = new Room(numVacancies, roomType, roomShelterName);
+                            Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
+                            reservationList.add(res);
+                        }
+                        HomelessPerson hp = new HomelessPerson(name, gender, id);
+                        hp.setHasReservation(hasReservation);
+                        hp.setReserveList(reservationList);
                         Model.getInstance().set_currentUser(hp);
                         Log.d("Grabbed User", hp.getId() + " => " + hp.getName());
                     }
