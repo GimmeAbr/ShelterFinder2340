@@ -78,17 +78,18 @@ public class ShelterDao {
     }
 
     public void updateShelter(Shelter shelter) {
-        for (Room r : shelter.getRoomList()) {
-            DocumentReference roomRef = db.collection("shelters")
-                    .document(shelter.getId()).collection("roomList").document(r.getRoomType());
-            roomRef.update("vacancy", r.getNumVacancies());
-        }
-
-        for (Reservation reservation : shelter.getReserveList()) {
-            DocumentReference resRef = db.collection("shelters")
-                    .document(shelter.getId()).collection("reserveList").document(reservation.getId());
-            resRef.set(reservation);
-        }
+        db.collection("shelters").document(shelter.getId()).set(shelter);
+//        for (Room r : shelter.getRoomList()) {
+//            DocumentReference roomRef = db.collection("shelters")
+//                    .document(shelter.getId()).collection("roomList").document(r.getRoomType());
+//            roomRef.update("vacancy", r.getNumVacancies());
+//        }
+//
+//        for (Reservation reservation : shelter.getReserveList()) {
+//            DocumentReference resRef = db.collection("shelters")
+//                    .document(shelter.getId()).collection("reserveList").document(reservation.getId());
+//            resRef.set(reservation);
+//        }
     }
 
     public boolean isDone() {

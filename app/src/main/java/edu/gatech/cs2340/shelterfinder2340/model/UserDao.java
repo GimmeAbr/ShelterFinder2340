@@ -56,7 +56,12 @@ public class UserDao {
                         String name = snapshot.getString("name");
                         boolean hasReservation = snapshot.getBoolean("hasReservation");
                         String gender = snapshot.getString("gender");
-                        ArrayList<Reservation> reservationList = (ArrayList<Reservation>) snapshot.get("reserveList");
+                        ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
+                        ArrayList<Reservation> reservationList = new ArrayList<>();
+                        for (Object o : preReserveList) {
+                            Reservation res = (Reservation) o;
+                            reservationList.add(res);
+                        }
                         HomelessPerson hp = new HomelessPerson(name, gender, id);
                         hp.setHasReservation(hasReservation);
                         hp.setReserveList(reservationList);
