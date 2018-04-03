@@ -78,19 +78,17 @@ public class ShelterDao {
     }
 
     public void updateShelter(Shelter shelter) {
-        Map<String, Object> shelterMap = new HashMap<>();
-        shelterMap.put("shelterName", shelter.getShelterName());
-        shelterMap.put("gender", shelter.getGender());
-        shelterMap.put("capacity", shelter.getCapacity());
-        shelterMap.put("phoneNumber", shelter.getPhoneNumber());
-        shelterMap.put("longitude", shelter.getLongitude());
-        shelterMap.put("latitude", shelter.getLatitude());
-        shelterMap.put("address", shelter.getAddress());
-        shelterMap.put("id", shelter.getId());
-        shelterMap.put("roomList", (Object) shelter.getRoomList());
-        shelterMap.put("reserveList", shelter.getReserveList());
+        for (Room r : shelter.getRoomList()) {
+            DocumentReference roomRef = db.collection("shelters")
+                    .document(shelter.getId()).collection("roomList").document(r.getRoomType());
+            roomRef.update("vacancy", r.getNumVacancies());
+        }
 
-        db.collection("shelters").document(shelter.getId()).set(shelterMap);
+        for (Reservation reservation : shelter.getReserveList()) {
+            DocumentReference resRef = db.collection("shelters")
+                    .document(shelter.getId()).collection("reserveList").document(reservation.getId());
+            resRef.set(reservation);
+        }
     }
 
     public boolean isDone() {

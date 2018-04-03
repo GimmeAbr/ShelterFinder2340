@@ -49,7 +49,7 @@ public class UserDao {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    // TODO: Make this work; right now it is null
+                    // TODO: Make this work; retrieve reservation list correctly
                     Log.d("Id from user", task.getResult().getString("name"));
                     DocumentSnapshot snapshot = task.getResult();
                     if (snapshot.exists()) {

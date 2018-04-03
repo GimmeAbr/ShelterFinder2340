@@ -5,7 +5,7 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  */
 
 public class Reservation {
-    HomelessPerson resOwner;
+    String resOwnerId;
     Room resRoom;
     String date;
     int numRooms;
@@ -13,15 +13,15 @@ public class Reservation {
 
     /*--------------- Constructors ----------------------*/
 
-    public Reservation(HomelessPerson resOwner, int numRooms, Room resRoom, String date) {
-        this.resOwner = resOwner;
+    public Reservation(String resOwnerId, int numRooms, Room resRoom, String date) {
+        this.resOwnerId = resOwnerId;
         this.resRoom = resRoom;
         this.numRooms = numRooms;
         this.date = date;
     }
 
     public Reservation(HomelessPerson resOwner, Room resRoom, int numRooms) {
-        this(resOwner, numRooms, resRoom, "");
+        this(resOwner.getId(), numRooms, resRoom, "");
     }
 
     /*---------- Getters ------------*/
@@ -37,7 +37,9 @@ public class Reservation {
         return numRooms;
     }
 
-    public HomelessPerson getResOwner() { return resOwner; }
+    public String getResOwnerId() {
+        return resOwnerId;
+    }
 
     public String getId() { return id;}
 
@@ -54,7 +56,7 @@ public class Reservation {
             return false;
         }
         if (((Reservation) r).getId().equals("")) {
-            return (((Reservation) r).getResOwner().getId().equals(resOwner.getId())
+            return (((Reservation) r).getResOwnerId().equals(resOwnerId)
             && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName()))
             && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getNumVacancies())));
         }

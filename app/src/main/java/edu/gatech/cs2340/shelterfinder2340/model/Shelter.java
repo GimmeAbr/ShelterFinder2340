@@ -164,22 +164,19 @@ public class Shelter{
     public void releaseReservation(Reservation reservation) {
         // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
         Room room = reservation.getResRoom();
-        HomelessPerson hp = reservation.getResOwner();
+        HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
         int numRes = reservation.getNumRooms();
         for (Room r: roomList) {
             if (r.getRoomType().equals(room.getRoomType())) {
                 r.releaseBeds(numRes);
             }
         }
-
         hp.releaseReservation(reservation);
         for (int i = 0; i < reserveList.size(); i++) {
             if(reserveList.get(i).getId().equals(reservation.getId())) {
                 reserveList.remove(i);
             }
         }
-
-
     }
 
     public void createReservation(HomelessPerson reserver, int num, Room room) {
@@ -187,7 +184,7 @@ public class Shelter{
         //add reservation to SHelter's reservation list
         //add reservation to User's reservation list
         if (num > 0) {
-            Reservation res = new Reservation(reserver, num, room, Calendar.getInstance().getTime().toString());
+            Reservation res = new Reservation(reserver, room, num);
             reserver.setHasReservation(true);
             reserver.addReservation(res);
             reserveList.add(res);
@@ -222,10 +219,14 @@ public class Shelter{
             roomList.add(new Room(80, "SINGLE", shelterName));
         } else if (shelterName.contains("Hope")) {
             roomList.add(new Room(22, "ANYONE", shelterName));
+        } else if (shelterName.contains("Our House")) {
+            roomList.add(new Room(76, "FAMILY", shelterName));
+        } else if (gender.toUpperCase().contains("FAMI")) {
+            roomList.add(new Room(Integer.valueOf(capacity), "FAMILY", shelterName));
         } else if (capacity.contains("N/A")) {
             roomList.add(new Room(0, gender.toUpperCase(), shelterName));
         } else {
-            Room r = new Room(Integer.valueOf(capacity), gender.toUpperCase(), shelterName);
+            Room r = new Room(Integer.valueOf(capacity), gender.toUpperCase().replaceAll("/", " AND "), shelterName);
             roomList.add(r);
             Log.d("Room String", r.toString());
         }

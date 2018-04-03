@@ -173,6 +173,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<Reservation> reservations = new ArrayList<>();
+                ((HomelessPerson) (Model.getInstance().get_currentUser())).setHasReservation(true);
 
                 for (int i = 0; i < layout.getChildCount(); i++) {
                     LinearLayout linearLayout = (LinearLayout) layout.getChildAt(i);
@@ -180,9 +181,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
                     Spinner numToReserveSpn = (Spinner)linearLayout.getChildAt(1);
                     Room reservered = roomMap.get((String)roomStringSpn.getSelectedItem());
                     Integer numReserved = Integer.valueOf(numToReserveSpn.getSelectedItem().toString());
-                    Reservation reservation = new Reservation(Model.getInstance().getCurrentUser(),reservered,numReserved);
-                    reservations.add(reservation);
-                    ((HomelessPerson)Model.getInstance().get_currentUser()).addReservation(reservation);
+                    shelter.createReservation(Model.getInstance().getCurrentUser(), numReserved, reservered);
                     // TODO: UPDATE EVERY FUCKING THING
                     ShelterDao sDao = new ShelterDao();
                     sDao.updateShelter(shelter);
