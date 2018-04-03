@@ -84,7 +84,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), ReservationActivity.class);
+                        Intent i = new Intent(getApplicationContext(), ReserveRoomActivity.class);
                         startActivity(i);
                         finish();
                     }

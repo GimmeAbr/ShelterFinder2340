@@ -13,7 +13,6 @@ import java.util.List;
 public class HomelessPerson extends User {
 
     private List<Shelter> shelterInterests;
-    private Location currentLocation;
     private String gender;
     private boolean hasReservation;
 
@@ -26,7 +25,7 @@ public class HomelessPerson extends User {
         this.setGender(gender);
         shelterInterests = new ArrayList<Shelter>();
         reserveList = new ArrayList<Reservation>();
-
+        this.setAttribute("Homeless");
     }
     public HomelessPerson(String name, String gender, String uid) {
         this(name,"","", gender, uid);
@@ -45,7 +44,6 @@ public class HomelessPerson extends User {
     public List<Shelter> getShelterInterests() {
         return shelterInterests;
     }
-    public Location getCurrentLocation() { return currentLocation; }
     public List<Reservation> getReserveList() {
         return reserveList;
     }
@@ -58,7 +56,6 @@ public class HomelessPerson extends User {
         this.hasReservation = res;
     }
     public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
-    public void setCurrentLocation(Location currentLocation) { this.currentLocation = currentLocation; }
     public void setReserveList(ArrayList<Reservation> reserveList) {
         this.reserveList = reserveList;
     }

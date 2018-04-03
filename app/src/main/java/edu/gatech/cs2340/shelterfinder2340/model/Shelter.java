@@ -26,11 +26,8 @@ public class Shelter{
     private String phoneNumber;
     private double latitude;
     private double longitude;
-    private int vacancies;
     private String capacity;
     private String id;
-
-    List<ReservationBarLayout> bars;
 
     private List<Room> roomList;
 
@@ -39,9 +36,6 @@ public class Shelter{
     }
 
     private List<Reservation> reserveList;
-    public List<ReservationBarLayout> getBars() {
-        return bars;
-    }
 
 
     public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, String id) {
@@ -95,10 +89,6 @@ public class Shelter{
     }
 
     public void setId(String id) {this.id = id;}
-
-    public void setBars(List<ReservationBarLayout> bars) {
-        this.bars = bars;
-    }
 
     public void setRoomList(List<Room> list) {
         roomList = list;
@@ -198,16 +188,6 @@ public class Shelter{
             ro = ro && (r.reservedOut());
         }
         return ro;
-    }
-
-    public List<ReservationBarLayout> setBarsList(Context context) {
-        bars = new ArrayList<>();
-        for (Room room: roomList) {
-            ReservationBarLayout rb = new ReservationBarLayout(context, room);
-            bars.add(rb);
-        }
-        // Collaborates with Room objects
-        return bars;
     }
 
     /**
