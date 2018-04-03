@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Arrays;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.User;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
@@ -106,12 +107,11 @@ public class RegisterActivity extends AppCompatActivity {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         if (attribute.equals("User")) {
-                                            final HomelessPerson hp = new HomelessPerson(gender, name);
+                                            final HomelessPerson hp = new HomelessPerson(name, gender, user.getUid());
                                             hp.setReservation(true);
-
                                             UserDao dao = new UserDao();
                                             dao.saveHomelessPerson(hp);
-                                            updatUIHomeless(user, hp);
+                                            Model.getInstance().set_currentUser(hp);
                                         }
                                         updateUI(user);
                                     } else {
@@ -149,15 +149,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void updatUIHomeless(FirebaseUser user, HomelessPerson hp) {
-        if (user != null) {
-            Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
-            myIntent.putExtra("Label", "start");
-            myIntent.putExtra("homelessName", hp.getName());
-            myIntent.putExtra("homelessGender", hp.getGender());
-            myIntent.putExtra("homelssRes", hp.hasReservation());
-            myIntent.putExtra("homelessId", hp.getId());
-            startActivity(myIntent);
-        }
-    }
+//    private void updatUIHomeless(FirebaseUser user, HomelessPerson hp) {
+//        if (user != null) {
+//            Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
+//            myIntent.putExtra("Label", "start");
+//            myIntent.putExtra("homelessName", hp.getName());
+//            myIntent.putExtra("homelessGender", hp.getGender());
+//            myIntent.putExtra("homelssRes", hp.hasReservation());
+//            myIntent.putExtra("homelessId", hp.getId());
+//            startActivity(myIntent);
+//        }
+//    }
 }

@@ -385,7 +385,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // TODO: read user from database
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
-                // dao.queryHomelessUser(uid, getApplicationContext());
+                dao.queryHomelessUser(uid);
                 Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
                 getApplicationContext().startActivity(loginSucess);
                 finish();

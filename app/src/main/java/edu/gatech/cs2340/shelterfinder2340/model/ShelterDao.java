@@ -52,6 +52,7 @@ public class ShelterDao {
                 shelterMap.put("longitude", shelter.getLongitude());
                 shelterMap.put("latitude", shelter.getLatitude());
                 shelterMap.put("address", shelter.getAddress());
+                shelterMap.put("roomList", shelter.getRoomList());
             db.collection("shelters")
                     .add(shelterMap)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

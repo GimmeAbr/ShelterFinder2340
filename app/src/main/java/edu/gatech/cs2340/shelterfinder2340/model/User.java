@@ -6,11 +6,6 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  */
 
 public class User {
-    public String getUserName() {
-        return userName;
-    }
-
-    private String userName;
 
     public String getAttribute() {
         return attribute;
@@ -55,7 +50,7 @@ public class User {
     public String getUsername() {
         return username;
     }
-    public String getPassWord() {
+    public String getPassword() {
         return password;
     }
     public String getId() { return id; }
@@ -69,7 +64,4 @@ public class User {
         return (pWord.equals(this.password));
     }
 
-    public void releaseReservation(Reservation res) {
-
-    }
 }
