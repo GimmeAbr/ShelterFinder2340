@@ -120,6 +120,18 @@ public class Login_Success extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton mapSearch = (FloatingActionButton) findViewById(R.id.map_button);
+        mapSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                i.putExtra("shelters", (ArrayList<Shelter>)shelterList);
+                startActivity(i);
+
+
+            }
+        });
+
     }
 
     private class ShelterAdapter extends ArrayAdapter<Shelter> {

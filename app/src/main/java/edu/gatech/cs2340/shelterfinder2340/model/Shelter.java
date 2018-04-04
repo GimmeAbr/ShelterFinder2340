@@ -3,6 +3,7 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
  * Created by admin on 2/26/18.
  */
 
-public class Shelter{
+@SuppressWarnings("serial")
+public class Shelter implements Serializable {
     private String shelterName, gender, address, phoneNumber, capacity;
     private double longitude, latitude;
     private int vacancies, id;

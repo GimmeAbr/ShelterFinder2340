@@ -54,11 +54,24 @@
         android:id="@+id/search_button"
         android:layout_width="64dp"
         android:layout_height="54dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:src="@drawable/search"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="bottom|center"
+        tools:layout_editor_absoluteX="320dp"
+        tools:layout_editor_absoluteY="513dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/map_button"
+        android:layout_width="64dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="65dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:src="@android:drawable/ic_menu_mapmode"
         app:layout_anchor="@+id/relativeLayout"
         app:layout_anchorGravity="right|bottom"
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="513dp"
-        android:src="@drawable/search"
-        android:backgroundTint="@android:color/holo_blue_light"/>
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="513dp" />
 
 </android.support.design.widget.CoordinatorLayout>
