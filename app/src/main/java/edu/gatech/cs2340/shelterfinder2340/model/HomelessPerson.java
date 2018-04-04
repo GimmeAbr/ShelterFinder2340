@@ -13,10 +13,9 @@ import java.util.List;
 public class HomelessPerson extends User {
 
     private List<Shelter> shelterInterests;
-    private Location currentLocation;
     private String gender;
     private boolean hasReservation;
-    private Shelter reservedShelter;
+
     private ArrayList<Reservation> reserveList;
 
 
@@ -25,7 +24,8 @@ public class HomelessPerson extends User {
         super(name, username, password, id);
         this.setGender(gender);
         shelterInterests = new ArrayList<Shelter>();
-
+        reserveList = new ArrayList<Reservation>();
+        this.setAttribute("Homeless");
     }
     public HomelessPerson(String name, String gender, String uid) {
         this(name,"","", gender, uid);
@@ -38,14 +38,12 @@ public class HomelessPerson extends User {
     public String getGender() {
         return gender;
     }
-    public boolean hasReservation() {
+    public boolean getHasReservation() {
         return hasReservation;
     }
-    public Shelter getReservedShelter() { return reservedShelter; }
     public List<Shelter> getShelterInterests() {
         return shelterInterests;
     }
-    public Location getCurrentLocation() { return currentLocation; }
     public List<Reservation> getReserveList() {
         return reserveList;
     }
@@ -54,13 +52,13 @@ public class HomelessPerson extends User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    public void setReservation(boolean res) {
+    public void setHasReservation(boolean res) {
         this.hasReservation = res;
     }
-    public void setReservedShelter(Shelter shelter) { this.reservedShelter = shelter;}
     public void setShelterInterests(List<Shelter> shelterList) { this.shelterInterests = shelterList; }
-    public void setCurrentLocation(Location currentLocation) { this.currentLocation = currentLocation; }
-
+    public void setReserveList(ArrayList<Reservation> reserveList) {
+        this.reserveList = reserveList;
+    }
 
     //------------------------------- Actions -------------------------------
     public void markInterest(Shelter shelter) {
@@ -74,32 +72,23 @@ public class HomelessPerson extends User {
     }
     public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
 
+    public void addReservation(Reservation res) {
+        reserveList.add(res);
+    }
 
-    public void reserveRoom(int num, String type, String shelterName) {
-        if (num > 0) {
-            Room reserve = new Room(num, type, shelterName);
-            Reservation res = new Reservation(this, reserve, Calendar.getInstance().getTime().toString());
-            reserveList.add(res);
+    public void releaseReservation(Reservation res) {
+        for (int i = 0; i < reserveList.size(); i++) {
+            if(reserveList.get(i).getId().equals(res.getId())) {
+                reserveList.remove(i);
+            }
+        }
+        if (reserveList.isEmpty()) {
+            hasReservation = false;
         }
     }
 
-    /*
-     * Releases one specific reservation
-     */
-    public void releaseRes(Reservation reservation) {
-        reserveList.remove(reservation);
-        hasReservation = !(reserveList.isEmpty());
-    }
-
-    /*
-        Releases all the rooms at once
-     */
-    public void releaseRooms() {
+    public void releaseAllReservations() {
         reserveList.clear();
         hasReservation = false;
-        /*--------------Or This--------------*/
-//        for (Reservation r: reserveList) {
-//            r.releaseReservation();
-//        }
     }
 }

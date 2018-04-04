@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,8 @@ import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
+import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
@@ -129,8 +132,67 @@ public class Login_Success extends AppCompatActivity {
                     // Load each shelter from a successful task
                     final List <Shelter> shelterListLoaded = new ArrayList<>();
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
-                        Shelter shelter = snapshot.toObject(Shelter.class);
-                        shelterListLoaded.add(shelter);
+                        Log.e("poop", String.valueOf(null == snapshot));
+                        if (snapshot.exists()) {
+                            // String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, String id
+                            String shelterName = snapshot.getString("shelterName");
+                            String gender = snapshot.getString("gender");
+                            String address = snapshot.getString("address");
+                            String phoneNumber = snapshot.getString("phoneNumber");
+                            double longitude = snapshot.getDouble("longitude");
+                            double latitude = snapshot.getDouble("latitude");
+                            String capacity = snapshot.getString("capacity");
+                            String id = snapshot.getId();
+                            Shelter shelter = new Shelter(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, id);
+                            /**
+                             * ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
+                             ArrayList<Reservation> reservationList = new ArrayList<>();
+                             for (Object o : preReserveList) {
+                             Reservation res = (Reservation) o;
+                             reservationList.add(res);
+                             }
+                             */
+                            if (snapshot.get("reserveList") != null) {
+                                ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
+                                ArrayList<Reservation> reservationList = new ArrayList<>();
+                                for (Object o : preReserveList) {
+                                    HashMap<String, Object> preReservation = (HashMap<String, Object>) o;
+                                    int numRoom = ((Long) preReservation.get("numRooms")).intValue();
+                                    String resOwnerId = (String) preReservation.get("resOwnerId");
+                                    HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
+                                    int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                                    String roomType = (String) preRoom.get("roomType");
+                                    String roomShelterName = (String) preRoom.get("shelterName");
+                                    Room resRoom = new Room(numVacancies, roomType, roomShelterName);
+                                    Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
+                                    reservationList.add(res);
+                                }
+                                shelter.setReserveList(reservationList);
+                            }
+                            if (snapshot.get("roomList") != null) {
+                                ArrayList<Object> preRoomList = (ArrayList<Object>) snapshot.get("roomList");
+                                ArrayList<Room> roomList = new ArrayList<>();
+                                for (Object o : preRoomList) {
+                                    /**
+                                     * HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
+                                     int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                                     String roomType = (String) preRoom.get("roomType");
+                                     String roomShelterName = (String) preRoom.get("shelterName");
+                                     Room resRoom = new Room(numVacancies, roomType, roomShelterName);
+                                     */
+                                    HashMap<String, Object> preRoom = (HashMap<String, Object>) o;
+                                    int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                                    String roomType = (String) preRoom.get("roomType");
+                                    String roomShelterName = (String) preRoom.get("shelterName");
+                                    Room room = new Room(numVacancies, roomType, roomShelterName);
+                                    roomList.add(room);
+                                }
+                                shelter.setRoomList(roomList);
+                            }
+
+                            // TODO: Remove when done testing reserve shelter screen
+                            shelterListLoaded.add(shelter);
+                        }
                     }
                     //Now shelterList is populated set changes in the model
                     model.setSheltersList(shelterListLoaded);
@@ -143,6 +205,7 @@ public class Login_Success extends AppCompatActivity {
                 }
             }
         });
+
 
 
 
@@ -170,6 +233,7 @@ public class Login_Success extends AppCompatActivity {
                 model.setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

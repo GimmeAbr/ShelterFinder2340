@@ -2,16 +2,28 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,94 +36,53 @@ import edu.gatech.cs2340.shelterfinder2340.controllers.Login_Success;
 
 public class UserDao {
     boolean isDone = false;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    public void saveHomelessPerson(HomelessPerson hp) {
+    public void saveHomelessPerson(HomelessPerson user) {
         Log.d("debug", "about to save homeless person");
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference homelessRef = ref.child("homeless");
-        homelessRef.child("").setValue(hp);
+        db.collection("homeless").document(user.getId()).set(user);
     }
 
-    public void queryHomelessUser(final String id, final Context context) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference homelessRef = ref.child("homeless");
-        final List<HomelessPerson> homelessList = new ArrayList<>();
-        Log.d("Query", "CALLED");
-        Query query = ref.child("homeless").orderByChild("id").equalTo(id);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            // dataSnapshot is the "issue" node with all children with id 0
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                // do something with the individual "issues"
-                                String gender = snapshot.child("gender").getValue(String.class);
-                                boolean enabledReservation = snapshot.child("res").getValue(Boolean.class);
-                                String name = snapshot.child("name").getValue(String.class);
-                                System.out.println("HomelessGender: " +  gender);
-                                Log.d("Enabled: ", enabledReservation + "");
-                                Log.d("NameHomeless", name);
-//                        if (shelterInterest.length() > 0) {
-//
-//                        } else {
-//                            hp.setShelterList(new ArrayList<Shelter>());
-//                        }
-                                // If it is a homeless person /////
-                                HomelessPerson hp = new HomelessPerson(id, gender, name);
-                                //hp.setRes(enabledReservation);
-                                Model.getInstance().set_currentUser(hp);
-                                Log.d("current user", Model.getInstance().get_currentUser().toString());
-                            }
+    public void queryHomelessUser(final String id) {
+        Log.d("Id", id);
+        db.collection("homeless").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // TODO: Make this work; retrieve reservation list correctly
+                    Log.d("Id from user", task.getResult().getString("name"));
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot.exists()) {
+                        String name = snapshot.getString("name");
+                        boolean hasReservation = snapshot.getBoolean("hasReservation");
+                        String gender = snapshot.getString("gender");
+                        ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
+                        ArrayList<Reservation> reservationList = new ArrayList<>();
+                        for (Object o : preReserveList) {
+                            HashMap<String, Object> preReservation = (HashMap<String, Object>) o;
+                            int numRoom = ((Long) preReservation.get("numRooms")).intValue();
+                            String resOwnerId = (String) preReservation.get("resOwnerId");
+                            HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
+                            int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                            String roomType = (String) preRoom.get("roomType");
+                            String roomShelterName = (String) preRoom.get("shelterName");
+                            Room resRoom = new Room(numVacancies, roomType, roomShelterName);
+                            Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
+                            reservationList.add(res);
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-        homelessRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("On Data Change", "CALLED");
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for(DataSnapshot snapshot: children) {
-                    String uid = snapshot.child("id").getValue(String.class);
-                    if (uid.equals(id)) {
-                        String gender = snapshot.child("gender").getValue(String.class);
-                        boolean enabledReservation = snapshot.child("res").getValue(Boolean.class);
-                        String name = snapshot.child("name").getValue(String.class);
-                        Log.d("HomelessGender: ", gender);
-                        Log.d("Enabled: ", enabledReservation + "");
-                        Log.d("NameHomeless", name);
-//                        if (shelterInterest.length() > 0) {
-//
-//                        } else {
-//                            hp.setShelterList(new ArrayList<Shelter>());
-//                        }
-                        // If it is a homeless person /////
-                        HomelessPerson hp = new HomelessPerson(uid, gender, name);
-                        //.setRes(enabledReservation);
+                        HomelessPerson hp = new HomelessPerson(name, gender, id);
+                        hp.setHasReservation(hasReservation);
+                        hp.setReserveList(reservationList);
                         Model.getInstance().set_currentUser(hp);
-                        Log.d("current user", Model.getInstance().get_currentUser().toString());
-                        Intent myIntent = new Intent(context, Login_Success.class);
-                        myIntent.putExtra("Label", "start");
-                        //String shelterInterest = snapshot.child("shelters").getValue(String.class);
-                        context.startActivity(myIntent);
+                        Log.d("Grabbed User", hp.getId() + " => " + hp.getName());
                     }
+                } else {
+                    Log.d("Oh No", "Not successful");
                 }
-                isDone = true;
-                Log.d("debug", "Successful in loading");
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-
         });
     }
+
     public boolean isDone() {
         return isDone;
     }
