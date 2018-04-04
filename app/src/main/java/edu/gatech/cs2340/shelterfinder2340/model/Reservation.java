@@ -1,50 +1,67 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
 /**
- * Created by admin on 3/30/18.
+ * Created by Mya on 3/30/18.
+ * This class represents the reservations made by HomelessPerson
+ * and stored in both the user and the shelter
  */
 
 public class Reservation {
-    String resOwnerId;
-    Room resRoom;
-    String date;
-    int numRooms;
-    String id = "";
+    private final String resOwnerId;
+    private final Room resRoom;
+    private final int numRooms;
+    private final String id = "";
 
     /*--------------- Constructors ----------------------*/
 
-    public Reservation(String resOwnerId, int numRooms, Room resRoom, String date) {
+    /**
+     * Constructor of Reservation
+     *
+     * @param resOwnerId the Id of the HomelessPerson who made the Reservation
+     * @param numRooms   the number of rooms reserved
+     * @param resRoom    the Room object that gets reserved
+     */
+    public Reservation(String resOwnerId, int numRooms, Room resRoom) {
         this.resOwnerId = resOwnerId;
         this.resRoom = resRoom;
         this.numRooms = numRooms;
-        this.date = date;
     }
 
-    public Reservation(HomelessPerson resOwner, Room resRoom, int numRooms) {
-        this(resOwner.getId(), numRooms, resRoom, "");
+    /**
+     * The Other Constructor
+     *
+     * @param resOwner the HomelessPerson who made the Reservation
+     * @param resRoom  the Room object that gets reserved
+     * @param numRooms the number of rooms reserved
+     */
+    Reservation(HomelessPerson resOwner, Room resRoom, int numRooms) {
+        this(resOwner.getId(), numRooms, resRoom);
     }
 
     /*---------- Getters ------------*/
-    public String getDate() {
-        return date;
-    }
 
+    /**
+     * Get the resRoom Object
+     *
+     * @return resRoom
+     */
     public Room getResRoom() {
         return resRoom;
     }
 
-    public int getNumRooms() {
+    int getNumRooms() {
         return numRooms;
     }
 
-    public String getResOwnerId() {
+    private String getResOwnerId() {
         return resOwnerId;
     }
 
+    /**
+     * Return the Id of the Reservation
+     * @return id
+     */
     public String getId() { return id;}
-
-    /*---------- Setters ------------*/
-    public void setId(String id) { this.id = id; }
 
     /*---------- Helpers ------------*/
     @Override
@@ -55,12 +72,13 @@ public class Reservation {
         if (!(r instanceof Reservation)) {
             return false;
         }
-        if (((Reservation) r).getId().equals("")) {
-            return (((Reservation) r).getResOwnerId().equals(resOwnerId)
-            && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName()))
-                    && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getRoomType())));
+        if (!("".equals(((Reservation) r).getId()))) {
+            return id.equals(((Reservation) r).getId());
+        } else {
+            Room room = ((Reservation) r).getResRoom();
+            return (resOwnerId.equals(((Reservation) r).getResOwnerId())
+                    && room.equals(resRoom));
         }
-        return false;
     }
 
 }

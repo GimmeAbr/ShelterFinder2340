@@ -69,6 +69,13 @@ public class Room implements Serializable{
         return "" + numVacancies + " " + roomType + "room(s)";
     }
 
+    @Override
+    public boolean equals(Object r) {
+        return r != null && r instanceof Room
+                && (this.toString()).equals(((Room) r).toString())
+                && (shelterName.equals(((Room) r).getShelterName()));
+    }
+
     public boolean reservedOut() {
         return numVacancies == 0;
     }
