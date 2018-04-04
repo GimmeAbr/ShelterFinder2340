@@ -46,6 +46,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
     Map<String,Room> roomMap;
     Spinner firstSpinner;
     Spinner firstInput;
+    Button cancelButton;
 
 
 
@@ -66,6 +67,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
         roomMap = new HashMap<>();
         firstSpinner = findViewById(R.id.RoomTypes);
         firstInput = findViewById(R.id.NumData);
+        cancelButton = findViewById(R.id.cancel_reserve);
 
         shelter = Model.getInstance().getCurrentShelter();
         for (Room d: shelter.getRoomList()) {
@@ -194,7 +196,13 @@ public class ReserveRoomActivity extends AppCompatActivity {
             }
         });
         // TODO: CANCEL BUTTON
-
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
+                startActivity(intent);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
