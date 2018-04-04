@@ -3,6 +3,8 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
