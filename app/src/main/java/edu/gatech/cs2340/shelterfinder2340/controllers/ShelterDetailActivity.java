@@ -106,9 +106,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        for (Reservation reservation: hp.getReserveList()) {
-                            currentShelter.releaseReservation(reservation);
-                        }
+                        currentShelter.releaseReservations(hp.getReserveList());
                         ShelterDao sDao = new ShelterDao();
                         sDao.updateShelter(currentShelter);
                         UserDao userDao = new UserDao();

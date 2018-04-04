@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 import android.content.Context;
@@ -171,6 +172,29 @@ public class Shelter{
             if (rsv.equals(reservation)) {
                 Log.d("Match", reservation.resOwnerId);
                 reserveList.remove(rsv);
+            }
+        }
+    }
+    public void releaseReservations(List<Reservation> reservations) {
+        for(int j =0; j < reservations.size(); j++){
+            Reservation reservation = reservations.get(j);
+            Room room = reservation.getResRoom();
+            HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+            int numRes = reservation.getNumRooms();
+            for (Room r : roomList) {
+                if (r.getRoomType().equals(room.getRoomType())) {
+                    Log.d("numRes", numRes + "");
+                    r.setNumVacancies(r.getNumVacancies() + numRes);
+                }
+            }
+            hp.releaseReservation(reservation);
+            for(int i = 0; i < reserveList.size(); i++) {
+                Reservation reserveListReservation = reserveList.get(i);
+                if (reserveListReservation.equals(reservation)) {
+                    Log.d("Match", reservation.resOwnerId);
+                    reserveList.remove(i);
+                    i--;
+                }
             }
         }
     }
