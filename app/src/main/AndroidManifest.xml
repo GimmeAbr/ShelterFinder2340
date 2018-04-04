@@ -45,6 +45,14 @@
             android:label="@string/title_activity_filter"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".controllers.MapsActivity"
+            android:label="@string/map"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB58yrz4UAApFL6NLkp_3E64JDbr2MeW_M"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".controllers.ReserveRoomActivity"
             android:label="@string/title_activity_reserve_room"
             android:theme="@style/AppTheme.NoActionBar"></activity>

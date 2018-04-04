@@ -9,6 +9,7 @@
     <string name="login_string">Login</string>
     <string name="reg_string">Register</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="map">Map</string>
 
     <!-- Strings related to login -->
     <string name="prompt_password">Password</string>
@@ -36,5 +37,7 @@
     <string name="reg_userType"> User Type </string>
     <string name="reg"> Register </string>
     <string name="title_activity_filter">FilterActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_demoooo">demooo</string>
     <string name="title_activity_reserve_room">ReserveRoomActivity</string>
 </resources>
