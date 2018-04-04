@@ -200,7 +200,8 @@ public class ReserveRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
+                finish();
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
