@@ -32,7 +32,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ShelterQuery query = Model.getInstance().get_query();
-        shelterList = (ArrayList<Shelter>) getIntent().getSerializableExtra("shelters");
+        if (query == null)
+            shelterList = (Model.getInstance().getShelters());
+        else
+            shelterList = query.filterShelter(Model.getInstance().getShelters());
 
 
 

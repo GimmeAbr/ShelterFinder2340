@@ -237,7 +237,11 @@ public class Login_Success extends AppCompatActivity {
 
 
     private void populateListView () {
-        shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, model.getShelters());
+        ShelterQuery query = Model.getInstance().get_query();
+        if (query == null)
+            shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, model.getShelters());
+        else
+            shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, query.filterShelter(model.getShelters()));
         shelterListView.setAdapter(shelterAdapter);
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
