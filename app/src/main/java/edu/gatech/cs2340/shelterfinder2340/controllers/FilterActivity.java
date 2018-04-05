@@ -2,20 +2,20 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
 
+/**
+ * The Activity that is used for filtering the shelters
+ */
 public class FilterActivity extends AppCompatActivity {
     private CheckBox family;
     private CheckBox young;
@@ -29,7 +29,7 @@ public class FilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final EditText nameText = findViewById(R.id.shelterName);
@@ -55,8 +55,9 @@ public class FilterActivity extends AppCompatActivity {
                 boolean isFemale = female.isChecked();
                 String stName = nameText.getText().toString();
                 Intent searchIntent = new Intent(getApplicationContext(), Login_Success.class);
-                // ShelterQuery class is, well, a query class that can give you a filtered list of shelters based on criteria
-                ShelterQuery query = new ShelterQuery(hasFamily, hasAny, isMale, isFemale, hasChild, hasYoung, stName);
+                // ShelterQuery is a query class that can give you a filtered list of shelters
+                ShelterQuery query = new ShelterQuery(hasFamily, hasAny,
+                        isMale, isFemale, hasChild, hasYoung, stName);
                 Model.getInstance().set_query(query);
                 searchIntent.putExtra("Label", "search");
                 startActivity(searchIntent);

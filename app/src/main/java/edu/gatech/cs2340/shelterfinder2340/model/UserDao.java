@@ -67,7 +67,7 @@ public class UserDao {
                             String roomType = (String) preRoom.get("roomType");
                             String roomShelterName = (String) preRoom.get("shelterName");
                             Room resRoom = new Room(numVacancies, roomType, roomShelterName);
-                            Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
+                            Reservation res = new Reservation(resOwnerId, numRoom, resRoom);
                             reservationList.add(res);
                         }
                         HomelessPerson hp = new HomelessPerson(name, gender, id);

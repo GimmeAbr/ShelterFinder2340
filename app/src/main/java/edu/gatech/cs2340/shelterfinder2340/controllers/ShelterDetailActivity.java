@@ -48,6 +48,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
         final HomelessPerson hp = model.getCurrentUser();
 
         currentShelter.setRoomList(currentShelter.getRoomList());
+        ShelterDao sDao = new ShelterDao();
+        sDao.updateShelter(currentShelter);
         /**
          * Set all of the text fields based on shelter data
          */

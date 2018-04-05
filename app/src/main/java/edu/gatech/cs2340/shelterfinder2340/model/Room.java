@@ -76,6 +76,17 @@ public class Room implements Serializable{
                 && (shelterName.equals(((Room) r).getShelterName()));
     }
 
+    public boolean compareRoomType(Room r) {
+        return (roomType.equals(r.getRoomType()));
+    }
+
+    int calculateBeds() {
+        if (roomType.contains("FAMI")) {
+            return numVacancies * 3;
+        }
+        return numVacancies;
+    }
+
     public boolean reservedOut() {
         return numVacancies == 0;
     }

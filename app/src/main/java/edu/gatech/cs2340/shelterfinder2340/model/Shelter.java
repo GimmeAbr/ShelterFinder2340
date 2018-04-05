@@ -1,26 +1,13 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
-import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
-import java.io.Serializable;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
-import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
-import android.content.Context;
 import android.util.Log;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 /**
  * Created by admin on 2/26/18.
+ * This class represents a Shelter
  */
 public class Shelter{
     private String shelterName;
@@ -30,22 +17,42 @@ public class Shelter{
     private double latitude;
     private double longitude;
     private String capacity;
-    private String id;
+    private final String id;
 
     private List<Room> roomList;
 
-    public List<Reservation> getReserveList() {
+    List<Reservation> getReserveList() {
         return reserveList;
     }
 
-    public void setReserveList(List<Reservation> reserveList) {
-        this.reserveList = reserveList;
+    /**
+     * Set the Shelter's reserveList to the list given
+     *
+     * @param rsvList the list given
+     */
+    public void setReserveList(Collection<Reservation> rsvList) {
+        this.reserveList = new ArrayList<>();
+        reserveList.addAll(rsvList);
     }
 
     private List<Reservation> reserveList;
 
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, String id) {
+    /**
+     * Constructor for shelter
+     *
+     * @param shelterName Shelter's name
+     * @param gender      The gender of the shelter
+     * @param address     Shelter's address
+     * @param phoneNumber Shelter's phone number
+     * @param longitude   Shelter's longitude
+     * @param latitude    Shelter's latitude
+     * @param capacity    Shelter's capacity
+     * @param id          Shelter's id
+     */
+    public Shelter(String shelterName, String gender, String address,
+                   String phoneNumber, double longitude, double latitude,
+                   String capacity, String id) {
         this.shelterName = shelterName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -58,152 +65,188 @@ public class Shelter{
         roomList = new ArrayList<>();
     }
 
-    public Shelter (String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude, String capacity) {
-        this(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, "");
-    }
 
-    public Shelter() {
-        this("","","","",0,0,"","");
-    }
+    //Setters; These methods are for the ShelterCoordinators
 
-    //Setters
+    /**
+     * Set Shelter's name to the String given
+     *
+     * @param shelterName the String given
+     */
     public void setShelterName(String shelterName) {
         this.shelterName = shelterName;
     }
 
+    /**
+     * Set Shelter's gender to the gender given
+     * @param gender    the gender
+     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
+    /**
+     * Set Shelter's address to the current address given
+     * @param address   the current address given
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * Set Shelter's capacity to the given capacity
+     * @param capacity  the given capacity
+     */
     public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    /**
+     * Set Shelter's phone number to the given number
+     *
+     * @param phoneNumber the given shelter's phone number
+     */
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setLatitude(double latitude) {
+    void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public void setId(String id) {this.id = id;}
-
-    public void setRoomList(List<Room> list) {
-        roomList = list;
+    /**
+     * Set the roomList variable to the list given
+     *
+     * @param list the given list
+     */
+    public void setRoomList(Collection<Room> list) {
+        roomList = new ArrayList<>();
+        roomList.addAll(list);
     }
     //Getters
+
+    /**
+     * @return Shelter's name
+     */
     public String getShelterName() {
         return shelterName;
     }
 
+    /**
+     * @return Shelter's gender
+     */
     public String getGender() {
         return gender;
     }
 
-    public String getAddress() {
+    /**
+     * @return Shelter's address
+     */
+    public CharSequence getAddress() {
         return address;
     }
 
-    public String getCapacity() {
+    /**
+     * @return Shelter's capacity
+     */
+    public CharSequence getCapacity() {
         return capacity;
     }
 
-    public String getPhoneNumber() {
+    /**
+     * @return Shelter's phoneNumber
+     */
+    public CharSequence getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     * @return Shelter's latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * @return Shelter's longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
-    public String getId() { return id; }
+    /**
+     * @return Shelter's id
+     */
+    public String getId() { return id;
+    }
 
+    /**
+     * @return Shelter's roomList
+     */
     public List<Room> getRoomList() {
-        if (roomList.size() == 0
-                || roomList == null) {
-            loadInitialRoomList();
-        }
         return roomList;
     }
 
-    public void reserveBedss(int cap, String type) {
-        for (Room r: roomList) {
-            if (r.getRoomType().equals(type)) {
-                r.reserveBeds(cap);
-                return;
-            }
-        }
-    }
+//    public void releaseReservation(Reservation reservation) {
+//        Room room = reservation.getResRoom();
+//        HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+//        int numRes = reservation.getNumRooms();
+//        for (Room r: roomList) {
+//            if (r.compareRoomType(room)) {
+//                r.setNumVacancies(r.getNumVacancies() + numRes);
+//            }
+//        }
+//        hp.releaseReservation(reservation);
+//        for (Reservation rsv : reserveList) {
+//            if (rsv.equals(reservation)) {
+//                reserveList.remove(rsv);
+//            }
+//        }
+//    }
 
-    public void releaseByList(List<Room> resList) {
-        for (Room r: resList) {
-            for (Room e: roomList) {
-                if (e.getRoomType().equals(r.getRoomType())) {
-                    e.releaseBeds(r.getNumVacancies());
-                }
-            }
-        }
-    }
-
-    public void releaseReservation(Reservation reservation) {
-        // TODO: Release Room based on Reservation object; Maybe write something in the Reservation class that compares roomType
-        Room room = reservation.getResRoom();
-        HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
-        int numRes = reservation.getNumRooms();
-        for (Room r: roomList) {
-            if (r.getRoomType().equals(room.getRoomType())) {
-                Log.d("numRes", numRes + "");
-                r.setNumVacancies(r.getNumVacancies() + numRes);
-            }
-        }
-        hp.releaseReservation(reservation);
-        for (Reservation rsv : reserveList) {
-            if (rsv.equals(reservation)) {
-                Log.d("Match", reservation.resOwnerId);
-                reserveList.remove(rsv);
-            }
-        }
-    }
+    /**
+     * Release the list of given reservations from the Shelter
+     * @param reservations  the list of reservations to release
+     */
     public void releaseReservations(List<Reservation> reservations) {
-        for(int j =0; j < reservations.size(); j++){
-            Reservation reservation = reservations.get(j);
-            Room room = reservation.getResRoom();
-            HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+        HomelessPerson hp = (HomelessPerson) Model.getInstance().get_currentUser();
+        Reservation reservation;
+        Room room;
+        Collection<Reservation> backupReserve = new ArrayList<>();
+        backupReserve.addAll(reserveList);
+        for(int j = 0; j < reservations.size(); j++) {
+            reservation = reservations.get(j);
+            room = reservation.getResRoom();
             int numRes = reservation.getNumRooms();
             for (Room r : roomList) {
-                if (r.getRoomType().equals(room.getRoomType())) {
+                if (r.compareRoomType(room)) {
                     Log.d("numRes", numRes + "");
                     r.setNumVacancies(r.getNumVacancies() + numRes);
                 }
             }
             hp.releaseReservation(reservation);
-            for(int i = 0; i < reserveList.size(); i++) {
-                Reservation reserveListReservation = reserveList.get(i);
-                if (reserveListReservation.equals(reservation)) {
-                    Log.d("Match", reservation.resOwnerId);
-                    reserveList.remove(i);
-                    i--;
+
+            for (Reservation reservationBackUp : backupReserve) {
+                if (reservationBackUp.equals(reservation)) {
+                    reserveList.remove(reservationBackUp);
                 }
             }
         }
     }
 
+    /**
+     * Create a reservation using the reserver, number of rooms reserved, and a Room object
+     * @param reserver  the HomelessPerson who made the reservation
+     * @param num       the number of rooms reserved
+     * @param room      the Room object used
+     */
     public void createReservation(HomelessPerson reserver, int num, Room room) {
         //create reservation
-        //add reservation to SHelter's reservation list
+        //add reservation to Shelter's reservation list
         //add reservation to User's reservation list
         if (num > 0) {
             Reservation res = new Reservation(reserver, room, num);
@@ -214,6 +257,9 @@ public class Shelter{
         }
     }
 
+    /**
+     * @return if the Shelter is reserved out
+     */
     public boolean reservedOut() {
         boolean ro = true;
         for (Room r: roomList) {
@@ -223,35 +269,13 @@ public class Shelter{
     }
 
     /**
-     * This method loads the initial roomList based on the csv file
+     * Calculate the vacancies in the Shelter
+     * @return the number of vacant beds
      */
-    public void loadInitialRoomList() {
-        if (shelterName.contains("Eden")) {
-            roomList.add(new Room(32, "FAMILY", shelterName));
-            roomList.add(new Room(80, "SINGLE", shelterName));
-        } else if (shelterName.contains("Hope")) {
-            roomList.add(new Room(22, "ANYONE", shelterName));
-        } else if (shelterName.contains("Our House")) {
-            roomList.add(new Room(76, "FAMILY", shelterName));
-        } else if (capacity.contains("N/A")) {
-            roomList.add(new Room(0, gender.toUpperCase(), shelterName));
-        } else if (gender.toUpperCase().contains("FAMI")) {
-            roomList.add(new Room(Integer.valueOf(capacity), "FAMILY", shelterName));
-        } else {
-            Room r = new Room(Integer.valueOf(capacity), gender.toUpperCase().replaceAll("/", " AND "), shelterName);
-            roomList.add(r);
-            Log.d("Room String", r.toString());
-        }
-    }
-
     public int calculateVacancies() {
         int vac = 0;
         for (Room r: roomList) {
-            if (r.getRoomType().toLowerCase().contains("famil")) {
-                vac += 3 * r.getNumVacancies();
-            } else {
-                vac += r.getNumVacancies();
-            }
+            vac = vac + r.calculateBeds();
         }
         return vac;
     }

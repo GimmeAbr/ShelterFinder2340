@@ -208,9 +208,6 @@ public class Login_Success extends AppCompatActivity {
 
 
 
-
-
-
         FloatingActionButton search = (FloatingActionButton) findViewById(R.id.search_button);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +248,7 @@ public class Login_Success extends AppCompatActivity {
                 model.setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }
