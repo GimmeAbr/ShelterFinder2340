@@ -30,23 +30,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
-import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
-import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -64,13 +57,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private LoginActivity thisObj;
     private Model model;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -90,10 +76,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mAuth = FirebaseAuth.getInstance();
         model = Model.getInstance();
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -105,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        Button mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,12 +219,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -348,8 +332,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             try {
                 Task task = mAuth.signInWithEmailAndPassword(mEmail, mPassword);
                 while (!task.isComplete()) {
@@ -357,12 +339,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
                 Log.d("debug", "WHAT HAPPENED");
                 // If sign in fails, display a message to the
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's informa tion
+                if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
+                    // Sign in success, update UI with the signed-in user's information
                     FirebaseUser user = mAuth.getCurrentUser();
 
                     //Change the user id to a string
-                    model.setCurrentUser(new HomelessPerson(user.getDisplayName(), user.getEmail(), user.getUid()));
+                    model.setCurrentUser(new HomelessPerson(user.getDisplayName(),
+                            user.getEmail(), user.getUid()));
                 } else {
                     throw new RuntimeException("Login failed");
                 }
@@ -370,9 +353,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d("debug", e.toString());
                 return false;
             }
-
-
-            // TODO: register the new account here.
             return true;
         }
 
@@ -381,8 +361,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                // TODO: read user from database
+            if (success && mAuth.getCurrentUser() != null) {
                 String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid);
