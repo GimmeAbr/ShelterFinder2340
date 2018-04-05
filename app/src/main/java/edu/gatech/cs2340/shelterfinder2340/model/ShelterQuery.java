@@ -51,7 +51,8 @@ public class ShelterQuery {
         }
     }
 
-    public List<Shelter> filterShelter(List<Shelter> shelterList) {
+    public List<Shelter> filterShelter() {
+        List<Shelter> shelterList = Model.getInstance().getShelters();
         List<Shelter> backupShelters = new ArrayList<Shelter>();
         backupShelters.addAll(shelterList);
         if (name.length() > 0 || male || female || children || young

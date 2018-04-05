@@ -2,8 +2,11 @@ package edu.gatech.cs2340.shelterfinder2340.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import android.util.Log;
+
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * Created by admin on 2/26/18.
@@ -65,6 +68,13 @@ public class Shelter{
         roomList = new ArrayList<>();
     }
 
+    public Shelter(DocumentSnapshot snapshot) {
+        this(snapshot.getString("shelterName"), snapshot.getString("gender"),
+                snapshot.getString("address"), snapshot.getString("phoneNumber"),
+                snapshot.getDouble("longitude"), snapshot.getDouble("latitude"),
+                snapshot.getString("capacity"), snapshot.getId());
+    }
+
 
     //Setters; These methods are for the ShelterCoordinators
 
@@ -94,7 +104,7 @@ public class Shelter{
     }
 
     /**
-     * Set Shelter's capacity to the given capacity
+     * Set Shelter's capacity to the given
      * @param capacity  the given capacity
      */
     public void setCapacity(String capacity) {
@@ -123,7 +133,7 @@ public class Shelter{
      *
      * @param list the given list
      */
-    public void setRoomList(Collection<Room> list) {
+    public void setRoomList(List<Room> list) {
         roomList = new ArrayList<>();
         roomList.addAll(list);
     }
@@ -207,6 +217,54 @@ public class Shelter{
 //            }
 //        }
 //    }
+
+    public void setReserveListFromSnapshot(DocumentSnapshot snapshot) {
+        if (snapshot.get("reserveList") != null) {
+            //noinspection unchecked
+            @SuppressWarnings("unchecked") Iterable<Object> preReserveList
+                    = (ArrayList<Object>) snapshot.get("reserveList");
+            Collection<Reservation> reservationList = new ArrayList<>();
+            for (Object o : preReserveList) {
+                @SuppressWarnings("unchecked")
+                HashMap<String, Object> preReservation
+                        = (HashMap<String, Object>) o;
+                int numRoom = ((Long) preReservation
+                        .get("numRooms")).intValue();
+                String resOwnerId = (String) preReservation.get("resOwnerId");
+                @SuppressWarnings("unchecked") HashMap<String, Object> preRoom
+                        = (HashMap<String, Object>)
+                        preReservation.get("resRoom");
+                int numVacancies =
+                        ((Long) preRoom.get("numVacancies")).intValue();
+                String roomType = (String) preRoom.get("roomType");
+                String roomShelterName = (String) preRoom.get("shelterName");
+                Room resRoom =
+                        new Room(numVacancies, roomType, roomShelterName);
+                Reservation res = new Reservation(resOwnerId, numRoom, resRoom);
+                reservationList.add(res);
+            }
+            this.reserveList.addAll(reservationList);
+        }
+    }
+
+    public void setRoomListFromSnapshot(DocumentSnapshot snapshot) {
+        if (snapshot.get("roomList") != null) {
+            @SuppressWarnings("unchecked") Iterable<Object> preRoomList =
+                    (ArrayList<Object>) snapshot.get("roomList");
+            List<Room> roomList = new ArrayList<>();
+            for (Object o : preRoomList) {
+                @SuppressWarnings("unchecked")
+                HashMap<String, Object> preRoom = (HashMap<String, Object>) o;
+                int numVacancies =
+                        ((Long) preRoom.get("numVacancies")).intValue();
+                String roomType = (String) preRoom.get("roomType");
+                String roomShelterName = (String) preRoom.get("shelterName");
+                Room room = new Room(numVacancies, roomType, roomShelterName);
+                roomList.add(room);
+            }
+            this.setRoomList(roomList);
+        }
+    }
 
     /**
      * Release the list of given reservations from the Shelter

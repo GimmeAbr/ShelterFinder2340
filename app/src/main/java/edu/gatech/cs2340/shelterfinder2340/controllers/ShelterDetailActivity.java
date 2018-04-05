@@ -33,7 +33,6 @@ import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
 
 public class ShelterDetailActivity extends AppCompatActivity {
-    private boolean homelessRes;
     Model model = Model.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +49,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
         currentShelter.setRoomList(currentShelter.getRoomList());
         ShelterDao sDao = new ShelterDao();
         sDao.updateShelter(currentShelter);
-        /**
-         * Set all of the text fields based on shelter data
-         */
+        // Set all of the text fields based on shelter data
         TextView capacity = (TextView) findViewById(R.id.capacity);
         capacity.setText(currentShelter.getCapacity());
 

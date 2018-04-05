@@ -58,6 +58,7 @@ public class FilterActivity extends AppCompatActivity {
                 // ShelterQuery is a query class that can give you a filtered list of shelters
                 ShelterQuery query = new ShelterQuery(hasFamily, hasAny,
                         isMale, isFemale, hasChild, hasYoung, stName);
+                Model.getInstance().set_filteredShelters(query.filterShelter());
                 Model.getInstance().set_query(query);
                 searchIntent.putExtra("Label", "search");
                 startActivity(searchIntent);

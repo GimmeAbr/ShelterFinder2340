@@ -50,8 +50,12 @@ public class Model {
     /** holds the list of all shelters */
     private List<Shelter> _shelters;
 
+    public List<Shelter> get_filteredShelters() {
+        return _filteredShelters;
+    }
+
     /** holds a list of the filtered shelters*/
-    private ArrayList<Shelter> _filteredShelters;
+    private List<Shelter> _filteredShelters;
 
 
     //-----------------------------------Constructor-----------------------------------
@@ -81,6 +85,10 @@ public class Model {
 
     public void setCurrentShelter(Shelter shelter) {
         _currentShelter = shelter;
+    }
+
+    public void set_filteredShelters(List<Shelter> _filteredShelters) {
+        this._filteredShelters = _filteredShelters;
     }
 
     public void setSheltersList(List<Shelter> shelterList) {
