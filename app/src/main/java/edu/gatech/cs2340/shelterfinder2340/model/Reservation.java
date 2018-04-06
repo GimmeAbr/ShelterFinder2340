@@ -64,6 +64,12 @@ public class Reservation {
     public String getId() { return id;}
 
     /*---------- Helpers ------------*/
+
+    public boolean judgeShelter(Shelter shelter) {
+        String shelterName = shelter.getShelterName();
+        return (resRoom.getShelterName().equals(shelterName));
+    }
+
     @Override
     public boolean equals(Object r) {
         if (r == null) {

@@ -10,12 +10,11 @@ public class Review {
     private int rating;
     private String reviewContent;
 
-    public Review(int rating, String reviewText, User reviewer, String shelterName) {
+    Review(int rating, String reviewText, User reviewer, String shelterName) {
         this.rating = rating;
         this.reviewContent = reviewText;
         this.reviewer = reviewer;
         this.shelterName = shelterName;
-
     }
 
     public int getRating() { return rating; }

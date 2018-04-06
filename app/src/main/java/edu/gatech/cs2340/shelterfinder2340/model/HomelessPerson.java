@@ -72,6 +72,15 @@ public class HomelessPerson extends User {
     }
     public Review submitReview(int rating, String reviewText) { return new Review(rating, reviewText, this, "");}
 
+    public boolean hasReservedAtShelter(Shelter shelter) {
+        for (Reservation reservation : reserveList) {
+            if (reservation.judgeShelter(shelter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addReservation(Reservation res) {
         reserveList.add(res);
     }

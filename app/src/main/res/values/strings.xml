@@ -40,4 +40,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_demoooo">demooo</string>
     <string name="title_activity_reserve_room">ReserveRoomActivity</string>
+
+    <!-- Strings related to reservation -->
+    <string name="release_reservations">Release All Reservations</string>
+    <string name="reserve">Reserve</string>
 </resources>

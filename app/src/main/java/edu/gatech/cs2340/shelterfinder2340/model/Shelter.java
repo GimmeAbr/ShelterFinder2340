@@ -107,7 +107,7 @@ public class Shelter{
      * Set Shelter's capacity to the given
      * @param capacity  the given capacity
      */
-    public void setCapacity(String capacity) {
+    void setCapacity(String capacity) {
         this.capacity = capacity;
     }
 

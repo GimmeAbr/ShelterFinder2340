@@ -1,85 +1,74 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.DialogInterface;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
-import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
-import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
-import edu.gatech.cs2340.shelterfinder2340.model.Model;
-import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
-import edu.gatech.cs2340.shelterfinder2340.views.ReservationBarLayout;
 
-
+/**
+ * ShelterDetailActivity is a class used for displaying a shelter's details
+ */
 public class ShelterDetailActivity extends AppCompatActivity {
-    Model model = Model.getInstance();
+    private final Model model = Model.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail);
         ActionBar tb = getSupportActionBar();
 
-        /**
+        /*
          * Get the current shelter from the model
          */
         final Shelter currentShelter = model.getCurrentShelter();
         final HomelessPerson hp = model.getCurrentUser();
 
-        currentShelter.setRoomList(currentShelter.getRoomList());
-        ShelterDao sDao = new ShelterDao();
-        sDao.updateShelter(currentShelter);
+
         // Set all of the text fields based on shelter data
-        TextView capacity = (TextView) findViewById(R.id.capacity);
+        TextView capacity = findViewById(R.id.capacity);
         capacity.setText(currentShelter.getCapacity());
 
-        TextView gender = (TextView) findViewById(R.id.gender);
+        TextView gender = findViewById(R.id.gender);
         gender.setText(currentShelter.getGender());
 
-        TextView longtitude = (TextView) findViewById(R.id.longitude);
-        longtitude.setText("" + currentShelter.getLongitude());
+        TextView longtitude = findViewById(R.id.longitude);
+        longtitude.setText(String.format(Locale.US, "%f", currentShelter.getLongitude()));
 
-        TextView latitude = (TextView) findViewById(R.id.latitude);
-        latitude.setText("" + currentShelter.getLatitude());
+        TextView latitude = findViewById(R.id.latitude);
+        latitude.setText(String.format(Locale.US, "%f", currentShelter.getLatitude()));
 
-        TextView address = (TextView) findViewById(R.id.address);
+        TextView address = findViewById(R.id.address);
         address.setText(currentShelter.getAddress());
 
-        TextView phone = (TextView) findViewById(R.id.phonenumber);
+        TextView phone = findViewById(R.id.phonenumber);
         phone.setText(currentShelter.getPhoneNumber());
 
         TextView vacancies = findViewById(R.id.vacancies);
-        vacancies.setText(currentShelter.calculateVacancies() + "");
+        vacancies.setText(String.format(Locale.US, "%d",
+                currentShelter.calculateVacancies()));
 
         final Button reserveButton = findViewById(R.id.reserveButton);
 
-        /**
+        /*
          * This Block is dedicated to deciding if the HomelessPerson reserved rooms at the place
          *
          * If he/she does reserve a room here, the button should change its text to "Release"
-         * And then maybe either release all the rooms or just release some of them, whatever the user wants
+         * And then maybe either release all the rooms or just release some of them,
+         * whatever the user wants
          */
-        // TODO: Check if the person has reserved; if so, which shelter
         if (!hp.getHasReservation()) {
             if (!currentShelter.reservedOut()) {
                 reserveButton.setOnClickListener(new View.OnClickListener() {
@@ -91,59 +80,48 @@ public class ShelterDetailActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+                setUnableReserve(reserveButton, getApplicationContext());
             }
         } else {
             // hp does have a reservation
-            if (hp.getReserveList().get(0).getResRoom().getShelterName().equals(currentShelter.getShelterName())) {
-                reserveButton.setClickable(true);
-                reserveButton.setEnabled(true);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                reserveButton.setText("Release All Rooms");
-                reserveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        currentShelter.releaseReservations(hp.getReserveList());
-                        ShelterDao sDao = new ShelterDao();
-                        sDao.updateShelter(currentShelter);
-                        UserDao userDao = new UserDao();
-                        userDao.saveHomelessPerson((HomelessPerson) Model.getInstance().get_currentUser());
-                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
-                        startActivity(i);
-                        finish();
-                    }
-                });
+            if (hp.getReserveList().isEmpty()) {
+                if (hp.hasReservedAtShelter(currentShelter)) {
+                    setReserveButton(reserveButton, getApplicationContext());
+                    reserveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            currentShelter.releaseReservations(hp.getReserveList());
+                            ShelterDao sDao = new ShelterDao();
+                            sDao.updateShelter(currentShelter);
+                            UserDao userDao = new UserDao();
+                            HomelessPerson hp = (HomelessPerson) Model
+                                    .getInstance().get_currentUser();
+                            userDao.saveHomelessPerson(hp);
+                            Intent i = new Intent(getApplicationContext(), Login_Success.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    });
+                }
             } else {
-                reserveButton.setClickable(false);
-                reserveButton.setEnabled(false);
-                reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
+                setUnableReserve(reserveButton, getApplicationContext());
             }
         }
-
         if (tb != null) {
             tb.setTitle(Model.getInstance().getCurrentShelter().getShelterName());
         }
-        // isRes() indicates whether the HomelessPerson is allowed to reserve
-//        if (((HomelessPerson)Model.getInstance().get_currentUser()).getHasReservation()) {
-//            reserveButton.setClickable(false);
-//            reserveButton.setBackgroundColor(getResources().getColor(R.color.disable_grey));
-//        } else {
-//            reserveButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    List<Room> roomList = Model.getInstance().getCurrentShelter().getRoomList();
-////                    List<Room> roomList = new ArrayList<>();
-////                    roomList.add(new Room(4,"Deluxe", Model.getInstance().getCurrentShelter().getShelterName()));
-////                    roomList.add(new Room(2,"Lesure", Model.getInstance().getCurrentShelter().getShelterName()));
-////                    roomList.add(new Room(7,"Crap", Model.getInstance().getCurrentShelter().getShelterName()));
-//                    Model.getInstance().getCurrentShelter().setRoomList(roomList);
-//                    Intent intent = new Intent(getApplicationContext(), ReserveRoomActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
-//        }
+    }
 
+    private static void setReserveButton(Button reserveButton, Context context) {
+        reserveButton.setClickable(true);
+        reserveButton.setEnabled(true);
+        reserveButton.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        reserveButton.setText(R.string.release_reservations);
+    }
+
+    private static void setUnableReserve(Button reserveButton, Context context) {
+        reserveButton.setClickable(false);
+        reserveButton.setEnabled(false);
+        reserveButton.setBackgroundColor(context.getResources().getColor(R.color.disable_grey));
     }
 }

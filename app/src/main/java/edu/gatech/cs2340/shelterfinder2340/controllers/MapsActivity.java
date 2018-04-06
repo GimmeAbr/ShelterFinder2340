@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -22,7 +23,8 @@ import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+public class MapsActivity extends android.support.v4.app.FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private List<Shelter> shelterList;
@@ -32,13 +34,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ShelterQuery query = Model.getInstance().get_query();
-        if (query == null)
+        if (query == null) {
             shelterList = (Model.getInstance().getShelters());
-        else
-            shelterList = query.filterShelter(Model.getInstance().getShelters());
-
-
-
+        } else {
+            shelterList = query.filterShelter();
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
