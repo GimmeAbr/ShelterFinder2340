@@ -217,4 +217,12 @@ public class Model {
         this._query = _query;
     }
 
+    public void saveEverything() {
+        ShelterDao sDao = new ShelterDao();
+        sDao.updateShelter(_currentShelter);
+        UserDao userDao = new UserDao();
+        HomelessPerson hp = (HomelessPerson) _currentUser;
+        userDao.saveHomelessPerson(hp);
+    }
+
 }

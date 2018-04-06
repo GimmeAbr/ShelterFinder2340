@@ -16,9 +16,6 @@ import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 
-import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
-import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
-
 /**
  * ShelterDetailActivity is a class used for displaying a shelter's details
  */
@@ -35,7 +32,6 @@ public class ShelterDetailActivity extends AppCompatActivity {
          */
         final Shelter currentShelter = model.getCurrentShelter();
         final HomelessPerson hp = model.getCurrentUser();
-
 
         // Set all of the text fields based on shelter data
         TextView capacity = findViewById(R.id.capacity);
@@ -91,12 +87,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             currentShelter.releaseReservations(hp.getReserveList());
-                            ShelterDao sDao = new ShelterDao();
-                            sDao.updateShelter(currentShelter);
-                            UserDao userDao = new UserDao();
-                            HomelessPerson hp = (HomelessPerson) Model
-                                    .getInstance().get_currentUser();
-                            userDao.saveHomelessPerson(hp);
+                            Model.getInstance().saveEverything();
                             Intent i = new Intent(getApplicationContext(), Login_Success.class);
                             startActivity(i);
                             finish();
