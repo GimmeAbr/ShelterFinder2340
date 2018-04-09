@@ -90,9 +90,9 @@ public class Login_Success extends AppCompatActivity {
         /**
          * Step one is to set instantiate the view variables with UI view objects
          */
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        shelterListView = (ListView) findViewById(R.id.shelter_list);
+        shelterListView = findViewById(R.id.shelter_list);
         mProgressView = findViewById(R.id.login_progress2);
 
 //        // Loads Data from the Filter View With Intent Data
