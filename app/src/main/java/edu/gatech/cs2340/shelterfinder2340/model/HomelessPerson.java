@@ -91,4 +91,10 @@ public class HomelessPerson extends User {
         reserveList.clear();
         hasReservation = false;
     }
+
+    public boolean compareShelter(Shelter currentShelter) {
+        return reserveList.size() > 0
+                && reserveList.get(0).getResRoom().getShelterName()
+                .equals(currentShelter.getShelterName());
+    }
 }
