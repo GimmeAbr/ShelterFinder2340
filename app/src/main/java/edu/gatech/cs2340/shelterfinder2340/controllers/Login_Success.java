@@ -88,7 +88,7 @@ public class Login_Success extends AppCompatActivity {
         });
 
         // Loads Shelters
-        shelterList = new ArrayList<Shelter>();
+        shelterList = new ArrayList<>();
         showProgress(true);
         ShelterDao dao = new ShelterDao();
 
@@ -119,7 +119,8 @@ public class Login_Success extends AppCompatActivity {
                                 for (Object o : preReserveList) {
                                     HashMap<String, Object> preReservation =
                                             (HashMap<String, Object>) o;
-                                    int numRoom = ((Long) preReservation.get("numRooms")).intValue();
+                                    int numRoom =
+                                            ((Long) preReservation.get("numRooms")).intValue();
                                     String resOwnerId = (String) preReservation.get("resOwnerId");
                                     HashMap<String, Object> preRoom =
                                             (HashMap<String, Object>)
@@ -129,7 +130,8 @@ public class Login_Success extends AppCompatActivity {
                                     String roomType = (String) preRoom.get("roomType");
                                     String roomShelterName = (String) preRoom.get("shelterName");
                                     String date = (String) preRoom.get("date");
-                                    Room resRoom = new Room(numVacancies, roomType, roomShelterName);
+                                    Room resRoom =
+                                            new Room(numVacancies, roomType, roomShelterName);
                                     Reservation res =
                                             new Reservation(resOwnerId, numRoom, resRoom, date);
                                     reservationList.add(res);
@@ -191,7 +193,7 @@ public class Login_Success extends AppCompatActivity {
 
 
     private void populateListView () {
-        ShelterQuery query = Model.getInstance().get_query();
+        ShelterQuery query = model.get_query();
         /* Adapter to populate the shelterListView */
         ArrayAdapter<Shelter> shelterAdapter;
         if (query == null) {
