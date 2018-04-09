@@ -17,6 +17,7 @@ import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
@@ -54,14 +55,14 @@ public class ShelterDetailActivity extends AppCompatActivity {
         TextView capacity = (TextView) findViewById(R.id.capacity);
         capacity.setText(currentShelter.getCapacity());
 
-        TextView gender = (TextView) findViewById(R.id.gender);
+        TextView gender = findViewById(R.id.gender);
         gender.setText(currentShelter.getGender());
 
-        TextView longtitude = (TextView) findViewById(R.id.longitude);
-        longtitude.setText("" + currentShelter.getLongitude());
+        TextView longitude = findViewById(R.id.longitude);
+        longitude.setText(String.format(Locale.US, "%f", currentShelter.getLongitude()));
 
         TextView latitude = (TextView) findViewById(R.id.latitude);
-        latitude.setText("" + currentShelter.getLatitude());
+        latitude.setText(String.format(Locale.US, "%f", currentShelter.getLatitude()));
 
         TextView address = (TextView) findViewById(R.id.address);
         address.setText(currentShelter.getAddress());
