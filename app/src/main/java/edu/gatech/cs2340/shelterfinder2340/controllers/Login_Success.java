@@ -81,6 +81,7 @@ public class Login_Success extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Model.getInstance().set_query(null);
                 Intent logOutIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(logOutIntent);
                 finish();
