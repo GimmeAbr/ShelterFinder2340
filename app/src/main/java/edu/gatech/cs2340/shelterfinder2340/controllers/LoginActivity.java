@@ -2,6 +2,7 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,23 +31,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
-import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
-import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -60,21 +56,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-    private FirebaseAuth mAuth;
-    private LoginActivity thisObj;
+    private static FirebaseAuth mAuth;
     private Model model;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
+    private static UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -84,16 +69,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        thisObj = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         model = Model.getInstance();
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView =  findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -105,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        Button mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,16 +206,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void updateUI() {
-        Log.d("debug","WHAT THE HELL IS HAPPENING");
-        Log.d("error","WHAT THE HELL IS HAPPENING");
-        Log.d("verbose","WHAT THE HELL IS HAPPENING");
-        showProgress(false);
-        mEmailView.setError("Invalid email or password");
-        View focusView = mEmailView;
-        focusView.requestFocus();
-    }
-
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
@@ -250,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -270,12 +244,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -329,13 +298,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
+    @SuppressLint("StaticFieldLeak")
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -353,15 +322,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 Task task = mAuth.signInWithEmailAndPassword(mEmail, mPassword);
                 while (!task.isComplete()) {
-
+                    Log.d("debug", "waiting on connection");
                 }
                 Log.d("debug", "WHAT HAPPENED");
                 // If sign in fails, display a message to the
                 if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's informa tion
+                    // Sign in success, update UI with the signed in user's information
                     FirebaseUser user = mAuth.getCurrentUser();
 
                     //Change the user id to a string
+                    assert user != null;
                     model.setCurrentUser(new HomelessPerson(user.getDisplayName(), user.getEmail(), user.getUid()));
                 } else {
                     throw new RuntimeException("Login failed");
@@ -383,11 +353,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 // TODO: read user from database
-                String uid = mAuth.getCurrentUser().getUid();
+                @SuppressWarnings("ConstantConditions") String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid);
-                Intent loginSucess = new Intent(getApplicationContext(), Login_Success.class);
-                getApplicationContext().startActivity(loginSucess);
+                Intent loginSuccess = new Intent(getApplicationContext(), Login_Success.class);
+                getApplicationContext().startActivity(loginSuccess);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

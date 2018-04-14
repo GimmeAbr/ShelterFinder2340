@@ -1,7 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
-import android.content.Intent;
-import android.os.AsyncTask;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -9,35 +8,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.gatech.cs2340.shelterfinder2340.R;
-import edu.gatech.cs2340.shelterfinder2340.controllers.Login_Success;
 
-
-/**
- * Created by Peter on 3/5/2018.
- */
 
 public class ShelterDao {
-    boolean isDone = false;
-
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // For future use
+    @SuppressWarnings("unused")
     public void saveShelters(List<Shelter> shelters) {
         Log.d("debug", "about to save shelters");
         /* DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -92,7 +76,4 @@ public class ShelterDao {
 //        }
     }
 
-    public boolean isDone() {
-        return isDone;
-    }
 }
