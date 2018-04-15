@@ -1,12 +1,8 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
-/**
- * Created by Sebastian Hollister on 2/26/2018.
- */
-
 public class Review {
-    private String shelterName;
-    private User reviewer;
+    private final String shelterName;
+    private final User reviewer;
     private int rating;
     private String reviewContent;
 
