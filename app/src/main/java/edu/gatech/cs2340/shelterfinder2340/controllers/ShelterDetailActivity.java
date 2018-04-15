@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -74,8 +75,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                 reserveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), ReserveRoomActivity.class);
-                        startActivity(i);
+                        fadeOutToActivity(ReserveRoomActivity.class);
                         finish();
                     }
                 });
@@ -101,8 +101,7 @@ public class ShelterDetailActivity extends AppCompatActivity {
                         UserDao userDao = new UserDao();
                         userDao.saveHomelessPerson((HomelessPerson) Model.getInstance()
                                 .get_currentUser());
-                        Intent i = new Intent(getApplicationContext(), Login_Success.class);
-                        startActivity(i);
+                        fadeOutToActivity(Login_Success.class);
                         finish();
                     }
                 });
@@ -117,5 +116,14 @@ public class ShelterDetailActivity extends AppCompatActivity {
             tb.setTitle(Model.getInstance().getCurrentShelter().getShelterName());
         }
 
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
     }
 }

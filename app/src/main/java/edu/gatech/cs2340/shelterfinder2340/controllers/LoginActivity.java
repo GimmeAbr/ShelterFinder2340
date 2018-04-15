@@ -3,6 +3,7 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -121,8 +122,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(cancelIntent);
+                fadeOutToActivity(WelcomeActivity.class);
             }
         });
 
@@ -413,5 +413,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
     }
 }

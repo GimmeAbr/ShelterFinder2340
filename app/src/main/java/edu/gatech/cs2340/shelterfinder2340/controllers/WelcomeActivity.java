@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,17 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                getApplicationContext().startActivity(intent);
-//                overridePendingTransition(animationIn, animationOut);
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-                startActivity(i);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                fadeOutToActivity(LoginActivity.class);
             }
         });
         final Button regBtn = findViewById(R.id.reg_button);
@@ -57,15 +48,18 @@ public class WelcomeActivity extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                startActivity(intent);
+                fadeOutToActivity(RegisterActivity.class);
             }
         });
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
     }
 
 }

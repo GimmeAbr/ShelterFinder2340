@@ -79,8 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(cancelIntent);
+                fadeOutToActivity(WelcomeActivity.class);
             }
         });
 
@@ -143,21 +142,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
-            myIntent.putExtra("Label", "start");
-            startActivity(myIntent);
+            fadeOutToActivity(Login_Success.class);
         }
     }
 
-//    private void updatUIHomeless(FirebaseUser user, HomelessPerson hp) {
-//        if (user != null) {
-//            Intent myIntent = new Intent(RegisterActivity.this, Login_Success.class);
-//            myIntent.putExtra("Label", "start");
-//            myIntent.putExtra("homelessName", hp.getName());
-//            myIntent.putExtra("homelessGender", hp.getGender());
-//            myIntent.putExtra("homelssRes", hp.hasReservation());
-//            myIntent.putExtra("homelessId", hp.getId());
-//            startActivity(myIntent);
-//        }
-//    }
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
+    }
 }
