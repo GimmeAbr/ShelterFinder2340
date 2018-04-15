@@ -70,6 +70,7 @@ public class UserDao {
                             Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
                             reservationList.add(res);
                         }
+                        hasReservation = !reservationList.isEmpty();
                         HomelessPerson hp = new HomelessPerson(name, gender, id);
                         hp.setHasReservation(hasReservation);
                         hp.setReserveList(reservationList);
