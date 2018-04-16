@@ -1,8 +1,8 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
-/**
+/*
  * Created by Sylvia Li on 2018/3/26.
- */
+ **/
 
 import java.io.Serializable;
 
@@ -11,16 +11,16 @@ import java.io.Serializable;
  * Users have a roo
  */
 public class Room implements Serializable{
-    private int initialCap;
+    private final int initialCap;
 
     public void setNumVacancies(int numVacancies) {
         this.numVacancies = numVacancies;
     }
 
     private int numVacancies;
-    private String roomType;
+    private final String roomType;
 
-    private String shelterName;
+    private final String shelterName;
 
     public int getNumVacancies() {
         return numVacancies;
@@ -50,12 +50,12 @@ public class Room implements Serializable{
         return false;
     }
 
-    public boolean canReserve(int numSpots) {
+    /*public boolean canReserve(int numSpots) {
         if (numVacancies >= numSpots) {
             return true;
         }
         return false;
-    }
+    } */
 
     public void releaseBeds(int numSpots) {
         this.numVacancies = this.numVacancies + numSpots;

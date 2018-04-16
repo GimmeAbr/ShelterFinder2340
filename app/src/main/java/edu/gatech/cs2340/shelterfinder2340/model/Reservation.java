@@ -1,15 +1,12 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 
-/**
- * Created by admin on 3/30/18.
- */
 
 public class Reservation {
-    String resOwnerId;
-    Room resRoom;
-    String date;
-    int numRooms;
-    String id = "";
+    final String resOwnerId;
+    private final Room resRoom;
+    private final String date;
+    private final int numRooms;
+    private String id = "";
 
     /*--------------- Constructors ----------------------*/
 
@@ -24,10 +21,12 @@ public class Reservation {
         this(resOwner.getId(), numRooms, resRoom, "");
     }
 
-    /*---------- Getters ------------*/
-    public String getDate() {
-        return date;
-    }
+// --Commented out by Inspection START (4/14/2018 10:04 PM):
+//    /*---------- Getters ------------*/
+//    public String getDate() {
+//        return date;
+//    }
+// --Commented out by Inspection STOP (4/14/2018 10:04 PM)
 
     public Room getResRoom() {
         return resRoom;
@@ -37,30 +36,21 @@ public class Reservation {
         return numRooms;
     }
 
-    public String getResOwnerId() {
+    private String getResOwnerId() {
         return resOwnerId;
     }
 
     public String getId() { return id;}
 
-    /*---------- Setters ------------*/
-    public void setId(String id) { this.id = id; }
+// --Commented out by Inspection START (4/14/2018 10:04 PM):
+//    /*---------- Setters ------------*/
+//    public void setId(String id) { this.id = id; }
+// --Commented out by Inspection STOP (4/14/2018 10:04 PM)
 
     /*---------- Helpers ------------*/
     @Override
     public boolean equals(Object r) {
-        if (r == null) {
-            return false;
-        }
-        if (!(r instanceof Reservation)) {
-            return false;
-        }
-        if (((Reservation) r).getId().equals("")) {
-            return (((Reservation) r).getResOwnerId().equals(resOwnerId)
-            && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName()))
-                    && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getRoomType())));
-        }
-        return false;
+        return r != null && r instanceof Reservation && ((Reservation) r).getId().equals("") && (((Reservation) r).getResOwnerId().equals(resOwnerId) && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName())) && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getRoomType())));
     }
 
 }

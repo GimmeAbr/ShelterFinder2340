@@ -14,17 +14,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
-import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
-import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     private List<Shelter> shelterList;
 
     @Override
@@ -69,26 +65,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        double lat = 0;
-        double lon = 0;
-        double counter = 0;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 
 
         for(Shelter s: shelterList){
-            lat += s.getLatitude();
-            lon += s.getLongitude();
-            LatLng shelt = new LatLng(s.getLatitude(), s.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(shelt).title(s.getShelterName() + " " + s.getPhoneNumber()));
+            LatLng shelter = new LatLng(s.getLatitude(), s.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(shelter).title(s.getShelterName() + " " + s.getPhoneNumber()));
 
         }
 
 
         LatLng atl = new LatLng(33.780264,-84.4123257);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(atl, 11));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(atl, 11));
     }
 }
