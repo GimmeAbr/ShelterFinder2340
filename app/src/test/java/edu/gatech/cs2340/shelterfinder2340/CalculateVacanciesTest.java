@@ -31,6 +31,7 @@ public class CalculateVacanciesTest {
     private Room childShelterRoom;
     private Room familyShelterRoom;
     private HomelessPerson seb = new HomelessPerson("Seb", "male", "2340test", "dfs", "sdfsd");
+    private HomelessPerson amy = new HomelessPerson("amy", "username", "password", "female", "dffd");
 
 
     @Before
@@ -76,6 +77,21 @@ public class CalculateVacanciesTest {
         familyShelter.createReservation(seb, 4, familyShelterRoom);
         calculatedVac = familyShelter.calculateVacancies();
         assertEquals(21 -  4, calculatedVac);
+    }
+
+    @Test
+    public void testMultipleReservations() {
+        womenShelter.createReservation(seb, 2, femaleShelterRoom );
+        womenShelter.createReservation(amy, 4, femaleShelterRoom);
+        calculatedVac = womenShelter.calculateVacancies();
+        assertEquals(299, calculatedVac);
+    }
+
+    @Test
+    public void testFullCapacity() {
+        familyShelter.createReservation(seb, 21, familyShelterRoom);
+        calculatedVac = familyShelter.calculateVacancies();
+        assertEquals(0, calculatedVac);
     }
 
 }
