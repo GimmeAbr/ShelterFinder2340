@@ -31,7 +31,7 @@ public class ShelterCoordinator extends User {
         } else if (label.equals(ShelterLabels.ADDRESS)) {
             workShelter.setAddress(update);
         } else if (label.equals(ShelterLabels.CAPACITY)) {
-            workShelter.setCapacity("");
+            workShelter.setCapacity(update);
         } else if (label.equals(ShelterLabels.GENDER)) {
             workShelter.setGender(update);
         } else if (label.equals(ShelterLabels.PHONENUMBER)) {
