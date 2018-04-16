@@ -30,8 +30,8 @@ public class CalculateVacanciesTest {
     private Room femaleShelterRoom;
     private Room childShelterRoom;
     private Room familyShelterRoom;
-    private HomelessPerson seb = new HomelessPerson("Seb", "male", "2340test", "dfs", "sdfsd");
-    private HomelessPerson amy = new HomelessPerson("amy", "username", "password", "female", "dffd");
+    private HomelessPerson seb = new HomelessPerson("Seb", "male", "2340test");
+    private HomelessPerson amy = new HomelessPerson("amy", "username", "password");
 
 
     @Before

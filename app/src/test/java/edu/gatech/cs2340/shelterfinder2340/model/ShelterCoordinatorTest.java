@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class ShelterCoordinatorTest {
     @Test
     public void changeShelterInfo() throws Exception {
-        Shelter shelter1 = new Shelter("DemoShelter", "female", "DemoAddress", "1011011100", 01, 01, "100", "1");
+        Shelter shelter1 = new Shelter("DemoShelter", "female", "DemoAddress", "1011011100", 1, 1, "100", "1");
         ShelterCoordinator shelt = new ShelterCoordinator("userName1", "password1", "password", shelter1);
 
         shelt.changeShelterInfo("DemoShelter2", ShelterLabels.NAME);
