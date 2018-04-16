@@ -193,13 +193,6 @@ public class ReserveRoomActivity extends AppCompatActivity {
                 finish();
             }
         });
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     private void fadeOutToActivity(Class<? extends Activity> activity) {

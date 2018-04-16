@@ -1,8 +1,12 @@
-package edu.gatech.cs2340.shelterfinder2340.model;
+package edu.gatech.cs2340.shelterfinder2340;
 import org.junit.Before;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+
+import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
+import edu.gatech.cs2340.shelterfinder2340.model.Room;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
