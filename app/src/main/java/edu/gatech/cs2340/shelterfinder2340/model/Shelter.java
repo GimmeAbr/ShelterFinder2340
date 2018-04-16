@@ -379,10 +379,10 @@ public class Shelter {
         if(!(this.longitude == other.getLongitude())) {
             return false;
         }
-        if(!(this.capacity == other.getCapacity())) {
+        if(!(this.capacity.equals(other.getCapacity()))) {
             return false;
         }
-        if(!(this.id == other.getId())) {
+        if(!(this.id.equals(other.getId()))) {
             return false;
         }
         return true;

@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * loads data from a pre-exisiting bundle if in there
+     * loads data from a pre-existing bundle if in there
      * @param i - which one
      * @param bundle - data
      * @return - returns other type of data
@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * on finish for the previous existing emails
-     * @param cursorLoader - the exisiting cursor loader
+     * @param cursorLoader - the existing cursor loader
      * @param cursor - the cursor
      */
     @Override
@@ -302,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * legit no idea what this does help
-     * @param cursorLoader
+     * @param cursorLoader -  saves cursor
      */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {

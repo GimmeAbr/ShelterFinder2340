@@ -22,7 +22,7 @@ public class PetersTests {
     private Shelter maleShelter;
     private Shelter femaleShelter;
 
-    private HomelessPerson peter = new HomelessPerson("Peter Lebedev", "1234@gmail.com", "2340test", "Male", "asCcomRAemTvmkDJwjcEnxAd1AF3");
+    private HomelessPerson peter = new HomelessPerson("Peter Lebedev", "1234@gmail.com", "2340test");
     private Room room1;
     private Room room2;
     private Room room3;
@@ -57,6 +57,7 @@ public class PetersTests {
         res1Result = new Reservation(peter, room1, 6);
         res2Result = new Reservation(peter, room2, 5);
         res3Result = new Reservation(peter, room3, 9);
+
     }
     @Test
     public void testMaleReserve() {
@@ -69,6 +70,12 @@ public class PetersTests {
         femaleShelter.createReservation(peter,5, room2);
         assertEquals(femaleShelter.getReserveList().get(0),res2Result);
         assertEquals(135, room2.getNumVacancies());
+    }
+    @Test
+    public void testZeroReserve() {
+        femaleShelter.createReservation(peter,0, room2);
+        assertEquals(peter.getReserveList().size(),0);
+        assertEquals(140, room2.getNumVacancies());
     }
     @Test
     public void testReserveTwoRooms() {

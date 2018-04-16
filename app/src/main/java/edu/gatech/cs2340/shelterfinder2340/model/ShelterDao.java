@@ -21,9 +21,10 @@ import java.util.Map;
 public class ShelterDao {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     // For future use
-    @SuppressWarnings("unused")
+
     /**
-     * this method saves the list of shelters to firebase
+     *  shave shelters
+     * @param shelters - list of shelters to update
      */
     public void saveShelters(List<Shelter> shelters) {
         Log.d("debug", "about to save shelters");

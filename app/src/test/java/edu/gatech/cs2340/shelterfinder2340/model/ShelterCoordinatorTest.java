@@ -35,6 +35,9 @@ public class ShelterCoordinatorTest {
 
         shelt.changeShelterInfo("100", ShelterLabels.LONGITUDE);
         assertEquals(100, shelter1.getLongitude(), 1.0);
+
+        shelt.changeShelterInfo("", ShelterLabels.LONGITUDE);
+        assertEquals(0, shelter1.getLongitude(), 1.0);
     }
 
 }

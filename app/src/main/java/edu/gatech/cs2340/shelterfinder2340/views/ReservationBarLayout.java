@@ -11,13 +11,10 @@ import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 
 
-/**
- * Created by Sylvia Li on 2018/3/25.
- */
+
 
 public class ReservationBarLayout extends LinearLayout {
     private TextView typeView;
-    private NumberPicker picker;
 
     public int getSelectedRoom() {
         return selectedRoom;
@@ -53,7 +50,7 @@ public class ReservationBarLayout extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.reservation_bar, this, true);
         typeView = findViewById(R.id.type);
         typeView.setText(type);
-        picker = findViewById(R.id.number_picker);
+        NumberPicker picker = findViewById(R.id.number_picker);
         picker.setMaxValue(capacity);
         picker.setMinValue(0);
         picker.setValue(0);
