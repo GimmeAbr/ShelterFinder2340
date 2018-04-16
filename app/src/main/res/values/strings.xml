@@ -40,4 +40,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_demoooo">demooo</string>
     <string name="title_activity_reserve_room">ReserveRoomActivity</string>
+
+    <string name="description_reserve">Select the type and number of rooms you would like to reserve. Click on Add Room to create reservations of a different room type.</string>
 </resources>

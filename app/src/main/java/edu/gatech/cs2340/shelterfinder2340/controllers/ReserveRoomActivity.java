@@ -37,7 +37,7 @@ import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
 public class ReserveRoomActivity extends AppCompatActivity {
 
-    TextView shelterName;
+    //TextView shelterName;
     ScrollView scrollView;
     Button reserveButton;
     Button addButton;
@@ -60,7 +60,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        shelterName = findViewById(R.id.shelter_name_reserve);
+        //shelterName = findViewById(R.id.shelter_name_reserve);
         scrollView = findViewById(R.id.scroll_view);
         reserveButton = findViewById(R.id.reserveBtn);
         addButton = findViewById(R.id.add_room);
@@ -71,10 +71,11 @@ public class ReserveRoomActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_reserve);
 
         shelter = Model.getInstance().getCurrentShelter();
+        toolbar.setTitle(shelter.getShelterName());
         for (Room d: shelter.getRoomList()) {
             roomMap.put(d.getRoomType(),d);
         }
-        shelterName.setText(shelter.getShelterName());
+        //shelterName.setText(shelter.getShelterName());
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(thisObj.getApplicationContext(),
                 android.R.layout.simple_list_item_1,  Arrays.copyOf(roomMap.keySet().toArray(), roomMap.keySet().toArray().length, String[].class));
         firstSpinner.setAdapter(adapter);
