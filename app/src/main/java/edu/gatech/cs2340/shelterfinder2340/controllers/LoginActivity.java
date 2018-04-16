@@ -247,6 +247,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+    /**
+     * loads data from a pre-exisiting bundle if in there
+     * @param i - which one
+     * @param bundle - data
+     * @return - returns other type of data
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -264,6 +270,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
+    /**
+     * on finish for the previous existing emails
+     * @param cursorLoader - the exisiting cursor loader
+     * @param cursor - the cursor
+     */
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<>();
@@ -276,6 +287,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         addEmailsToAutoComplete(emails);
     }
 
+    /**
+     * legit no idea what this does help
+     * @param cursorLoader
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 

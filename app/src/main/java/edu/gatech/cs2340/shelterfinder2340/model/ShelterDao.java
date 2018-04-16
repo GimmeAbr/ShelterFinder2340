@@ -22,6 +22,9 @@ public class ShelterDao {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     // For future use
     @SuppressWarnings("unused")
+    /**
+     * this method saves the list of shelters to firebase
+     */
     public void saveShelters(List<Shelter> shelters) {
         Log.d("debug", "about to save shelters");
         /* DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -56,11 +59,20 @@ public class ShelterDao {
         }
     }
 
+    /**
+     * Gets the list of shelters
+     * The oncomplete listern made retrivies the adata in a async call
+     * @param listener - the object which tells firebase what to do with the data when its loaded
+     */
     public void getShelters(OnCompleteListener<QuerySnapshot> listener) {
         Task<QuerySnapshot> task = db.collection("shelters").get();
         task.addOnCompleteListener(listener);
     }
 
+    /**
+     * updates the current shelter
+     * @param shelter - sheter to update
+     */
     public void updateShelter(Shelter shelter) {
         db.collection("shelters").document(shelter.getId()).set(shelter);
 //        for (Room r : shelter.getRoomList()) {
