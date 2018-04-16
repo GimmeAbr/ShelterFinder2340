@@ -261,4 +261,33 @@ public class Shelter{
         return this.shelterName;
     }
 
+    public boolean equals(Shelter other) {
+
+        if (!(this.shelterName.equals(other.getShelterName()))){
+            return false;
+        }
+        if(!(this.gender.equals(other.getGender()))) {
+            return false;
+        }
+        if(!(this.address.equals(other.getAddress()))) {
+            return false;
+        }
+        if(!(this.phoneNumber.equals(other.getPhoneNumber()))) {
+            return false;
+        }
+        if(!(this.latitude == other.getLatitude())) {
+            return false;
+        }
+        if(!(this.longitude == other.getLongitude())) {
+            return false;
+        }
+        if(!(this.capacity == other.getCapacity())) {
+            return false;
+        }
+        if(!(this.id == other.getId())) {
+            return false;
+        }
+        return true;
+    }
+
 }
