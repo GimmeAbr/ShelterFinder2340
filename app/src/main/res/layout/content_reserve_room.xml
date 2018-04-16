@@ -10,40 +10,36 @@
 
     <TextView
         android:id="@+id/shelter_name_reserve"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="$ShelterName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
-        android:text="Reserve A Room"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/description_reserve"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shelter_name_reserve" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:scrollHorizontally="false"
+        android:maxLines="100" />
 
     <Button
         android:id="@+id/add_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:text="Add Room"
-        app:layout_constraintStart_toStartOf="@+id/reserveBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/shelter_name_reserve"
+        app:layout_constraintStart_toStartOf="@+id/shelter_name_reserve" />
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="368dp"
         android:layout_height="314dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_room"
@@ -62,13 +58,13 @@
 
                 <Spinner
                     android:id="@+id/RoomTypes"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <Spinner
                     android:id="@+id/NumData"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -81,22 +77,13 @@
         android:id="@+id/reserveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="16dp"
         android:text="Reserve"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/shelter_name_reserve"
+        app:layout_constraintLeft_toRightOf="@+id/add_room" />
 
-    <Button
-        android:id="@+id/cancel_reserve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="8dp"
-        android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll_view" />
 
 </android.support.constraint.ConstraintLayout>

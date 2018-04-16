@@ -3,76 +3,54 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
-import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
+//import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Reservation;
 import edu.gatech.cs2340.shelterfinder2340.model.Room;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterDao;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
-import edu.gatech.cs2340.shelterfinder2340.model.User;
-import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
+//import edu.gatech.cs2340.shelterfinder2340.model.User;
+//import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
 
+/**
+ * This Activity is used to display the Login_Success screen
+ */
 public class Login_Success extends AppCompatActivity {
 
     /** ListView Object */
     private ListView shelterListView;
     /** Loader View while shelter loads */
     private View mProgressView;
-    /** Adapter to populate the shelterListView */
-    private ArrayAdapter<Shelter> shelterAdapter;
     /** the content of the shelter list view */
     private List<Shelter> shelterList;
-    /** The top part of the UI */
-    private Toolbar toolbar;
     /** The current context*/
     private Login_Success login_success;
     /** The current context*/
@@ -87,32 +65,23 @@ public class Login_Success extends AppCompatActivity {
         setContentView(R.layout.activity_login__success);
 
 
-        /**
+        /*
          * Step one is to set instantiate the view variables with UI view objects
          */
-        toolbar = findViewById(R.id.toolbar);
+        /* The top part of the UI */
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         shelterListView = findViewById(R.id.shelter_list);
         mProgressView = findViewById(R.id.login_progress2);
 
-//        // Loads Data from the Filter View With Intent Data
-//        Intent prev1Intent = getIntent();
-//        Bundle prev1Extra = prev1Intent.getExtras();
-//        if (prev1Extra != null) {
-//            if (prev1Extra.getString("Label").equals("search")) {
-//                ShelterQuery query = Model.getInstance().get_query();
-//                shelterList = query.filterShelter(shelterList);
-//            }
-//        }
-
         // Authentication -> getting the current user
-        // TODO: load current user here
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        final FirebaseUser user = mAuth.getCurrentUser();
         final Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Model.getInstance().set_query(null);
                 Intent logOutIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(logOutIntent);
                 finish();
@@ -120,8 +89,7 @@ public class Login_Success extends AppCompatActivity {
         });
 
         // Loads Shelters
-        // TODO: load from firebase and show spinner based off that
-        shelterList = new ArrayList<Shelter>();
+        shelterList = new ArrayList<>();
         showProgress(true);
         ShelterDao dao = new ShelterDao();
 
@@ -134,7 +102,6 @@ public class Login_Success extends AppCompatActivity {
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Log.e("poop", String.valueOf(null == snapshot));
                         if (snapshot.exists()) {
-                            // String shelterName, String gender, String address, String phoneNumber, double longitude, double latitude,  String capacity, String id
                             String shelterName = snapshot.getString("shelterName");
                             String gender = snapshot.getString("gender");
                             String address = snapshot.getString("address");
@@ -143,45 +110,43 @@ public class Login_Success extends AppCompatActivity {
                             double latitude = snapshot.getDouble("latitude");
                             String capacity = snapshot.getString("capacity");
                             String id = snapshot.getId();
-                            Shelter shelter = new Shelter(shelterName, gender, address, phoneNumber, longitude, latitude, capacity, id);
-                            /**
-                             * ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
-                             ArrayList<Reservation> reservationList = new ArrayList<>();
-                             for (Object o : preReserveList) {
-                             Reservation res = (Reservation) o;
-                             reservationList.add(res);
-                             }
-                             */
+                            Shelter shelter = new Shelter(shelterName, gender, address,
+                                    phoneNumber, longitude, latitude, capacity, id);
+
                             if (snapshot.get("reserveList") != null) {
-                                ArrayList<Object> preReserveList = (ArrayList<Object>) snapshot.get("reserveList");
-                                ArrayList<Reservation> reservationList = new ArrayList<>();
+                                Iterable<Object> preReserveList =
+                                        (ArrayList<Object>) snapshot.get("reserveList");
+                                List<Reservation> reservationList = new ArrayList<>();
                                 for (Object o : preReserveList) {
-                                    HashMap<String, Object> preReservation = (HashMap<String, Object>) o;
-                                    int numRoom = ((Long) preReservation.get("numRooms")).intValue();
+                                    HashMap<String, Object> preReservation =
+                                            (HashMap<String, Object>) o;
+                                    int numRoom =
+                                            ((Long) preReservation.get("numRooms")).intValue();
                                     String resOwnerId = (String) preReservation.get("resOwnerId");
-                                    HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
-                                    int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                                    HashMap<String, Object> preRoom =
+                                            (HashMap<String, Object>)
+                                                    preReservation.get("resRoom");
+                                    int numVacancies =
+                                            ((Long) preRoom.get("numVacancies")).intValue();
                                     String roomType = (String) preRoom.get("roomType");
                                     String roomShelterName = (String) preRoom.get("shelterName");
-                                    Room resRoom = new Room(numVacancies, roomType, roomShelterName);
-                                    Reservation res = new Reservation(resOwnerId, numRoom, resRoom, "");
+                                    String date = (String) preRoom.get("date");
+                                    Room resRoom =
+                                            new Room(numVacancies, roomType, roomShelterName);
+                                    Reservation res =
+                                            new Reservation(resOwnerId, numRoom, resRoom, date);
                                     reservationList.add(res);
                                 }
                                 shelter.setReserveList(reservationList);
                             }
                             if (snapshot.get("roomList") != null) {
-                                ArrayList<Object> preRoomList = (ArrayList<Object>) snapshot.get("roomList");
-                                ArrayList<Room> roomList = new ArrayList<>();
+                                Iterable<Object> preRoomList =
+                                        (ArrayList<Object>) snapshot.get("roomList");
+                                List<Room> roomList = new ArrayList<>();
                                 for (Object o : preRoomList) {
-                                    /**
-                                     * HashMap<String, Object> preRoom = (HashMap<String, Object>) preReservation.get("resRoom");
-                                     int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
-                                     String roomType = (String) preRoom.get("roomType");
-                                     String roomShelterName = (String) preRoom.get("shelterName");
-                                     Room resRoom = new Room(numVacancies, roomType, roomShelterName);
-                                     */
                                     HashMap<String, Object> preRoom = (HashMap<String, Object>) o;
-                                    int numVacancies = ((Long) preRoom.get("numVacancies")).intValue();
+                                    int numVacancies =
+                                            ((Long) preRoom.get("numVacancies")).intValue();
                                     String roomType = (String) preRoom.get("roomType");
                                     String roomShelterName = (String) preRoom.get("shelterName");
                                     Room room = new Room(numVacancies, roomType, roomShelterName);
@@ -190,7 +155,6 @@ public class Login_Success extends AppCompatActivity {
                                 shelter.setRoomList(roomList);
                             }
 
-                            // TODO: Remove when done testing reserve shelter screen
                             shelterListLoaded.add(shelter);
                         }
                     }
@@ -199,37 +163,30 @@ public class Login_Success extends AppCompatActivity {
                     showProgress(false);
                     populateListView();
                 } else {
-                    /**
-                     * TODO: insert code for on fail
-                     */
+                    Log.d("Failure", "Failed to load Shelters");
+                    Toast.makeText(login_success, "Sorry, we cannot load shelters" +
+                            " at this moment", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
-
-
-
-
-        FloatingActionButton search = (FloatingActionButton) findViewById(R.id.search_button);
+        FloatingActionButton search = findViewById(R.id.search_button);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), FilterActivity.class);
                 startActivity(i);
-                finish();
+                //finish();
             }
         });
 
-        FloatingActionButton mapSearch = (FloatingActionButton) findViewById(R.id.map_button);
+        FloatingActionButton mapSearch = findViewById(R.id.map_button);
         mapSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 i.putExtra("shelters", (ArrayList<Shelter>)shelterList);
                 startActivity(i);
-
-
             }
         });
 
@@ -237,11 +194,18 @@ public class Login_Success extends AppCompatActivity {
 
 
     private void populateListView () {
-        ShelterQuery query = Model.getInstance().get_query();
-        if (query == null)
-            shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, model.getShelters());
-        else
-            shelterAdapter = new ArrayAdapter<Shelter>(login_success, android.R.layout.simple_list_item_1, query.filterShelter(model.getShelters()));
+        ShelterQuery query = model.get_query();
+        /* Adapter to populate the shelterListView */
+        ArrayAdapter<Shelter> shelterAdapter;
+        if (query == null) {
+            shelterAdapter =
+                    new ArrayAdapter<>(login_success,
+                            android.R.layout.simple_list_item_1, model.getShelters());
+        } else {
+            shelterAdapter =
+                    new ArrayAdapter<>(login_success, android.R.layout.simple_list_item_1,
+                            query.filterShelter(model.getShelters()));
+        }
         shelterListView.setAdapter(shelterAdapter);
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -250,7 +214,7 @@ public class Login_Success extends AppCompatActivity {
                 model.setCurrentShelter(st);
                 Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

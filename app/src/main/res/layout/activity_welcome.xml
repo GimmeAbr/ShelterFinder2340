@@ -42,8 +42,8 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <Button
+                android:background="@drawable/ripple_effect_welcome"
                 android:id="@+id/login_button"
-                android:background="@color/colorPrimary"
                 android:elevation="@dimen/fab_margin"
                 android:padding="@dimen/fab_margin"
                 style="?metaButtonBarButtonStyle"
@@ -52,13 +52,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:text="@string/login_string"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/reg_button"
                 style="?metaButtonBarButtonStyle"
                 android:padding="@dimen/fab_margin"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/ripple_effect_welcome"
                 android:elevation="@dimen/fab_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

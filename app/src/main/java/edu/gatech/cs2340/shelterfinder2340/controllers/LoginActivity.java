@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -21,10 +22,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -70,6 +73,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setEnterTransition(new Fade());
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         model = Model.getInstance();
@@ -101,8 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(cancelIntent);
+                fadeOutToActivity(WelcomeActivity.class);
             }
         });
 
@@ -215,6 +219,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
+
+    private void goToNextActivity(int animationIn, int animationOut) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(intent);
+        overridePendingTransition(animationIn, animationOut);
+    }
+
 
     /**
      * Shows the progress UI and hides the login form.
@@ -385,5 +398,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
     }
 }

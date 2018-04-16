@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -51,6 +52,7 @@ public class ReserveRoomActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         shelterName = findViewById(R.id.shelter_name_reserve);
+        //shelterName = findViewById(R.id.shelter_name_reserve);
         reserveButton = findViewById(R.id.reserveBtn);
         addButton = findViewById(R.id.add_room);
         layout = findViewById(R.id.linearLayout);
@@ -60,10 +62,11 @@ public class ReserveRoomActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_reserve);
 
         shelter = Model.getInstance().getCurrentShelter();
+        toolbar.setTitle(shelter.getShelterName());
         for (Room d: shelter.getRoomList()) {
             roomMap.put(d.getRoomType(),d);
         }
-        shelterName.setText(shelter.getShelterName());
+        //shelterName.setText(shelter.getShelterName());
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(thisObj.getApplicationContext(),
                 android.R.layout.simple_list_item_1,  Arrays.copyOf(roomMap.keySet().toArray(), roomMap.keySet().toArray().length, String[].class));
         firstSpinner.setAdapter(adapter);
@@ -179,17 +182,14 @@ public class ReserveRoomActivity extends AppCompatActivity {
                     UserDao userDao = new UserDao();
                     userDao.saveHomelessPerson((HomelessPerson)Model.getInstance().get_currentUser());
                 }
-                Intent backIntent = new Intent(getApplicationContext(), Login_Success.class);
-                startActivity(backIntent);
+                fadeOutToActivity(Login_Success.class);
                 finish();
             }
         });
-        // TODO: CANCEL BUTTON
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                startActivityForResult(intent, 0);
+                fadeOutToActivity(ShelterDetailActivity.class);
                 finish();
             }
         });
@@ -200,6 +200,15 @@ public class ReserveRoomActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
     }
 
 }
