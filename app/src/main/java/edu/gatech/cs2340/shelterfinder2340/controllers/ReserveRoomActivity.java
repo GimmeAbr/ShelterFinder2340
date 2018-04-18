@@ -3,7 +3,6 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -50,9 +49,6 @@ public class ReserveRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reserve_room);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        shelterName = findViewById(R.id.shelter_name_reserve);
-        //shelterName = findViewById(R.id.shelter_name_reserve);
         reserveButton = findViewById(R.id.reserveBtn);
         addButton = findViewById(R.id.add_room);
         layout = findViewById(R.id.linearLayout);
