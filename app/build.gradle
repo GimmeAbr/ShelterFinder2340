@@ -39,7 +39,5 @@ dependencies {
     compile 'com.google.firebase:firebase-firestore:11.4.2'
     compile 'com.liuguangqiang.ripplelayout:library:0.1.0'
 
-    testCompile 'junit:junit:4.12'
-    compile 'org.testng:testng:6.9.6'
 }
 apply plugin: 'com.google.gms.google-services'

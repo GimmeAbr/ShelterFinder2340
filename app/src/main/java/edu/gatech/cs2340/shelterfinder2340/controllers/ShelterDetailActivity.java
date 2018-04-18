@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -60,6 +61,9 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
         TextView vacancies = findViewById(R.id.vacancies);
         vacancies.setText(String.format(Locale.US, "%d", currentShelter.calculateVacancies()));
+
+        Linkify.addLinks(address, Linkify.ALL);
+        Linkify.addLinks(phone, Linkify.ALL);
 
         final Button reserveButton = findViewById(R.id.reserveButton);
 

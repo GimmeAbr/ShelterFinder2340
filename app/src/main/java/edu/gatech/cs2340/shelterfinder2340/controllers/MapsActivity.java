@@ -1,6 +1,7 @@
 package edu.gatech.cs2340.shelterfinder2340.controllers;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.Shelter;
 import edu.gatech.cs2340.shelterfinder2340.model.ShelterQuery;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private List<Shelter> shelterList;
@@ -32,8 +35,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             shelterList = (Model.getInstance().getShelters());
         else
             shelterList = query.filterShelter(Model.getInstance().getShelters());
-
-
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -71,14 +72,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 
 
-        for(Shelter s: shelterList){
+        for (Shelter s : shelterList) {
             LatLng shelter = new LatLng(s.getLatitude(), s.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(shelter).title(s.getShelterName() + " " + s.getPhoneNumber()));
+            MarkerOptions mo = new MarkerOptions().position(shelter).title(s.getShelterName() + " " + s.getPhoneNumber());
+            googleMap.addMarker(mo);
 
         }
 
-
-        LatLng atl = new LatLng(33.780264,-84.4123257);
+        LatLng atl = new LatLng(33.780264, -84.4123257);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(atl, 11));
     }
 }
