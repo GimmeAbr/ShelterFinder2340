@@ -388,4 +388,13 @@ public class Shelter {
         return true;
     }
 
+    public String getReserveDisplay(HomelessPerson user) {
+        for (Reservation res : reserveList) {
+            if (user.getId().equals(res.resOwnerId)) {
+                return res.toString();
+            }
+        }
+        return "You have not reserved here";
+    }
+
 }

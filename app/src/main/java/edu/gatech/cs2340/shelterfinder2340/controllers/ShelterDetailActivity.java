@@ -124,10 +124,8 @@ public class ShelterDetailActivity extends AppCompatActivity {
 
     private void slideOutToActivity(Class<? extends Activity> activity) {
         Intent intent = new Intent(getApplicationContext(), activity);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

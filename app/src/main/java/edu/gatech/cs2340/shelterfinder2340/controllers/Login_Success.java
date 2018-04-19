@@ -3,7 +3,9 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -174,8 +177,7 @@ public class Login_Success extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-                startActivity(i);
+                fadeOutToActivity(FilterActivity.class);
                 //finish();
             }
         });
@@ -196,27 +198,56 @@ public class Login_Success extends AppCompatActivity {
     private void populateListView () {
         ShelterQuery query = model.get_query();
         /* Adapter to populate the shelterListView */
-        ArrayAdapter<Shelter> shelterAdapter;
+        SimpleAdapter shelterAdapter;
+        HashMap<String, Object> shelterReservePair;
+        List<Shelter> shelterList = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> shelterReserveAll = new ArrayList<>();
         if (query == null) {
-            shelterAdapter =
-                    new ArrayAdapter<>(login_success,
-                            android.R.layout.simple_list_item_1, model.getShelters());
+            shelterList = model.getShelters();
         } else {
-            shelterAdapter =
-                    new ArrayAdapter<>(login_success, android.R.layout.simple_list_item_1,
-                            query.filterShelter(model.getShelters()));
+            shelterList = query.filterShelter(model.getShelters());
         }
+
+        for (Shelter s : shelterList) {
+            shelterReservePair = new HashMap<>();
+            shelterReservePair.put("shelter", s);
+            shelterReservePair.put("reserved", s.getReserveDisplay(model.getCurrentUser()));
+            shelterReserveAll.add(shelterReservePair);
+        }
+        /*
+         * sa = new SimpleAdapter(this, list,
+         R.layout.twolines,
+         new String[] { "line1","line2" },
+         new int[] {R.id.line_a, R.id.line_b});
+         ((ListView)findViewById(R.id.list)).setAdapter(sa);
+         */
+        shelterAdapter = new SimpleAdapter(this, shelterReserveAll, R.layout.reserve_list_display,
+                new String[]{"shelter", "reserved"}, new int[]{R.id.line_a, R.id.line_b});
+
         shelterListView.setAdapter(shelterAdapter);
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Shelter st = model.getShelters().get(i);
                 model.setCurrentShelter(st);
-                Intent intent = new Intent(getApplicationContext(), ShelterDetailActivity.class);
-                startActivity(intent);
+                slideOutToActivity(ShelterDetailActivity.class);
                 //finish();
             }
         });
+    }
+
+    private void slideOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    private void fadeOutToActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getApplicationContext(), activity);
+        //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -251,5 +282,6 @@ public class Login_Success extends AppCompatActivity {
             shelterListView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
 
 }

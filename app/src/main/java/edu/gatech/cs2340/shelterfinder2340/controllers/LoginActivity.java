@@ -402,10 +402,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void fadeOutToActivity(Class<? extends Activity> activity) {
         Intent intent = new Intent(getApplicationContext(), activity);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         //Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

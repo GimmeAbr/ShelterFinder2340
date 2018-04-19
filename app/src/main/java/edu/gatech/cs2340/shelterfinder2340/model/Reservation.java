@@ -56,4 +56,9 @@ public class Reservation {
         return r != null && r instanceof Reservation && ((Reservation) r).getId().equals("") && (((Reservation) r).getResOwnerId().equals(resOwnerId) && (((Reservation) r).getResRoom().getShelterName().equals(resRoom.getShelterName())) && (((Reservation) r).getResRoom().getRoomType().equals(resRoom.getRoomType())));
     }
 
+    @Override
+    public String toString() {
+        return "You have reserved " + numRooms + " " + resRoom.getRoomType() + " Room(s)";
+    }
+
 }
