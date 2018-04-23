@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Arrays;
 import edu.gatech.cs2340.shelterfinder2340.R;
+import edu.gatech.cs2340.shelterfinder2340.model.Admin;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
 import edu.gatech.cs2340.shelterfinder2340.model.Model;
 import edu.gatech.cs2340.shelterfinder2340.model.UserDao;
@@ -102,6 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
                                             UserDao dao = new UserDao();
                                             dao.saveHomelessPerson(hp);
                                             Model.getInstance().set_currentUser(hp);
+                                        } else if (attribute.equals("Admin")) {
+                                            Admin admin = new Admin(name, user.getUid());
+                                            UserDao dao = new UserDao();
+                                            dao.saveAdmin(admin);
+                                            Model.getInstance().set_currentUser(admin);
                                         }
                                         updateUI(user);
                                     } else {
@@ -133,7 +139,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            fadeOutToActivity(Login_Success.class);
+            if (Model.getInstance().get_currentUser().getAttribute().equals("Admin")) {
+                fadeOutToActivity(MainActivity.class);
+            } else {
+                fadeOutToActivity(Login_Success.class);
+            }
         }
     }
 

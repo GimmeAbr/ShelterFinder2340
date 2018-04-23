@@ -29,6 +29,28 @@ public class UserDao {
         db.collection("homeless").document(user.getId()).set(user);
     }
 
+    public void saveAdmin(Admin admin) {
+        db.collection("admin").document(admin.getId()).set(admin);
+    }
+
+    public void queryAdmin(String id) {
+        // TODO: query Admin from the "admin" collection here
+    }
+
+    public void saveBannedUser(HomelessPerson homelessPerson) {
+        db.collection("banned").document(homelessPerson.getId()).set(homelessPerson);
+    }
+
+    public void unsaveBannedUser(HomelessPerson homelessPerson) {
+        db.collection("banned").document(homelessPerson.getId()).delete();
+    }
+
+    public void queryUser(String id) {
+        // TODO: Use this in LoginActivity so that we can log in both Users and Admins
+        queryHomelessUser(id);
+        queryAdmin(id);
+    }
+
     /**
      * Query the HomelessPerson from Firebase
      * @param id    the id of the HomelessPerson

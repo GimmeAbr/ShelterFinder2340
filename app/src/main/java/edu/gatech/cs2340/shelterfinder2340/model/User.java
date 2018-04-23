@@ -79,6 +79,9 @@ public class User {
      */
     public User(String id) {
         this.id = id;
+        this.name = "";
+        this.username = "";
+        this.password = "";
     }
 
     /**

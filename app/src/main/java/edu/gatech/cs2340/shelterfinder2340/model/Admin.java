@@ -12,6 +12,8 @@ package edu.gatech.cs2340.shelterfinder2340.model;
  }
  */
 public class Admin extends User {
+
+    private CommandManager cm = CommandManager.getCm();
     /**
      * Constructor for Admin
      * @param userName the username of the admin
@@ -23,6 +25,11 @@ public class Admin extends User {
         this.setAttribute("Admin");
     }
 
+    public Admin(String name, String id) {
+        super(name, id);
+        this.setAttribute("Admin");
+    }
+
     /**
      * Constructor for admin that takes in only the id
      * @param id the id of the admin
@@ -30,5 +37,21 @@ public class Admin extends User {
     public Admin(String id) {
         super(id);
         this.setAttribute("Admin");
+    }
+
+    public void banUser(HomelessPerson hp) {
+        cm.banUser(hp);
+    }
+
+    public void unbanUser(HomelessPerson hp) {
+        cm.unbanUser(hp);
+    }
+
+    public void undo() {
+        cm.undo();
+    }
+
+    public void redo() {
+        cm.redo();
     }
 }
