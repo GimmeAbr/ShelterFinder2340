@@ -35,6 +35,9 @@ public class MyaTester {
 
     }
     @Test
+    /**
+     * Removes a reservation when the homeless person has no reservations
+     */
     public void reserveListEmpty() {
         setUp();
         assertFalse(hp.getHasReservation());
@@ -46,7 +49,11 @@ public class MyaTester {
         assertEquals(hp.getReserveList().size(), 0);
     }
 
-    @Test void reserveListPopulated() {
+    @Test
+    /**
+     * Removes a reservation when it is found in the homeless person's reservation list
+     */
+    void reserveListPopulated() {
         setUp();
         ArrayList<Reservation> resList = new ArrayList<>();
         resList.add(res1);
@@ -68,6 +75,10 @@ public class MyaTester {
     }
 
     @Test
+    /**
+     * Tries to remove a reservation that the homeless person does not hold
+     * after executing, homelessperson should still hold all reservations and none are removed
+     */
     public void reservationNotFound() {
         setUp();
         ArrayList<Reservation> resList = new ArrayList<>();
@@ -85,6 +96,10 @@ public class MyaTester {
     }
 
     @Test
+    /**
+     * Removes the last reservation held by a homeless person and checks conditions
+     * when the homeless person has no more reservations
+     */
     public void removeLastReservation() {
         setUp();
         ArrayList<Reservation> resList = new ArrayList<>();

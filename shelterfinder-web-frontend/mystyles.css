@@ -1,0 +1,31 @@
+body {
+    background-color: dodgerblue
+}
+
+.white {
+    color: whitesmoke;
+}
+
+.gray-transparent {
+    background-color: rgba(20, 20, 20, 0.4);
+}
+
+.blue-background {
+    background-color: dodgerblue
+}
+
+.narrow {
+    max-width: 46em;
+}
+
+.btn-primary:hover {
+    background-color: pink;
+}
+
+.scroll {
+    overflow-y: scroll;
+}
+
+a {
+    color: pink;
+}

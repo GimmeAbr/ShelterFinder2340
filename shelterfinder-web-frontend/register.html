@@ -1,0 +1,78 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- My css styles-->
+    <link rel="stylesheet" href="mystyles.css">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=BenchNine:700|Fjalla+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+</head>
+
+<body>
+    <div class="h-25">
+    </div>
+
+    <div class="mt-25 container narrow text-center">
+        <div class="mx-auto">
+            <img src="logo.png" class="mx-auto">
+        </div>
+        <div class="text-left pt-3 pr-5 pl-5 w-75 mx-auto">
+            <form>
+                <h1 class="white">Register</h1>
+                <div class="form-group">
+                    <label for="user-type">I would like to register as...</label>
+                    <select class="form-control" id="user-type">
+                        <option>User</option>
+                        <option>Shelter Coordinator</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-3 col-form-label">Email</label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="email" value="email@example.com">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="username" class="col-3 col-form-label">Username</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-3 col-form-label">Password</label>
+                    <div class="col">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="age" class="col-3 col-form-label">Age</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="age" placeholder="">
+                    </div>
+                    <label for="gender" class="col-3 col-form-label">Gender</label>
+                    <div class="col">
+                        <select class="form-control" id="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-3 h-25">
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    <div class="text-center">
+                        <p>Already have an account? Log in <a href="login.html">here</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
