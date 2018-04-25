@@ -15,6 +15,7 @@ public class User {
         return attribute;
     }
 
+
     /**
      * Sets a user's attribute to the passed in information
      * @param attribute The attribute that the user's attribute should be set to
@@ -36,8 +37,11 @@ public class User {
     private String name;
     private String username;
     private String password;
-    private final String id;
+    private String id;
 
+    public User(){
+
+    }
     /**
      * Constructor for a User
      * @param name the name of the user

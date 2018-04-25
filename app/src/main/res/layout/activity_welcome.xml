@@ -71,9 +71,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="@string/reg_string"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                android:text="@string/reg_string" />
+
+            <Button
+                android:id="@+id/login_fb"
+                style="?metaButtonBarButtonStyle"
+                android:padding="@dimen/fab_margin"
+                android:background="@drawable/ripple_effect_welcome"
+                android:elevation="@dimen/fab_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:text="Login With Facebook" />
 
         </LinearLayout>
     </FrameLayout>
