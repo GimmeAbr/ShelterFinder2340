@@ -5,8 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,12 +39,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.prefs.Preferences;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
 import edu.gatech.cs2340.shelterfinder2340.model.HomelessPerson;
@@ -55,6 +73,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -63,13 +83,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Model model;
 
     private static UserLoginTask mAuthTask = null;
+    private Context c;
+    private SharedPreferences preferences;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Integer incorrectAttempts;
 
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+    private boolean userinDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,6 +231,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
+        // Check if account has had too many login attempts
+        ArrayList<Boolean> arr = new ArrayList<Boolean>();
+        //EmailLocked(email, arr);
+        /*
+        if (isEmailLocked(email)){
+            mEmailView.setError(getString(R.string.tooManyAttempts));
+            focusView = mEmailView;
+            cancel = true;
+
+        } */
+        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        c = this;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit= preferences.edit();
+
+        int incorrectAttempts = preferences.getInt(email, 0);
+        if (incorrectAttempts == 0) {
+            edit.putInt(email, 0);
+            Log.d("Attempts", "Zero Value");
+        }
+        edit.commit();
+        Log.d("Attempts", email + ((Integer)incorrectAttempts).toString());
+
+        /*
+        if (incorrectAttempts >= 3) {
+            mEmailView.setError(getString(R.string.tooManyAttempts));
+            focusView = mEmailView;
+            cancel = true;
+
+        } */
+
+
+
+        if (otherBooleanLock(email)) {
+            mEmailView.setError(getString(R.string.tooManyAttempts));
+            focusView = mEmailView;
+            cancel = true;
+
+        }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -235,6 +302,155 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getApplicationContext().startActivity(intent);
         overridePendingTransition(animationIn, animationOut);
     }
+
+    private void EmailLocked(String email,ArrayList<Boolean> arr) {
+        EmailLockTask e = new EmailLockTask(email, arr);
+        e.execute(arr);
+
+    }
+
+    private boolean otherBooleanLock(String email){
+        if (Model.getInstance().get_lockout(email) >= 3) {
+            return true;
+        }
+        return false;
+
+    }
+
+
+
+    private boolean isEmailLocked(final String email) {
+
+        Log.d("Tracking", "hit");
+        DocumentReference docRef = db.collection("userAttempts").document(email);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Log.d("Tracking", "On Complete hit");
+                while(!task.isSuccessful()){
+                    Log.d("searching", "Document exists");
+                }
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("Tracking", "Document exists");
+                        incorrectAttempts = ((Long) document.get("loginAttempts")).intValue();
+                        if (incorrectAttempts == 0) {
+                            userinDb = false;
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("email", email);
+                            data.put("loginAttempts", 0);
+                            db.collection("userAttempts").document(email).set(data);
+                            Log.d("Tracking",  "Incorrect Attempts is 0, data reset ");
+                        } else {
+                            Log.d("Tracking", "More than 0 events");
+                            userinDb = true;
+                        }
+                    } else {
+                        incorrectAttempts = 0;
+                        userinDb = false;
+                        Log.d("message", "There is the document");
+                    }
+                } else {
+                    Log.d("message", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        if (incorrectAttempts == null) {
+            incorrectAttempts = 0;
+            Log.d("Tracking", "null catch temp");
+        }
+
+        return (incorrectAttempts >= 3);
+    }
+
+
+
+
+
+        /*
+        if (!userinDb) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("email", email);
+            data.put("loginAttempts", 0);
+            db.collection("userAttempts").document(email).set(data);
+            Log.d("User Events",  "user not in database");
+            return false;
+        } */
+
+
+
+
+        /*
+        Log.d("test", "starting");
+        Query q = db.collection("userAttempts").whereEqualTo("email", email);
+        Task<QuerySnapshot> task = q.get();
+        if (task.isSuccessful()) {
+            Log.d("Data", "retrieving data");
+            QuerySnapshot querySnapshot = task.getResult();
+            if(querySnapshot.size() == 0){
+                Map<String, Object> data = new HashMap<>();
+                data.put("email", email);
+                data.put("loginAttempts", 0);
+                db.collection("userAttempts").document(email).set(data);
+                incorrectAttempts = 0;
+                return false;
+
+            }
+            else if (querySnapshot.size() == 1){
+                List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                DocumentSnapshot documentSnapshot= documents.get(0);
+                Map<String, Object> map1 = documentSnapshot.getData();
+                Map<String, Integer> map = (Map) map1;
+                if (map.get("loginAttempts") > 3) {
+                    return true;
+                } else {
+                    incorrectAttempts = map.get("loginAttempts");
+                    return false;
+                }
+
+            } else{
+                Log.d("email locked", "size more than 1");
+                incorrectAttempts = 100;
+                return false;
+            }
+        } else {
+            Log.d("Failure", "Failure");
+            return false;
+        } /*
+        /*
+        QuerySnapshot querySnapshot = task.getResult();
+        if(querySnapshot.size() == 0){
+            Map<String, Object> data = new HashMap<>();
+            data.put("email", email);
+            data.put("loginAttempts", 0);
+            db.collection("userAttempts").document(email).set(data);
+            incorrectAttempts = 0;
+            return false;
+
+        }
+        else if (querySnapshot.size() == 1){
+            List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+            DocumentSnapshot documentSnapshot= documents.get(0);
+            Map<String, Object> map1 = documentSnapshot.getData();
+            Map<String, Integer> map = (Map) map1;
+            if (map.get("loginAttempts") > 3) {
+                return true;
+            } else {
+                incorrectAttempts = map.get("loginAttempts");
+                return false;
+            }
+
+        } else{
+            Log.d("email locked", "size more than 1");
+            incorrectAttempts = 100;
+            return false;
+        }
+*/
+
+
 
 
     /**
@@ -336,6 +552,73 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
     }
 
+    @SuppressLint("StaticFieldLeak")
+    public class EmailLockTask extends AsyncTask<ArrayList<Boolean>, Void, Void> {
+        private String email;
+        private int incorrectAttempts;
+        private ArrayList<Boolean> b;
+        private boolean boo;
+
+        EmailLockTask(String e, ArrayList<Boolean> bo) {
+            email = e;
+            b = bo;
+        }
+
+        public Boolean result() {
+            execute(b);
+            return boo;
+
+        }
+
+        @Override
+        protected Void doInBackground(ArrayList<Boolean>... params) {
+
+                Log.d("Tracking", "hit");
+                DocumentReference docRef = db.collection("userAttempts").document(email);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Log.d("Tracking", "On Complete hit");
+                        while(!task.isSuccessful()){
+                            Log.d("searching", "Document exists");
+                        }
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d("Tracking", "Document exists");
+                                incorrectAttempts = ((Long) document.get("loginAttempts")).intValue();
+                                if (incorrectAttempts == 0) {
+                                    userinDb = false;
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("email", email);
+                                    data.put("loginAttempts", 0);
+                                    db.collection("userAttempts").document(email).set(data);
+                                    Log.d("Tracking",  "Incorrect Attempts is 0, data reset ");
+                                } else {
+                                    Log.d("Tracking", "More than 0 events");
+                                    userinDb = true;
+                                }
+                            } else {
+                                incorrectAttempts = 0;
+                                userinDb = false;
+                                Log.d("message", "No such document");
+                            }
+                        } else {
+                            Log.d("message", "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
+            b.add(incorrectAttempts >= 3);
+            boo = incorrectAttempts >= 3;
+            return null;
+        }
+
+
+    }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -345,6 +628,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -363,13 +647,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d("debug", "WHAT HAPPENED");
                 // If sign in fails, display a message to the
                 if (task.isSuccessful()) {
+                    db.collection("userAttempts").document(mEmail).update("loginAttempts", 0);
                     // Sign in success, update UI with the signed in user's information
+                    Model.getInstance().resetUser(mEmail);
+
+//                    SharedPreferences.Editor edit= preferences.edit();
+//                    edit.putInt(mEmail, 0);
+//                    edit.commit();
                     FirebaseUser user = mAuth.getCurrentUser();
 
                     //Change the user id to a string
                     assert user != null;
                     model.setCurrentUser(new HomelessPerson(user.getDisplayName(), user.getEmail(), user.getUid()));
                 } else {
+                    Model.getInstance().incrementUser(mEmail);
+
+//                    Map<String, Object> data = new HashMap<>();
+//                    data.put("email", mEmail);
+//                    data.put("loginAttempts", incorrectAttempts);
+
+                    SharedPreferences.Editor edit= preferences.edit();
+                    if (edit == null) {
+                        Log.d("Bad Login", "edit");
+
+                    }
+                    if (!(preferences == null)) {
+                        Log.d("Bad Login", "preferences");
+                    }
+
+                    Log.d("Bad Login", mEmail);
+
+//                    edit.putInt(mEmail, preferences.getInt(mEmail, 0)+1);
+//
+//                    Log.d("Bad Login", ((Integer)preferences.getInt(mEmail, 0)).toString());
+//                    edit.commit();
+
+//                    db.collection("userAttempts").document(mEmail).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Log.d("UPDATE", "DocumentSnapshot successfully updated! " + mEmail);
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w("Error", "Error writing document", e);
+//                        }
+//                    });
+                    Log.d("INCORRECT ATTEMPT:", incorrectAttempts.toString());
                     throw new RuntimeException("Login failed");
                 }
             } catch (RuntimeException e) {
@@ -387,17 +711,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+
             if (success) {
                 // TODO: read user from database
                 @SuppressWarnings("ConstantConditions") String uid = mAuth.getCurrentUser().getUid();
                 UserDao dao = new UserDao();
                 dao.queryHomelessUser(uid);
+
+                //db.collection("userAttempts").document(mEmail).update("loginAttempts", 0);
+
+
                 Intent loginSuccess = new Intent(getApplicationContext(), Login_Success.class);
                 getApplicationContext().startActivity(loginSuccess);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                //db.collection("userAttempts").document(mEmail).update("loginAttempts", incorrectAttempts + 1);
             }
         }
 
@@ -415,3 +745,120 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
+
+/*
+private boolean isEmailLocked(final String email) {
+
+        Log.d("Tracking", "hit");
+        DocumentReference docRef = db.collection("userAttempts").document(email);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Log.d("Tracking", "On Complete hit");
+                while(!task.isSuccessful()){
+                    Log.d("searching", "Document exists");
+                }
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("Tracking", "Document exists");
+                        incorrectAttempts = ((Long) document.get("loginAttempts")).intValue();
+                        if (incorrectAttempts == 0) {
+                            userinDb = false;
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("email", email);
+                            data.put("loginAttempts", 0);
+                            db.collection("userAttempts").document(email).set(data);
+                            Log.d("Tracking",  "Incorrect Attempts is 0, data reset ");
+                        } else {
+                            Log.d("Tracking", "More than 0 events");
+                            userinDb = true;
+                        }
+                    } else {
+                        incorrectAttempts = 0;
+                        userinDb = false;
+                        Log.d("message", "No such document");
+                    }
+                } else {
+                    Log.d("message", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        if (incorrectAttempts == null) {
+            incorrectAttempts = 100;
+            Log.d("Tracking", "null catch temp");
+        }
+
+
+
+
+         Log.d("Tracking", "hit");
+        DocumentReference docRef = db.collection("userAttempts").document(email);
+        Task<DocumentSnapshot> task = docRef.get();
+        while(!task.isSuccessful()){
+            Log.d("Tracking", "task not done");
+        }
+        if (task.isSuccessful()) {
+            DocumentSnapshot ds = task.getResult();
+            if (ds.exists()){
+                Log.d("Tracking", "snapshot exists");
+                incorrectAttempts = ((Long) ds.get("loginAttempts")).intValue();
+                if (incorrectAttempts == 0) {
+                    userinDb = false;
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("email", email);
+                    data.put("loginAttempts", 0);
+                    db.collection("userAttempts").document(email).set(data);
+                    Log.d("Tracking",  "Incorrect Attempts is 0, data reset ");
+
+                } else {
+                    Log.d("Tracking", "More than 0 attempts");
+                    userinDb = true;
+                }
+
+            } else {
+                Log.d("Tracking", "no snapshot");
+            }
+        }
+
+
+
+
+
+
+
+        final Integer[] arr = new Integer[1];
+        Log.d("Tracking", "hit");
+        final DocumentReference docRef = db.collection("userAttempts").document(email);
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(docRef);
+                if (snapshot.exists()) {
+                    Log.d("Tracking", "retrieved");
+                } else {
+                    Log.d("Tracking", "not");
+                }
+
+                arr[0] = ((Long) snapshot.get("loginAttempts")).intValue();
+                return null;
+                // Success
+            }
+        });
+        incorrectAttempts = arr[0];
+        if (incorrectAttempts == 0) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("email", email);
+            data.put("loginAttempts", 0);
+            db.collection("userAttempts").document(email).set(data);
+            arr[0] = incorrectAttempts;
+            Log.d("Tracking", "Incorrect Attempts is 0, data reset ");
+        } else {
+            arr[0] = incorrectAttempts;
+            Log.d("Tracking", "More than 0 attemps");
+            Log.d("Tracking", "Transaction success!");
+        }
+
+ */

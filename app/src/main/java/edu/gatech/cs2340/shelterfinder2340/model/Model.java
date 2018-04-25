@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.shelterfinder2340.model;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,6 +33,26 @@ public class Model {
 
     /** the ShelterQuery object*/
     private ShelterQuery _query;
+
+    private HashMap<String, Integer> _lockout = new HashMap<String, Integer>();
+
+    public Integer get_lockout(String s){
+        if (_lockout.get(s) == null) {
+            _lockout.put(s,0);
+            return 0;
+        } else {
+            return _lockout.get(s);
+        }
+
+    }
+
+    public void incrementUser(String s) {
+        _lockout.put(s, _lockout.get(s) + 1);
+    }
+
+    public void resetUser(String s){
+        _lockout.put(s, 0);
+    }
 
     /**
      * Constructs a new instance of the model class
