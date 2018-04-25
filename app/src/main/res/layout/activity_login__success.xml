@@ -59,17 +59,17 @@
         app:layout_anchor="@id/relativeLayout"
         app:layout_anchorGravity="right|bottom">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/addShelter"
-            android:layout_width="64dp"
-            android:layout_height="54dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:src="@drawable/ic_add_black_24dp"
-            app:layout_anchor="@+id/include2"
-            app:layout_anchorGravity="right|center"
-            tools:layout_editor_absoluteX="250dp"
-            tools:layout_editor_absoluteY="513dp" />
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/addShelter"-->
+        <!--android:layout_width="64dp"-->
+        <!--android:layout_height="54dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:backgroundTint="@android:color/holo_blue_light"-->
+        <!--android:src="@drawable/ic_add_black_24dp"-->
+        <!--app:layout_anchor="@+id/include2"-->
+        <!--app:layout_anchorGravity="right|center"-->
+        <!--tools:layout_editor_absoluteX="250dp"-->
+        <!--tools:layout_editor_absoluteY="513dp" />-->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/search_button"
