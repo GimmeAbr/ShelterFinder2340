@@ -9,7 +9,6 @@ import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-
 import edu.gatech.cs2340.shelterfinder2340.R;
 
 /**
@@ -47,6 +46,14 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fadeOutToActivity(RegisterActivity.class);
+            }
+        });
+
+        final Button fbBtn = findViewById(R.id.login_fb);
+        fbBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fadeOutToActivity(LoginFacebook.class);
             }
         });
     }

@@ -12,6 +12,9 @@ public class HomelessPerson extends User {
     private boolean hasReservation;
     private ArrayList<Reservation> reserveList;
 
+    public HomelessPerson() {
+
+    }
     /**
      * HomelessPerson constructor
      * @param name the name of the user

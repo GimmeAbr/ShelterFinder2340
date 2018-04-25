@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +52,10 @@ public class UserDao {
         queryAdmin(id);
     }
 
+    public void homelessUserQuery(final String id, OnCompleteListener<QuerySnapshot> listener) {
+        Task<QuerySnapshot> task = db.collection("homeless").whereEqualTo("id",id).get();
+        task.addOnCompleteListener(listener);
+    }
     /**
      * Query the HomelessPerson from Firebase
      * @param id    the id of the HomelessPerson
