@@ -3,9 +3,12 @@ package edu.gatech.cs2340.shelterfinder2340.controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
+import android.view.Window;
 import android.widget.Toast;
 
 import edu.gatech.cs2340.shelterfinder2340.R;
@@ -42,6 +45,11 @@ public class LoginFacebook extends AppCompatActivity {
     Context appContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
         appContext = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
